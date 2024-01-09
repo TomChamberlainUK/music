@@ -1,0 +1,35 @@
+:root {
+  --background-light: rgba(255, 255, 255, 1);
+  --background-dark: rgba(0, 0, 0, 1);
+  --text-dark-contrast: rgba(0, 0, 0, 1);
+  --text-dark-high-emphasis: rgba(0, 0, 0, 0.87);
+  --text-dark-low-emphasis: rgba(0, 0, 0, 0.60);
+  --text-dark-disabled: rgba(0, 0, 0, 0.38);
+  --text-light-contrast: rgba(255, 255, 255, 1);
+  --text-light-high-emphasis: rgba(255, 255, 255, 0.87);
+  --text-light-low-emphasis: rgba(255, 255, 255, 0.60);
+  --text-light-disabled: rgba(255, 255, 255, 0.38);
+}
+
+[data-theme="dark"] {
+  --background-light: rgba(0, 0, 0, 1);
+  --background-dark: rgba(30, 30, 30, 1);
+  --text-dark-contrast: rgba(255, 255, 255, 1);
+  --text-dark-high-emphasis: rgba(255, 255, 255, 0.87);
+  --text-dark-low-emphasis: rgba(255, 255, 255, 0.60);
+  --text-dark-disabled: rgba(0, 0, 0, 0.38);
+  --text-light-contrast: rgba(255, 255, 255, 1);
+  --text-light-high-emphasis: rgba(255, 255, 255, 0.87);
+  --text-light-low-emphasis: rgba(255, 255, 255, 0.60);
+  --text-light-disabled: rgba(255, 255, 255, 0.38);
+}
+
+html, body, #app {
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-light);
+  color: var(--text-dark-contrast);
+}
