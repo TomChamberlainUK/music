@@ -90,12 +90,12 @@
       {#each strings as string}
         <div class="guitar__string">
           {#each string as note}
-          <div class="
-            guitar__fret
-            {note === root ? 'guitar__fret--root': ''}
-            {note === majorThird ? 'guitar__fret--major-third': ''}
-            {note === perfectFifth ? 'guitar__fret--perfect-fifth': ''}
-          ">
+          <div
+            class="guitar__fret"
+            class:guitar__fret--root={note === root}
+            class:guitar__fret--major-third={note === majorThird}
+            class:guitar__fret--perfect-fifth--root={note === perfectFifth}
+          >
             {note}
           </div>
           {/each}
