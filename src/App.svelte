@@ -2,37 +2,37 @@
   import Layout from './components/Layout.svelte';
 
   const notes = [
-    'a',
-    'a#',
-    'b',
-    'c',
-    'c#',
-    'd',
-    'd#',
-    'e',
-    'f',
-    'f#',
-    'g',
-    'g#'
+    'A',
+    'A#',
+    'B',
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#'
   ];
 
   // 6 String Guitar
   const strings = [
-    getStringNotes('e'),
-    getStringNotes('b'),
-    getStringNotes('g'),
-    getStringNotes('d'),
-    getStringNotes('a'),
-    getStringNotes('e'),
+    getStringNotes('E'),
+    getStringNotes('B'),
+    getStringNotes('G'),
+    getStringNotes('D'),
+    getStringNotes('A'),
+    getStringNotes('E'),
   ];
 
   // 5 String Bass
   // const strings = [
-  //   getStringNotes('g'),
-  //   getStringNotes('d'),
-  //   getStringNotes('a'),
-  //   getStringNotes('e'),
-  //   getStringNotes('b'),
+  //   getStringNotes('G'),
+  //   getStringNotes('D'),
+  //   getStringNotes('A'),
+  //   getStringNotes('E'),
+  //   getStringNotes('B'),
   // ];
 
   let root = notes[0];
@@ -58,8 +58,6 @@
     }
     return stringNotes;
   }
-
-  
 </script>
 
 <Layout>
