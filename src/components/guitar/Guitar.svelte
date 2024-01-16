@@ -18,9 +18,6 @@
     }
     return stringNotes;
   }
-
-  console.log(scale);
-
 </script>
 
 <div class="guitar">
