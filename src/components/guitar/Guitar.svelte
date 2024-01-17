@@ -21,7 +21,6 @@
 </script>
 
 <div class="guitar">
-  {scale}
   <div class="fret-indicators">
     {#each { length: numberOfFrets } as _, i}
       <div class="fret-indicator">
