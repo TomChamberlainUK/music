@@ -2,12 +2,15 @@
   import Layout from './components/Layout.svelte';
   import Guitar from './components/guitar/Guitar.svelte';
   import notes from './utils/notes';
-  import getDiatonicScale from './utils/getDiatonicScale';
+  import Scale from './utils/Scale';
 
-  let root = notes[0];
-  let scale = 'Diatonic';
+  let root = 'C';
+  let type = 'diatonic';
 
-  $: diatonicScale = getDiatonicScale(root);
+  $: scale = new Scale({
+    type,
+    root
+  })
 </script>
 
 <Layout>
@@ -25,15 +28,17 @@
     </label>
     <label>
       <span>Scale</span>
-      <select bind:value={scale}>
-        <option>Diatonic</option>
+      <select bind:value={type}>
+        <option>chromatic</option>
+        <option>diatonic</option>
+        <option>pentatonic</option>
       </select>
     </label>
     <h2>
-      Displaying the {root} diatonic scale
+      Displaying the {root} {type} scale
     </h2>
     <p>
-      Featuring the notes: {new Intl.ListFormat().format(diatonicScale)}.
+      Featuring the notes: {new Intl.ListFormat().format(scale.notes)}.
     </p>
     <Guitar
       numberOfFrets={22}
@@ -45,7 +50,7 @@
         'A',
         'E',
       ]}
-      scale={diatonicScale}
+      scale={scale.notes}
     />
   </main>
 </Layout>
