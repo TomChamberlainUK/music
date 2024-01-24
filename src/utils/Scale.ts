@@ -8,12 +8,15 @@ type ConstructorParams = {
 export default class Scale {
   type: string;
   notes: string[];
+  modes: string[];
 
   constructor({
     type,
-    root
+    root,
   }: ConstructorParams) {
     this.type = type;
-    this.notes = getScaleNotes({ type, root });
+    const { notes, modes } = getScaleNotes({ type, root });
+    this.notes = notes;
+    this.modes = modes;
   }
 }

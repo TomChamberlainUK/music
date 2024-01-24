@@ -3,14 +3,18 @@
   import Guitar from './components/guitar/Guitar.svelte';
   import notes from './utils/notes';
   import Scale from './utils/Scale';
+  import getNotesFromIndex from './utils/getNotesFromIndex';
 
   let root = 'C';
   let type = 'diatonic';
+  let mode: string;
 
   $: scale = new Scale({
     type,
     root
-  })
+  });
+
+  $: arrangedNotesFromMode = getNotesFromIndex(scale.modes.findIndex(scaleMode => mode === scaleMode), scale.notes);
 </script>
 
 <Layout>
@@ -28,10 +32,19 @@
     </label>
     <label>
       <span>Scale</span>
-      <select bind:value={type}>
-        <option>chromatic</option>
+      <select bind:value={type} on:change={() => mode = scale.modes[0]}>
         <option>diatonic</option>
         <option>pentatonic</option>
+      </select>
+    </label>
+    <label>
+      <span>Mode</span>
+      <select bind:value={mode}>
+        {#each scale.modes as mode}
+          {#if mode}
+            <option>{mode}</option>
+          {/if}
+        {/each}
       </select>
     </label>
     <h2>
@@ -50,7 +63,7 @@
         'A',
         'E',
       ]}
-      scale={scale.notes}
+      scale={arrangedNotesFromMode}
     />
   </main>
 </Layout>
