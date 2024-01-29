@@ -8,10 +8,10 @@
   let type = 'diatonic';
   let modeName: string;
 
+  const listFormatter = new Intl.ListFormat();
+
   $: scale = getScale({ root, type });
   $: mode = scale.getMode(modeName);
-  $: formattedScaleNotes = new Intl.ListFormat().format(scale.notes);
-  $: formattedModeNotes = new Intl.ListFormat().format(mode?.notes ?? '');
 </script>
 
 <Layout>
@@ -51,14 +51,14 @@
       The {root} major {scale.name} scale
     </h2>
     <p>
-      Featuring the notes: {formattedScaleNotes}.
+      Featuring the notes: {listFormatter.format(scale.notes)}.
     </p>
     {#if mode}
       <h3>
         Displaying the {mode.root} {mode.name} mode
       </h3>
       <p>
-        Featuring the notes: {formattedModeNotes}.
+        Featuring the notes: {listFormatter.format(mode.notes)}.
       </p>
       <Guitar
         numberOfFrets={22}
