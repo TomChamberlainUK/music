@@ -70,7 +70,7 @@
           'A',
           'E',
         ]}
-        scale={mode?.notes}
+        scale={mode.notes}
       />
     {/if}
   </main>
