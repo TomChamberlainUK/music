@@ -1,8 +1,8 @@
 <script lang="ts">
   import Layout from './components/Layout.svelte';
   import Guitar from './components/guitar/Guitar.svelte';
-  import getScale from './utils/getScale';
   import notes from './utils/notes';
+  import getScale from './utils/getScale';
 
   let root = 'C';
   let type = 'diatonic';
@@ -10,6 +10,8 @@
 
   $: scale = getScale({ root, type });
   $: mode = scale.getMode(modeName);
+  $: formattedScaleNotes = new Intl.ListFormat().format(scale.notes);
+  $: formattedModeNotes = new Intl.ListFormat().format(mode?.notes ?? '');
 </script>
 
 <Layout>
@@ -49,12 +51,15 @@
       The {root} major {scale.name} scale
     </h2>
     <p>
-      Featuring the notes: {new Intl.ListFormat().format(scale.notes)}.
+      Featuring the notes: {formattedScaleNotes}.
     </p>
     {#if mode}
       <h3>
         Displaying the {mode.root} {mode.name} mode
       </h3>
+      <p>
+        Featuring the notes: {formattedModeNotes}.
+      </p>
       <Guitar
         numberOfFrets={22}
         strings={[
