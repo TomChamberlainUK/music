@@ -12,7 +12,7 @@
   function getStringNotes(root: string) {
     const rootIndex = notes.findIndex(note => note === root);
     const stringNotes = [];
-    for (let i = 0; i < numberOfFrets; i++) {
+    for (let i = 0; i < numberOfFrets + 1; i++) {
       const nextNote = notes[(rootIndex + i) % notes.length];
       stringNotes.push(nextNote);
     }
@@ -22,7 +22,7 @@
 
 <div class="guitar">
   <div class="fret-indicators">
-    {#each { length: numberOfFrets } as _, i}
+    {#each { length: numberOfFrets + 1 } as _, i}
       <div class="fret-indicator">
         {i}
       </div>
