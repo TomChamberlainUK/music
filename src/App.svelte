@@ -2,15 +2,16 @@
   import Layout from './components/Layout.svelte';
   import Guitar from './components/guitar/Guitar.svelte';
   import notes from './utils/notes';
-  import Scale from './utils/Scale';
+  import getScale from './utils/getScale';
 
   let root = 'C';
   let type = 'diatonic';
+  let modeName: string;
 
-  $: scale = new Scale({
-    type,
-    root
-  })
+  const listFormatter = new Intl.ListFormat();
+
+  $: scale = getScale({ root, type });
+  $: mode = scale.getMode(modeName);
 </script>
 
 <Layout>
@@ -28,29 +29,49 @@
     </label>
     <label>
       <span>Scale</span>
-      <select bind:value={type}>
-        <option>chromatic</option>
+      <select
+        bind:value={type}
+        on:change={() => modeName = scale.modes[0].name}
+      >
         <option>diatonic</option>
         <option>pentatonic</option>
       </select>
     </label>
+    <label>
+      <span>Mode</span>
+      <select bind:value={modeName}>
+        {#each scale.modes as mode}
+          {#if mode}
+            <option>{mode.name}</option>
+          {/if}
+        {/each}
+      </select>
+    </label>
     <h2>
-      Displaying the {root} {type} scale
+      The {root} major {scale.name} scale
     </h2>
     <p>
-      Featuring the notes: {new Intl.ListFormat().format(scale.notes)}.
+      Featuring the notes: {listFormatter.format(scale.notes)}.
     </p>
-    <Guitar
-      numberOfFrets={22}
-      strings={[
-        'E',
-        'B',
-        'G',
-        'D',
-        'A',
-        'E',
-      ]}
-      scale={scale.notes}
-    />
+    {#if mode}
+      <h3>
+        Displaying the {mode.root} {mode.name} mode
+      </h3>
+      <p>
+        Featuring the notes: {listFormatter.format(mode.notes)}.
+      </p>
+      <Guitar
+        numberOfFrets={22}
+        strings={[
+          'E',
+          'B',
+          'G',
+          'D',
+          'A',
+          'E',
+        ]}
+        scale={mode.notes}
+      />
+    {/if}
   </main>
 </Layout>
