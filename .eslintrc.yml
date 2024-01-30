@@ -1,10 +1,16 @@
 extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
   - plugin:svelte/recommended
 parser: '@typescript-eslint/parser'
+plugins:
+  - '@typescript-eslint'
 parserOptions:
   project: ./tsconfig.json
   extraFileExtensions:
     - .svelte
+env:
+  browser: true
 overrides:
   - files: 
     - '*.svelte'
