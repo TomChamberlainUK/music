@@ -5,6 +5,7 @@ extends:
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
+  - '@stylistic/'
 parserOptions:
   project: ./tsconfig.json
   extraFileExtensions:
@@ -26,3 +27,12 @@ rules:
     - argsIgnorePattern: '^_'
       varsIgnorePattern: '^_'
       caughtErrorsIgnorePattern: '^_'
+  '@stylistic/semi':
+    - warn
+    - always
+  '@stylistic/quotes':
+    - warn
+    - single
+  'svelte/html-quotes':
+    - warn
+    - prefer: double
