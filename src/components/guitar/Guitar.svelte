@@ -85,8 +85,10 @@
 
     &:first-child {
       background-color: black;
+      color: var(--text-light-low-emphasis-locked);
 
       :global([data-theme="dark"]) & {
+        color: var(--text-dark-low-emphasis-locked);
         background-color: rgb(255, 255, 255);
       }
     }
