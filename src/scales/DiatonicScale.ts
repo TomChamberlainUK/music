@@ -15,6 +15,6 @@ export default class DiatonicScale extends Scale {
         'aeolian',
         'locrian'
       ]
-    })
+    });
   }
 }
