@@ -56,6 +56,8 @@
     place-content: center;
     flex: 1 1 0px;
     height: 100%;
+    color: var(--text-dark-high-emphasis);
+    font-weight: 600;
   }
 
   .guitar {
@@ -67,6 +69,10 @@
     height: 2rem;
     width: 100%;
     background-color: saddlebrown;
+
+    :global([data-theme="dark"]) & {
+      background-color: transparent;
+    }
   }
 
   .fret {
@@ -75,9 +81,14 @@
     flex: 1 1 0px;
     height: 100%;
     border: white solid 1px;
+    color: var(--text-dark-low-emphasis);
 
     &:first-child {
       background-color: black;
+
+      :global([data-theme="dark"]) & {
+        background-color: rgb(255, 255, 255);
+      }
     }
   }
 
@@ -87,7 +98,9 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    background-color: red;
+    background-color: rgb(255, 0, 0);
+    color: var(--text-dark-contrast);
+    font-weight: 700;
   }
 
   .scale-note-indicator {
@@ -96,6 +109,12 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    background-color: darkred;
+    background-color: rgb(255, 255, 255);
+    color: var(--text-dark-contrast);
+    font-weight: 700;
+
+    :global([data-theme="dark"]) & {
+      background-color: rgb(100, 100, 100);
+    }
   }
 </style>
