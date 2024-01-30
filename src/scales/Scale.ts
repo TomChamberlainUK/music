@@ -7,7 +7,7 @@ type ConstructorParams = {
   name: string,
   pattern: number[],
   modes: string[],
-}
+};
 
 export default class Scale {
   public root: string;

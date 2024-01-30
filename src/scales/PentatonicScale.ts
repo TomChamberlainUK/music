@@ -13,6 +13,6 @@ export default class PentatonicScale extends Scale {
         'blues minor',
         'minor'
       ]
-    })
+    });
   }
 }

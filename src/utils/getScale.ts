@@ -3,7 +3,7 @@ import { DiatonicScale, PentatonicScale } from '../scales';
 type Params = {
   type: string;
   root: string;
-}
+};
 
 export default function getScale({ type, root }: Params) {
   switch (type) {
