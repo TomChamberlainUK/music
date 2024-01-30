@@ -1,4 +1,5 @@
 :root {
+  // Dynamic theme colors - These change when the theme changes
   --background-light: rgba(255, 255, 255, 1);
   --background-dark: rgba(0, 0, 0, 1);
   --text-dark-contrast: rgba(0, 0, 0, 1);
@@ -9,6 +10,15 @@
   --text-light-high-emphasis: rgba(255, 255, 255, 0.87);
   --text-light-low-emphasis: rgba(255, 255, 255, 0.60);
   --text-light-disabled: rgba(255, 255, 255, 0.38);
+  // Locked theme colors - These remain the same when the theme changes
+  --text-dark-contrast-locked: rgba(0, 0, 0, 1);
+  --text-dark-high-emphasis-locked: rgba(0, 0, 0, 0.87);
+  --text-dark-low-emphasis-locked: rgba(0, 0, 0, 0.60);
+  --text-dark-disabled-locked: rgba(0, 0, 0, 0.38);
+  --text-light-contrast-locked: rgba(255, 255, 255, 1);
+  --text-light-high-emphasis-locked: rgba(255, 255, 255, 0.87);
+  --text-light-low-emphasis-locked: rgba(255, 255, 255, 0.60);
+  --text-light-disabled-locked: rgba(255, 255, 255, 0.38);
 }
 
 [data-theme="dark"] {
