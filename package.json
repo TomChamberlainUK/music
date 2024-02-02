@@ -10,7 +10,9 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint .",
     "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:single": "vitest run",
+    "test:coverage": "vitest --coverage",
+    "postinstall": "git config core.hooksPath ./git-hooks"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^1.5.4",
