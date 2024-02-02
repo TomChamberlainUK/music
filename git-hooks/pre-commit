@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Colour formatting
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+RESET_COLOR="\033[0m"
+
+exit_code=1
+exit_message="${RED}Commit aborted${RESET_COLOR} — please fix any issues before reattempting to commit changes"
+
+# Intro
+echo "Running pre-commit checks"
+
+# Linting
+echo "Running linter"
+pnpm run lint
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
+  echo "${RED}Linting failed${RESET_COLOR} — Errors detected"
+  echo "${exit_message}"
+  exit 1
+fi
+echo "${GREEN}Linting passed${RESET_COLOR} — No errors detected"
+
+# Tests
+echo "Running unit tests"
+pnpm run test:single
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
+  echo "${RED}Unit tests failed${RESET_COLOR} — Errors detected"
+  echo "${exit_message}"
+  exit 1
+fi
+echo "${GREEN}Unit tests passed${RESET_COLOR} — No errors detected"
+
+# Success message — set to exit 0 to allow commit
+echo "${GREEN}All Tests Passed${RESET_COLOR} — Proceeding with commit"
+exit 0
