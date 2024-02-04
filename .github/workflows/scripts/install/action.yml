@@ -3,7 +3,6 @@ description: Installs Node, pnpm, and app dependencies
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v3
     - uses: pnpm/action-setup@v2
       with:
         version: 8
