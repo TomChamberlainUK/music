@@ -1,4 +1,4 @@
-name: Node.js CI
+name: CI
 on:
   push:
     branches: [ "main" ]
@@ -9,23 +9,29 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/workflows/scripts/install
-    - name: Lint
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Install App
+      uses: ./.github/workflows/scripts/install
+    - name: Run Linter
       run: pnpm run lint
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/workflows/scripts/install
-    - name: Typecheck
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Install App
+      uses: ./.github/workflows/scripts/install
+    - name: Run Typechecker
       run: pnpm run check
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/workflows/scripts/install
-    - name: Unit tests
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Install App
+      uses: ./.github/workflows/scripts/install
+    - name: Run Unit tests
       run: pnpm run test:single
