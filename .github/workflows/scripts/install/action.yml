@@ -1,0 +1,17 @@
+name: Install App
+description: Installs Node, pnpm, and app dependencies
+runs:
+  using: "composite"
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install
+      shell: bash
