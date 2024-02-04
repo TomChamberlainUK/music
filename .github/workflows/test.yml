@@ -9,50 +9,20 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: '.nvmrc'
-        cache: 'pnpm'
-    - name: Install dependencies
-      run: pnpm install
+    - uses: ./.github/workflows/scripts/install
     - name: Lint
       run: pnpm run lint
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: '.nvmrc'
-        cache: 'pnpm'
-    - name: Install dependencies
-      run: pnpm install
+    - uses: ./.github/workflows/scripts/install
     - name: Typecheck
       run: pnpm run check
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: '.nvmrc'
-        cache: 'pnpm'
-    - name: Install dependencies
-      run: pnpm install
+    - uses: ./.github/workflows/scripts/install
     - name: Unit tests
       run: pnpm run test:single
