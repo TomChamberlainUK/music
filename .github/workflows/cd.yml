@@ -25,7 +25,7 @@ jobs:
     - name: Install App
       uses: ./.github/workflows/scripts/install
     - name: Build App
-      run: pnpm run build
+      run: pnpm run build --base "/music/"
     - name: Upload App
       uses: actions/upload-pages-artifact@v3
       with:
