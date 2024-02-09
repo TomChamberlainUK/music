@@ -60,7 +60,7 @@
         <span>Number of Strings:</span>
         <input
           bind:value={numberOfStrings}
-          on:change={() => stringTunings.length = numberOfStrings}
+          on:input={() => stringTunings.length = numberOfStrings}
           type="number"
         />
       </label>
