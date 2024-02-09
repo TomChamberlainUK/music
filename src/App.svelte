@@ -3,11 +3,30 @@
   import Guitar from './components/guitar/Guitar.svelte';
   import notes from './utils/notes';
   import getScale from './utils/getScale';
+  import getUID from './utils/getUID';
+
+  type Guitar = {
+    id: number,
+    numberOfFrets: number,
+    strings: string[],
+  };
 
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
 
+  let numberOfFrets = 22;
+  let numberOfStrings = 6;
+  let strings = ['E', 'B', 'G', 'D', 'A', 'E'];
+
+  let guitars: Guitar[] = [
+    {
+      id: getUID(),
+      numberOfFrets,
+      strings,
+    }
+  ];
+  
   const listFormatter = new Intl.ListFormat();
 
   $: scale = getScale({ root, type });
@@ -60,18 +79,75 @@
       <p>
         Featuring the notes: {listFormatter.format(mode.notes)}.
       </p>
-      <Guitar
-        numberOfFrets={22}
-        strings={[
-          'E',
-          'B',
-          'G',
-          'D',
-          'A',
-          'E',
-        ]}
-        scale={mode.notes}
-      />
+      <h2>
+        Guitars
+      </h2>
+      <div>
+        {#each guitars as guitar, i (guitar.id)}
+          <Guitar
+            numberOfFrets={guitar.numberOfFrets}
+            strings={guitar.strings}
+            scale={mode.notes}
+          />
+          <button
+            on:click={() => {
+              guitars.splice(i, 1);
+              guitars = guitars;
+            }}
+          >
+            Remove
+          </button>
+        {/each}
+      </div>
+      <div>
+        <h3>
+          Add New Guitar
+        </h3>
+        <label>
+          <span>Number of Strings:</span>
+          <input
+            bind:value={numberOfStrings}
+            on:change={() => strings.length = numberOfStrings}
+            type="number"
+          />
+        </label>
+        <label>
+          <span>Number of Frets:</span>
+          <input
+            bind:value={numberOfFrets}
+            type="number"
+          />
+        </label>
+        <fieldset>
+          <legend>
+            Tuning
+          </legend>
+          {#each { length: numberOfStrings } as _, i}
+            <label>
+              <span>{i}</span>
+              <select
+                bind:value={strings[i]}
+              >
+                {#each notes as note}
+                  <option>{note}</option>
+                {/each}
+              </select>
+            </label>
+          {/each}
+        </fieldset>
+        <button
+          on:click={() => {
+            guitars.push({
+              id: getUID(),
+              numberOfFrets,
+              strings
+            });
+            guitars = guitars;
+          }}
+        >
+          Add Guitar
+        </button>
+      </div>
     {/if}
   </main>
 </Layout>
