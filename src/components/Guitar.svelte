@@ -72,9 +72,7 @@
         {#each { length: numberOfStrings } as _, i}
           <label>
             <span>{formatOrdinal(numberOfStrings - i)}</span>
-            <select
-              bind:value={stringTunings[i]}
-            >
+            <select bind:value={stringTunings[i]}>
               {#each notes as note}
                 <option>{note}</option>
               {/each}
