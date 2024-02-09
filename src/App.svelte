@@ -5,21 +5,21 @@
   import getScale from './utils/getScale';
   import getUID from './utils/getUID';
 
-  type Guitar = {
-    id: number,
-  };
-
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
+  let guitarIds: number[] = [getUID()];
 
-  let guitars: Guitar[] = [
-    {
-      id: getUID(),
-    }
-  ];
-  
   const listFormatter = new Intl.ListFormat();
+
+  function addGuitar() {
+    guitarIds = [...guitarIds, getUID()];
+  }
+
+  function removeGuitar(index: number) {
+    guitarIds.splice(index, 1);
+    guitarIds = guitarIds;
+  }
 
   $: scale = getScale({ root, type });
   $: mode = scale.getMode(modeName);
@@ -75,28 +75,16 @@
         Guitars
       </h2>
       <div>
-        {#each guitars as guitar, i (guitar.id)}
+        {#each guitarIds as id, i (id)}
           <Guitar
             scale={mode.notes}
           />
-          <button
-            on:click={() => {
-              guitars.splice(i, 1);
-              guitars = guitars;
-            }}
-          >
+          <button on:click={() => removeGuitar(i)}>
             Remove
           </button>
         {/each}
       </div>
-      <button
-        on:click={() => {
-          guitars.push({
-            id: getUID(),
-          });
-          guitars = guitars;
-        }}
-      >
+      <button on:click={addGuitar}>
         Add Guitar
       </button>
     {/if}
