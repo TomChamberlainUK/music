@@ -1,14 +1,25 @@
 <script lang="ts">
   import Layout from './components/Layout.svelte';
-  import Guitar from './components/guitar/Guitar.svelte';
+  import Guitar from './components/Guitar.svelte';
   import notes from './utils/notes';
   import getScale from './utils/getScale';
+  import getUID from './utils/getUID';
 
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
+  let guitarIds: number[] = [getUID()];
 
   const listFormatter = new Intl.ListFormat();
+
+  function addGuitar() {
+    guitarIds = [...guitarIds, getUID()];
+  }
+
+  function removeGuitar(index: number) {
+    guitarIds.splice(index, 1);
+    guitarIds = guitarIds;
+  }
 
   $: scale = getScale({ root, type });
   $: mode = scale.getMode(modeName);
@@ -60,18 +71,22 @@
       <p>
         Featuring the notes: {listFormatter.format(mode.notes)}.
       </p>
-      <Guitar
-        numberOfFrets={22}
-        strings={[
-          'E',
-          'B',
-          'G',
-          'D',
-          'A',
-          'E',
-        ]}
-        scale={mode.notes}
-      />
+      <h2>
+        Guitars
+      </h2>
+      <div>
+        {#each guitarIds as id, i (id)}
+          <Guitar
+            scale={mode.notes}
+          />
+          <button on:click={() => removeGuitar(i)}>
+            Remove
+          </button>
+        {/each}
+      </div>
+      <button on:click={addGuitar}>
+        Add Guitar
+      </button>
     {/if}
   </main>
 </Layout>
