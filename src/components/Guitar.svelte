@@ -1,5 +1,6 @@
 <script lang="ts">
   import notes from '../utils/notes';
+  import formatOrdinal from '../utils/formatOrdinal';
 
   export let scale: string[] = [];
 
@@ -8,20 +9,6 @@
   let numberOfFrets = 22;
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
-
-  const pluralRules = new Intl.PluralRules('en', { type: 'ordinal' });
-  const suffixes = new Map([
-    ['one', 'st'],
-    ['two', 'nd'],
-    ['few', 'rd'],
-    ['other', 'th']
-  ]);
-
-  function formatOrdinal(number: number) {
-    const rule = pluralRules.select(number);
-    const suffix = suffixes.get(rule);
-    return `${number}${suffix}`;
-  }
 
   function getStringNotes(root: string, frets: number) {
     const rootIndex = notes.findIndex(note => note === root);
