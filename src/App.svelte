@@ -7,23 +7,15 @@
 
   type Guitar = {
     id: number,
-    numberOfFrets: number,
-    strings: string[],
   };
 
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
 
-  let numberOfFrets = 22;
-  let numberOfStrings = 6;
-  let strings = ['E', 'B', 'G', 'D', 'A', 'E'];
-
   let guitars: Guitar[] = [
     {
       id: getUID(),
-      numberOfFrets,
-      strings,
     }
   ];
   
@@ -85,8 +77,6 @@
       <div>
         {#each guitars as guitar, i (guitar.id)}
           <Guitar
-            numberOfFrets={guitar.numberOfFrets}
-            strings={guitar.strings}
             scale={mode.notes}
           />
           <button
@@ -99,55 +89,16 @@
           </button>
         {/each}
       </div>
-      <div>
-        <h3>
-          Add New Guitar
-        </h3>
-        <label>
-          <span>Number of Strings:</span>
-          <input
-            bind:value={numberOfStrings}
-            on:change={() => strings.length = numberOfStrings}
-            type="number"
-          />
-        </label>
-        <label>
-          <span>Number of Frets:</span>
-          <input
-            bind:value={numberOfFrets}
-            type="number"
-          />
-        </label>
-        <fieldset>
-          <legend>
-            Tuning
-          </legend>
-          {#each { length: numberOfStrings } as _, i}
-            <label>
-              <span>{i}</span>
-              <select
-                bind:value={strings[i]}
-              >
-                {#each notes as note}
-                  <option>{note}</option>
-                {/each}
-              </select>
-            </label>
-          {/each}
-        </fieldset>
-        <button
-          on:click={() => {
-            guitars.push({
-              id: getUID(),
-              numberOfFrets,
-              strings
-            });
-            guitars = guitars;
-          }}
-        >
-          Add Guitar
-        </button>
-      </div>
+      <button
+        on:click={() => {
+          guitars.push({
+            id: getUID(),
+          });
+          guitars = guitars;
+        }}
+      >
+        Add Guitar
+      </button>
     {/if}
   </main>
 </Layout>

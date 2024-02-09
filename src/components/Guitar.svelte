@@ -1,47 +1,95 @@
 <script lang="ts">
   import notes from '../utils/notes';
 
-  export let numberOfFrets: number;
-  export let strings: string[];
   export let scale: string[] = [];
 
-  const stringNotes = strings.map(string => (
-    getStringNotes(string)
-  ));
+  let displayConfig = false;
 
-  function getStringNotes(root: string) {
+  let numberOfFrets = 22;
+  let numberOfStrings = 6;
+  let stringTunings = ['E', 'B', 'G', 'D', 'A', 'E'];
+
+  function getStringNotes(root: string, frets: number) {
     const rootIndex = notes.findIndex(note => note === root);
     const stringNotes = [];
-    for (let i = 0; i < numberOfFrets + 1; i++) {
+    for (let i = 0; i < frets + 1; i++) {
       const nextNote = notes[(rootIndex + i) % notes.length];
       stringNotes.push(nextNote);
     }
     return stringNotes;
   }
+
+  $: strings = stringTunings.map(string => (
+    getStringNotes(string, numberOfFrets)
+  ));
 </script>
 
-<div class="guitar">
-  <div class="fret-indicators">
-    {#each { length: numberOfFrets + 1 } as _, i}
-      <div class="fret-indicator">
-        {i}
+<div>
+  <div class="guitar">
+    <div class="fret-indicators">
+      {#each { length: numberOfFrets + 1 } as _, i}
+        <div class="fret-indicator">
+          {i}
+        </div>
+      {/each}
+    </div>
+    {#each strings as string}
+      <div class="string">
+        {#each string as note}
+        <div class="fret">
+          <div
+            class:scale-root-indicator={scale[0] === note}
+            class:scale-note-indicator={scale.slice(1).includes(note)}
+          >
+            {note}
+          </div>
+        </div>
+        {/each}
       </div>
     {/each}
   </div>
-  {#each stringNotes as string}
-    <div class="string">
-      {#each string as note}
-      <div class="fret">
-        <div
-          class:scale-root-indicator={scale[0] === note}
-          class:scale-note-indicator={scale.slice(1).includes(note)}
-        >
-          {note}
-        </div>
-      </div>
-      {/each}
-    </div>
-  {/each}
+  <button
+    on:click={() => displayConfig = !displayConfig}
+    type="button"
+  >
+    Configure
+  </button>
+  {#if displayConfig}
+    <form>
+      <label>
+        <span>Number of Strings:</span>
+        <input
+          bind:value={numberOfStrings}
+          on:change={() => stringTunings.length = numberOfStrings}
+          type="number"
+        />
+      </label>
+      <label>
+        <span>Number of Frets:</span>
+        <input
+          bind:value={numberOfFrets}
+          type="number"
+        />
+      </label>
+      <fieldset>
+        <legend>
+          Tuning
+        </legend>
+        {#each { length: numberOfStrings } as _, i}
+          <label>
+            <span>{i}</span>
+            <select
+              bind:value={stringTunings[i]}
+            >
+              {#each notes as note}
+                <option>{note}</option>
+              {/each}
+            </select>
+          </label>
+        {/each}
+      </fieldset>
+    </form>
+  {/if}
 </div>
 
 <style lang="scss">
