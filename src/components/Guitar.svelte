@@ -7,7 +7,7 @@
 
   let numberOfFrets = 22;
   let numberOfStrings = 6;
-  let stringTunings = ['E', 'B', 'G', 'D', 'A', 'E'];
+  let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
   function getStringNotes(root: string, frets: number) {
     const rootIndex = notes.findIndex(note => note === root);
@@ -19,9 +19,11 @@
     return stringNotes;
   }
 
-  $: strings = stringTunings.map(string => (
-    getStringNotes(string, numberOfFrets)
-  ));
+  $: strings = stringTunings
+    .toReversed()  
+    .map(string => (
+      getStringNotes(string, numberOfFrets)
+    ));
 </script>
 
 <div>
@@ -77,7 +79,7 @@
         </legend>
         {#each { length: numberOfStrings } as _, i}
           <label>
-            <span>{i}</span>
+            <span>{numberOfStrings - i}</span>
             <select
               bind:value={stringTunings[i]}
             >
