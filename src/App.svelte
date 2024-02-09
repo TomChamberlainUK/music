@@ -1,6 +1,6 @@
 <script lang="ts">
   import Layout from './components/Layout.svelte';
-  import Guitar from './components/guitar/Guitar.svelte';
+  import Guitar from './components/Guitar.svelte';
   import notes from './utils/notes';
   import getScale from './utils/getScale';
   import getUID from './utils/getUID';

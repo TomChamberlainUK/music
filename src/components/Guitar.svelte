@@ -1,5 +1,5 @@
 <script lang="ts">
-  import notes from '../../utils/notes';
+  import notes from '../utils/notes';
 
   export let numberOfFrets: number;
   export let strings: string[];
