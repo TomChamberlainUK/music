@@ -1,6 +1,7 @@
 <script lang="ts">
   import notes from '../utils/notes';
   import formatOrdinal from '../utils/formatOrdinal';
+  import getConsecutiveNotes from '../utils/getConsecutiveNotes';
 
   export let scale: string[] = [];
 
@@ -10,20 +11,10 @@
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
-  function getStringNotes(root: string, frets: number) {
-    const rootIndex = notes.findIndex(note => note === root);
-    const stringNotes = [];
-    for (let i = 0; i < frets + 1; i++) {
-      const nextNote = notes[(rootIndex + i) % notes.length];
-      stringNotes.push(nextNote);
-    }
-    return stringNotes;
-  }
-
   $: strings = stringTunings
     .toReversed()  
     .map(string => (
-      getStringNotes(string, numberOfFrets)
+      getConsecutiveNotes(string, numberOfFrets + 1)
     ));
 </script>
 
