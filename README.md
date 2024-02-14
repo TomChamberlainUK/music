@@ -15,6 +15,8 @@
 1. [CI/CD Pipeline](#cicd-pipeline)
     1. [CI](#ci)
     1. [CD](#cd)
+1. [Git Hooks](#git-hooks)
+    1. [Pre-Commit](#pre-commit)
 
 ## Description
 
@@ -82,7 +84,11 @@ test:single | Runs a single test run
 
 ## CI/CD Pipeline
 
+> Scripts for the CI/CD pipeline can be found in `./.github/workflows`
+
 CI/CD is set up for this application via Github actions.
+
+The CI/CD pipeline ensures code and application quality for the repository and live product.
 
 ### CI
 
@@ -100,3 +106,17 @@ The CI pipeline includes the following steps:
 CD is run against any commits to the `main` branch.
 
 The CD pipeline automates deployments to Github pages.
+
+## Git Hooks
+
+> Git hooks can be found in `./git-hooks` and are installed to `git` via a `postinstall` script that runs whenever `pnpm install` is run.
+
+Git hooks are set up to ensure quality for the codebase.
+
+### Pre-Commit
+
+The following checks are made on every commit to the codebase:
+
+- Lint
+- Typecheck
+- Test
