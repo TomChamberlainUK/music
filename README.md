@@ -1,47 +1,122 @@
-# Svelte + TS + Vite
+[![CI](https://github.com/TomChamberlainUK/music/actions/workflows/ci.yml/badge.svg)](https://github.com/TomChamberlainUK/music/actions/workflows/ci.yml)
+[![CD](https://github.com/TomChamberlainUK/music/actions/workflows/cd.yml/badge.svg)](https://github.com/TomChamberlainUK/music/actions/workflows/cd.yml)
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+# Music
 
-## Recommended IDE Setup
+[A simple music app](tomchamberlainuk.github.io/music/)
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Need an official Svelte framework?
+## Contents
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+1. [Description](#description)
+1. [Get Started](#get-started)
+    1. [Install](#install)
+    1. [Scripts](#scripts)
+1. [CI/CD Pipeline](#cicd-pipeline)
+    1. [CI](#ci)
+    1. [CD](#cd)
+1. [Git Hooks](#git-hooks)
+    1. [Pre-Commit](#pre-commit)
 
-## Technical considerations
+## Description
 
-**Why use this over SvelteKit?**
+A simple app to aid musicians with the visualisation of scales.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## Get Started
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+### Install
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+> Ensure the correct version of Node specified in `.nvmrc` is being used
+> <br />
+> `nvm` users can run the command `nvm use`
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+> Package management is handled via `pnpm` — [follow their guide for installation](https://github.com/pnpm/pnpm?tab=readme-ov-file#getting-started)
 
-**Why include `.vscode/extensions.json`?**
+First download, clone, or fork this repository.
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+Then navigate to the root directory and install any dependencies by running:
 
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+```sh
+pnpm install
 ```
+
+### Development
+
+To run the application in development mode, run the command:
+
+```sh
+pnpm run dev
+```
+
+This will serve the application locally and update with any changes.
+
+### Production
+
+To build the application in production mode, run the command:
+
+```sh
+pnpm run build
+```
+
+This will compile all the source code into a distributable directory `./dist`
+
+To preview the build locally, run the command:
+
+```sh
+pnpm run preview
+```
+
+This will serve the production version of the application locally. This should not be used for standard production.
+
+### Scripts
+
+Script | Description
+--- | ---
+dev | Runs the application in development mode
+build | Builds a production version of the application
+preview | Locally preview the production build of the application
+check | Typecheck the code
+lint | Lint the code
+test | Test the application in watch mode
+test:coverage | Test the application and build a coverage report
+test:single | Runs a single test run
+
+## CI/CD Pipeline
+
+> Scripts for the CI/CD pipeline can be found in `./.github/workflows`
+
+CI/CD is set up for this application via Github actions.
+
+The CI/CD pipeline ensures code and application quality for the repository and live product.
+
+### CI
+
+CI is run against any open pull requests or commits to the `main` branch.
+
+The CI pipeline includes the following steps:
+
+- Lint
+- Typecheck
+- Test
+- Build
+
+### CD
+
+CD is run against any commits to the `main` branch.
+
+The CD pipeline automates deployments to Github pages.
+
+## Git Hooks
+
+> Git hooks can be found in `./git-hooks` and are installed to `git` via a `postinstall` script that runs whenever `pnpm install` is run.
+
+Git hooks are set up to ensure quality for the codebase.
+
+### Pre-Commit
+
+The following checks are made on every commit to the codebase:
+
+- Lint
+- Typecheck
+- Test
