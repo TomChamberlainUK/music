@@ -12,6 +12,9 @@
 1. [Get Started](#get-started)
     1. [Install](#install)
     1. [Scripts](#scripts)
+1. [CI/CD Pipeline](#cicd-pipeline)
+    1. [CI](#ci)
+    1. [CD](#cd)
 
 ## Description
 
@@ -76,3 +79,24 @@ lint | Lint the code
 test | Test the application in watch mode
 test:coverage | Test the application and build a coverage report
 test:single | Runs a single test run
+
+## CI/CD Pipeline
+
+CI/CD is set up for this application via Github actions.
+
+### CI
+
+CI is run against any open pull requests or commits to the `main` branch.
+
+The CI pipeline includes the following steps:
+
+- Lint
+- Typecheck
+- Test
+- Build
+
+### CD
+
+CD is run against any commits to the `main` branch.
+
+The CD pipeline automates deployments to Github pages.
