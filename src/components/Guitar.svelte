@@ -11,14 +11,50 @@
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
+  let highlightedNotes: string[] = [];
+  let showNoteMenu = true;
+  let rgb: number[] = [255, 0, 0];
+
   $: strings = stringTunings
     .toReversed()  
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
+  
+  $: colour = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 </script>
 
 <div>
+  {#if showNoteMenu}
+    <div>
+      rgb:
+      <input
+        type="range"
+        max="255"
+        min="0"
+        step="1"
+        bind:value={rgb[0]}
+      />
+      <input
+        type="range"
+        max="255"
+        min="0"
+        step="1"
+        bind:value={rgb[1]}
+      />
+      <input
+        type="range"
+        max="255"
+        min="0"
+        step="1"
+        bind:value={rgb[2]}
+      />
+      <div
+        class="colour-block"
+        style="background-color: {colour};"
+      />
+    </div>
+  {/if}
   <div class="guitar">
     <div class="fret-indicators">
       {#each { length: numberOfFrets + 1 } as _, i}
@@ -30,14 +66,29 @@
     {#each strings as string}
       <div class="string">
         {#each string as note}
-        <div class="fret">
+        <button
+          class="fret"
+          on:click={() => {
+            if (!highlightedNotes.includes(note)) {
+              highlightedNotes = [...highlightedNotes, note];
+            } else {
+              const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote === note);
+              highlightedNotes = [
+                ...highlightedNotes.slice(0, noteIndex),
+                ...highlightedNotes.slice(noteIndex + 1)
+              ];
+            }
+          }}
+        >
           <div
             class:scale-root-indicator={scale[0] === note}
             class:scale-note-indicator={scale.slice(1).includes(note)}
+            class:scale-custom-indicator={highlightedNotes.includes(note)}
+            style={highlightedNotes.includes(note) ? `background-color: ${colour};` : undefined}
           >
             {note}
           </div>
-        </div>
+        </button>
         {/each}
       </div>
     {/each}
@@ -116,6 +167,7 @@
   }
 
   .fret {
+    all: unset;
     display: grid;
     place-content: center;
     flex: 1 1 0px;
@@ -158,5 +210,21 @@
     :global([data-theme="dark"]) & {
       background-color: rgb(100, 100, 100);
     }
+  }
+
+  .scale-custom-indicator {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: var(--text-dark-contrast);
+    font-weight: 700;
+  }
+
+  .colour-block {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
   }
 </style>
