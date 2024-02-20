@@ -11,29 +11,51 @@
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
+  let selectedNote: string | null = null;
   let highlightedNotes: string[] = [];
-  let showNoteMenu = true;
   let color: string = '#76a0ff';
+
+  let guitarElement: HTMLElement;
 
   $: strings = stringTunings
     .toReversed()  
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
+
+  function selectNote(note: string | null) {
+    selectedNote = note;
+  }
+
+  function addNote(note: string) {
+    if (!highlightedNotes.includes(note)) {
+      highlightedNotes = [...highlightedNotes, note];
+    } else {
+      const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote === note);
+      highlightedNotes = [
+        ...highlightedNotes.slice(0, noteIndex),
+        ...highlightedNotes.slice(noteIndex + 1)
+      ];
+    }
+  }
+
+  function handleWindowClick({ target }: MouseEvent) {
+    assertEventTargetIsNode(target);
+    if (!guitarElement.contains(target)) {
+      selectedNote = null;
+    }
+  }
+
+  function assertEventTargetIsNode(eventTarget: EventTarget | null): asserts eventTarget is Node {
+    if (!eventTarget || !('nodeType' in eventTarget)) {
+      throw new Error('Expected event target to be Node');
+    }
+  }
 </script>
 
-<div>
-  {#if showNoteMenu}
-    <div>
-      rgb:
-      <input type="color" bind:value={color} />
-      <div
-        class="colour-block"
-        style="background-color: {color};"
-      />
-      <span>{color}</span>
-    </div>
-  {/if}
+<svelte:window on:click={handleWindowClick} />
+
+<div bind:this={guitarElement}>
   <div class="guitar">
     <div class="fret-indicators">
       {#each { length: numberOfFrets + 1 } as _, i}
@@ -47,22 +69,13 @@
         {#each string as note}
         <button
           class="fret"
-          on:click={() => {
-            if (!highlightedNotes.includes(note)) {
-              highlightedNotes = [...highlightedNotes, note];
-            } else {
-              const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote === note);
-              highlightedNotes = [
-                ...highlightedNotes.slice(0, noteIndex),
-                ...highlightedNotes.slice(noteIndex + 1)
-              ];
-            }
-          }}
+          on:focus={() => selectNote(note)}
         >
           <div
             class:scale-root-indicator={scale[0] === note}
             class:scale-note-indicator={scale.slice(1).includes(note)}
             class:scale-custom-indicator={highlightedNotes.includes(note)}
+            class:scale-selected-indicator={selectedNote === note}
             style={highlightedNotes.includes(note) ? `background-color: ${color};` : undefined}
           >
             {note}
@@ -72,6 +85,30 @@
       </div>
     {/each}
   </div>
+  {#if selectedNote}
+    <div>
+      <h1>
+        {selectedNote}
+      </h1>
+      <div>
+        <label>
+          <span>Colour</span>
+          <input type="color" bind:value={color} />
+        </label>
+        <div
+          class="colour-block"
+          style="background-color: {color};"
+        />
+        <span>
+          {color}
+        </span>
+      </div>
+      <button on:click={() => selectedNote && addNote(selectedNote)}>
+        {highlightedNotes.includes(selectedNote) ? 'Remove' : 'Add'}
+      </button>
+      <hr>
+    </div>
+  {/if}
   <button
     on:click={() => displayConfig = !displayConfig}
     type="button"
@@ -198,6 +235,18 @@
     height: 1.5rem;
     border-radius: 50%;
     color: var(--text-dark-contrast);
+    font-weight: 700;
+  }
+
+  .scale-selected-indicator {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border: var(--text-light-low-emphasis-locked) 0.25rem solid;
+    color: var(--text-dark-contrast);
+    background-color: var(--text-light-disabled-locked);
     font-weight: 700;
   }
 
