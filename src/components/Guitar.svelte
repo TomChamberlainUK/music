@@ -13,46 +13,25 @@
 
   let highlightedNotes: string[] = [];
   let showNoteMenu = true;
-  let rgb: number[] = [255, 0, 0];
+  let color: string = '#76a0ff';
 
   $: strings = stringTunings
     .toReversed()  
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
-  
-  $: colour = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 </script>
 
 <div>
   {#if showNoteMenu}
     <div>
       rgb:
-      <input
-        type="range"
-        max="255"
-        min="0"
-        step="1"
-        bind:value={rgb[0]}
-      />
-      <input
-        type="range"
-        max="255"
-        min="0"
-        step="1"
-        bind:value={rgb[1]}
-      />
-      <input
-        type="range"
-        max="255"
-        min="0"
-        step="1"
-        bind:value={rgb[2]}
-      />
+      <input type="color" bind:value={color} />
       <div
         class="colour-block"
-        style="background-color: {colour};"
+        style="background-color: {color};"
       />
+      <span>{color}</span>
     </div>
   {/if}
   <div class="guitar">
@@ -84,7 +63,7 @@
             class:scale-root-indicator={scale[0] === note}
             class:scale-note-indicator={scale.slice(1).includes(note)}
             class:scale-custom-indicator={highlightedNotes.includes(note)}
-            style={highlightedNotes.includes(note) ? `background-color: ${colour};` : undefined}
+            style={highlightedNotes.includes(note) ? `background-color: ${color};` : undefined}
           >
             {note}
           </div>
