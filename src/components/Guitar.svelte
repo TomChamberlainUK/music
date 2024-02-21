@@ -30,6 +30,14 @@
 
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
 
+  $: isHighlighted = (note: string) => (
+    highlightedNotes.some(({ value }) => value === note)
+  );
+
+  $: getHighlightedNote = (note: string) => (
+    highlightedNotes.find(({ value }) => value === note)
+  );
+
   function selectNote(note: string) {
     selectedNote = {
       value: note,
@@ -49,10 +57,6 @@
         ...highlightedNotes.slice(noteIndex + 1)
       ];
     }
-  }
-
-  function getHighlightedNote(note: string) {
-    return highlightedNotes.find(({ value }) => value === note);
   }
 
   function handleWindowClick({ target }: MouseEvent) {
@@ -85,7 +89,7 @@
         {#each string as note}
         <button
           class="fret"
-          title={highlightedNotes.find(({ value }) => value === note)?.name}
+          title={getHighlightedNote(note)?.name}
           on:click={() => selectNote(note)}
         >
           <div
@@ -93,7 +97,7 @@
             class:scale-note-indicator={scale.slice(1).includes(note)}
             class:scale-custom-indicator={highlightedNotes.some(({ value }) => value === note)}
             class:scale-selected-indicator={selectedNote?.value === note}
-            style={highlightedNotes.some(({ value }) => value === note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
+            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
           </div>
