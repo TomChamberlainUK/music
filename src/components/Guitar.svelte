@@ -11,9 +11,14 @@
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
-  let selectedNote: string | null = null;
-  let highlightedNotes: string[] = [];
-  let color: string = '#76a0ff';
+  type SelectedNote = {
+    value: string;
+    name: string;
+    color: string;
+  };
+
+  let selectedNote: SelectedNote | null = null;
+  let highlightedNotes: SelectedNote[] = [];
 
   let guitarElement: HTMLElement;
 
@@ -23,20 +28,31 @@
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
 
-  function selectNote(note: string | null) {
-    selectedNote = note;
+  $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
+
+  function selectNote(note: string) {
+    selectedNote = {
+      value: note,
+      name: '',
+      color: '#76a0ff'
+    };
   }
 
-  function addNote(note: string) {
-    if (!highlightedNotes.includes(note)) {
+  function addNote(note: SelectedNote) {
+    const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
+    const noteIsAlreadyHighlighted = noteIndex > -1;
+    if (!noteIsAlreadyHighlighted) {
       highlightedNotes = [...highlightedNotes, note];
     } else {
-      const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote === note);
       highlightedNotes = [
         ...highlightedNotes.slice(0, noteIndex),
         ...highlightedNotes.slice(noteIndex + 1)
       ];
     }
+  }
+
+  function getHighlightedNote(note: string) {
+    return highlightedNotes.find(({ value }) => value === note);
   }
 
   function handleWindowClick({ target }: MouseEvent) {
@@ -69,14 +85,15 @@
         {#each string as note}
         <button
           class="fret"
-          on:focus={() => selectNote(note)}
+          title={highlightedNotes.find(({ value }) => value === note)?.name}
+          on:click={() => selectNote(note)}
         >
           <div
             class:scale-root-indicator={scale[0] === note}
             class:scale-note-indicator={scale.slice(1).includes(note)}
-            class:scale-custom-indicator={highlightedNotes.includes(note)}
-            class:scale-selected-indicator={selectedNote === note}
-            style={highlightedNotes.includes(note) ? `background-color: ${color};` : undefined}
+            class:scale-custom-indicator={highlightedNotes.some(({ value }) => value === note)}
+            class:scale-selected-indicator={selectedNote?.value === note}
+            style={highlightedNotes.some(({ value }) => value === note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
           </div>
@@ -88,23 +105,27 @@
   {#if selectedNote}
     <div>
       <h1>
-        {selectedNote}
+        {selectedNote.value}
       </h1>
       <div>
         <label>
           <span>Colour</span>
-          <input type="color" bind:value={color} />
+          <input type="color" bind:value={selectedNote.color} />
         </label>
         <div
           class="colour-block"
-          style="background-color: {color};"
+          style="background-color: {selectedNote.color};"
         />
         <span>
-          {color}
+          {selectedNote.color}
         </span>
+        <label>
+          <span>Name</span>
+          <input type="text" bind:value={selectedNote.name} />
+        </label>
       </div>
       <button on:click={() => selectedNote && addNote(selectedNote)}>
-        {highlightedNotes.includes(selectedNote) ? 'Remove' : 'Add'}
+        {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
       </button>
       <hr>
     </div>
