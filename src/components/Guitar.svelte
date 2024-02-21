@@ -30,6 +30,10 @@
 
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
 
+  $: isSelected = (note: string) => (
+    selectedNote?.value === note
+  );
+
   $: isHighlighted = (note: string) => (
     highlightedNotes.some(({ value }) => value === note)
   );
@@ -93,10 +97,9 @@
           on:click={() => selectNote(note)}
         >
           <div
-            class:scale-root-indicator={scale[0] === note}
-            class:scale-note-indicator={scale.slice(1).includes(note)}
-            class:scale-custom-indicator={highlightedNotes.some(({ value }) => value === note)}
-            class:scale-selected-indicator={selectedNote?.value === note}
+            class:fret__indicator={scale.includes(note) || isHighlighted(note) || isSelected(note)}
+            class:fret__indicator--root={scale[0] === note}
+            class:fret__indicator--selected={isSelected(note)}
             style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
@@ -237,54 +240,26 @@
         }
       }
     }
-  }
 
-  .scale-root-indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background-color: rgb(255, 0, 0);
-    color: var(--text-dark-contrast);
-    font-weight: 700;
-  }
+    &__indicator {
+      display: grid;
+      place-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: rgb(255, 255, 255);
+      color: var(--text-dark-contrast-locked);
+      font-weight: 700;
 
-  .scale-note-indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background-color: rgb(255, 255, 255);
-    color: var(--text-dark-contrast);
-    font-weight: 700;
+      &--root {
+        background-color: rgb(255, 0, 0);
+      }
 
-    :global([data-theme="dark"]) & {
-      background-color: rgb(100, 100, 100);
+      &--selected {
+        border: var(--text-light-low-emphasis-locked) 0.25rem solid;
+        background-color: var(--text-light-disabled-locked);
+      }
     }
-  }
-
-  .scale-custom-indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    color: var(--text-dark-contrast);
-    font-weight: 700;
-  }
-
-  .scale-selected-indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    border: var(--text-light-low-emphasis-locked) 0.25rem solid;
-    color: var(--text-dark-contrast);
-    background-color: var(--text-light-disabled-locked);
-    font-weight: 700;
   }
 
   .colour-block {
