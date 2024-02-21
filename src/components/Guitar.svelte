@@ -258,6 +258,10 @@
       &--selected {
         border: var(--text-light-low-emphasis-locked) 0.25rem solid;
         background-color: var(--text-light-disabled-locked);
+
+        :global([data-theme="dark"]) & {
+          color: var(--text-dark-contrast);
+        }
       }
     }
   }
