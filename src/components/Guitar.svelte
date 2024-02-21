@@ -46,7 +46,7 @@
     };
   }
 
-  function addNote(note: SelectedNote) {
+  function highlightNote(note: SelectedNote) {
     const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
     const noteIsAlreadyHighlighted = noteIndex > -1;
     if (!noteIsAlreadyHighlighted) {
@@ -128,7 +128,7 @@
           <input type="text" bind:value={selectedNote.name} />
         </label>
       </div>
-      <button on:click={() => selectedNote && addNote(selectedNote)}>
+      <button on:click={() => selectedNote && highlightNote(selectedNote)}>
         {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
       </button>
       <hr>
