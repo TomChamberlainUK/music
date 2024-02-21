@@ -214,6 +214,7 @@
     border: white solid 1px;
     color: var(--text-dark-low-emphasis);
     background-color: var(--background-color);
+    cursor: pointer;
 
     &:hover {
       background-color: hsl(from var(--background-color) h s 50);
