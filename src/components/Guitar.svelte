@@ -202,11 +202,6 @@
     display: flex;
     height: 2rem;
     width: 100%;
-    background-color: saddlebrown;
-
-    :global([data-theme="dark"]) & {
-      background-color: transparent;
-    }
   }
 
   .fret {
@@ -217,14 +212,35 @@
     height: 100%;
     border: white solid 1px;
     color: var(--text-dark-low-emphasis);
+    background-color: saddlebrown;
+
+    &:hover {
+      background-color: hsl(from saddlebrown h s 50);
+    }
 
     &:first-child {
       background-color: black;
       color: var(--text-light-low-emphasis-locked);
 
-      :global([data-theme="dark"]) & {
+      &:hover {
+        background-color: hsl(from black h s 50);
+      }
+    }
+
+    :global([data-theme="dark"]) & {
+      background-color: black;
+
+      &:hover {
+        background-color: hsl(from black h s 50);
+      }
+
+      &:first-child {
         color: var(--text-dark-low-emphasis-locked);
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(150, 150, 150);
+
+        &:hover {
+          background-color: hsl(from rgb(150, 150, 150) h s 80);
+        }
       }
     }
   }
