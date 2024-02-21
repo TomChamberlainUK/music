@@ -11,14 +11,75 @@
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
+  type SelectedNote = {
+    value: string;
+    name: string;
+    color: string;
+  };
+
+  let selectedNote: SelectedNote | null = null;
+  let highlightedNotes: SelectedNote[] = [];
+
+  let guitarElement: HTMLElement;
+
   $: strings = stringTunings
     .toReversed()  
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
+
+  $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
+
+  $: isSelected = (note: string) => (
+    selectedNote?.value === note
+  );
+
+  $: isHighlighted = (note: string) => (
+    highlightedNotes.some(({ value }) => value === note)
+  );
+
+  $: getHighlightedNote = (note: string) => (
+    highlightedNotes.find(({ value }) => value === note)
+  );
+
+  function selectNote(note: string) {
+    selectedNote = {
+      value: note,
+      name: '',
+      color: '#76a0ff'
+    };
+  }
+
+  function highlightNote(note: SelectedNote) {
+    const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
+    const noteIsAlreadyHighlighted = noteIndex > -1;
+    if (!noteIsAlreadyHighlighted) {
+      highlightedNotes = [...highlightedNotes, note];
+    } else {
+      highlightedNotes = [
+        ...highlightedNotes.slice(0, noteIndex),
+        ...highlightedNotes.slice(noteIndex + 1)
+      ];
+    }
+  }
+
+  function handleWindowClick({ target }: MouseEvent) {
+    assertEventTargetIsNode(target);
+    if (!guitarElement.contains(target)) {
+      selectedNote = null;
+    }
+  }
+
+  function assertEventTargetIsNode(eventTarget: EventTarget | null): asserts eventTarget is Node {
+    if (!eventTarget || !('nodeType' in eventTarget)) {
+      throw new Error('Expected event target to be Node');
+    }
+  }
 </script>
 
-<div>
+<svelte:window on:click={handleWindowClick} />
+
+<div bind:this={guitarElement}>
   <div class="guitar">
     <div class="fret-indicators">
       {#each { length: numberOfFrets + 1 } as _, i}
@@ -30,18 +91,54 @@
     {#each strings as string}
       <div class="string">
         {#each string as note}
-        <div class="fret">
+        <button
+          class="fret"
+          title={getHighlightedNote(note)?.name}
+          on:click={() => selectNote(note)}
+        >
           <div
-            class:scale-root-indicator={scale[0] === note}
-            class:scale-note-indicator={scale.slice(1).includes(note)}
+            class:fret__indicator={scale.includes(note) || isHighlighted(note) || isSelected(note)}
+            class:fret__indicator--root={scale[0] === note}
+            class:fret__indicator--selected={isSelected(note)}
+            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
           </div>
-        </div>
+        </button>
         {/each}
       </div>
     {/each}
   </div>
+  {#if selectedNote}
+    <div>
+      <h1>
+        {selectedNote.value}
+      </h1>
+      <div>
+        <label>
+          <span>Colour</span>
+          <input type="color" bind:value={selectedNote.color} />
+        </label>
+        <div
+          class="colour-block"
+          style="background-color: {selectedNote.color};"
+        />
+        <span>
+          {selectedNote.color}
+        </span>
+      </div>
+      <div>
+        <label>
+          <span>Name</span>
+          <input type="text" bind:value={selectedNote.name} />
+        </label>
+      </div>
+      <button on:click={() => selectedNote && highlightNote(selectedNote)}>
+        {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
+      </button>
+      <hr>
+    </div>
+  {/if}
   <button
     on:click={() => displayConfig = !displayConfig}
     type="button"
@@ -108,55 +205,70 @@
     display: flex;
     height: 2rem;
     width: 100%;
-    background-color: saddlebrown;
-
-    :global([data-theme="dark"]) & {
-      background-color: transparent;
-    }
   }
 
   .fret {
+    --background-color: saddlebrown;
+    all: unset;
     display: grid;
     place-content: center;
     flex: 1 1 0px;
     height: 100%;
     border: white solid 1px;
     color: var(--text-dark-low-emphasis);
+    background-color: var(--background-color);
+    cursor: pointer;
+
+    &:hover {
+      background-color: hsl(from var(--background-color) h s 50);
+    }
 
     &:first-child {
-      background-color: black;
+      --background-color: black;
       color: var(--text-light-low-emphasis-locked);
+    }
 
-      :global([data-theme="dark"]) & {
+    :global([data-theme="dark"]) & {
+      --background-color: black;
+
+      &:first-child {
+        --background-color: rgb(150, 150, 150);
         color: var(--text-dark-low-emphasis-locked);
-        background-color: rgb(255, 255, 255);
+
+        &:hover {
+          background-color: hsl(from var(--background-color) h s 80);
+        }
+      }
+    }
+
+    &__indicator {
+      display: grid;
+      place-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: rgb(255, 255, 255);
+      color: var(--text-dark-contrast-locked);
+      font-weight: 700;
+
+      &--root {
+        background-color: rgb(255, 0, 0);
+      }
+
+      &--selected {
+        border: var(--text-light-low-emphasis-locked) 0.25rem solid;
+        background-color: var(--text-light-disabled-locked);
+
+        :global([data-theme="dark"]) & {
+          color: var(--text-dark-contrast);
+        }
       }
     }
   }
 
-  .scale-root-indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background-color: rgb(255, 0, 0);
-    color: var(--text-dark-contrast);
-    font-weight: 700;
-  }
-
-  .scale-note-indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background-color: rgb(255, 255, 255);
-    color: var(--text-dark-contrast);
-    font-weight: 700;
-
-    :global([data-theme="dark"]) & {
-      background-color: rgb(100, 100, 100);
-    }
+  .colour-block {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
   }
 </style>
