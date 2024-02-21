@@ -123,6 +123,8 @@
         <span>
           {selectedNote.color}
         </span>
+      </div>
+      <div>
         <label>
           <span>Name</span>
           <input type="text" bind:value={selectedNote.name} />
