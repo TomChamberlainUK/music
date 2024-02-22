@@ -9,7 +9,111 @@
 
   let numberOfFrets = 22;
   let numberOfStrings = 6;
+  let selectedPreset: string;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
+
+  const tuningPresetsPerNumberOfStrings = [
+    null,
+    null,
+    null,
+    null,
+    [
+      {
+        name: 'Standard E Tuning',
+        value: 'standard-e-tuning',
+        stringTunings: ['E', 'A', 'D', 'G']
+      },
+      {
+        name: 'Flat E Tuning',
+        value: 'flat-e-tuning',
+        stringTunings: ['D#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Standard D Tuning',
+        value: 'standard-d-tuning',
+        stringTunings: ['D', 'G', 'C', 'F']
+      },
+      {
+        name: 'Drop D Tuning',
+        value: 'drop-d-tuning',
+        stringTunings: ['D', 'A', 'D', 'G']
+      },
+      {
+        name: 'Drop Flat D Tuning',
+        value: 'drop-flat-e-tuning',
+        stringTunings: ['C#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Drop C Tuning',
+        value: 'drop-c-tuning',
+        stringTunings: ['C', 'G', 'C', 'F']
+      },
+    ],
+    [
+      {
+        name: 'Standard B Tuning',
+        value: 'standard-b-tuning',
+        stringTunings: ['B', 'E', 'A', 'D', 'G']
+      },
+      {
+        name: 'Flat B Tuning',
+        value: 'flat-b-tuning',
+        stringTunings: ['A#', 'D#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Standard A Tuning',
+        value: 'standard-a-tuning',
+        stringTunings: ['A', 'D', 'G', 'C', 'F']
+      },
+      {
+        name: 'Drop A Tuning',
+        value: 'drop-a-tuning',
+        stringTunings: ['A', 'E', 'A', 'D', 'G']
+      },
+      {
+        name: 'Drop Flat A Tuning',
+        value: 'flat-b-tuning',
+        stringTunings: ['G#', 'D#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Drop G Tuning',
+        value: 'standard-a-tuning',
+        stringTunings: ['G', 'D', 'G', 'C', 'F']
+      }
+    ],
+    [
+      {
+        name: 'Standard E Tuning',
+        value: 'standard-e-tuning',
+        stringTunings: ['E', 'A', 'D', 'G', 'B', 'E']
+      },
+      {
+        name: 'Flat E Tuning',
+        value: 'flat-e-tuning',
+        stringTunings: ['D#', 'G#', 'C#', 'F#', 'A#', 'D#']
+      },
+      {
+        name: 'Standard D Tuning',
+        value: 'standard-d-tuning',
+        stringTunings: ['D', 'G', 'C', 'F', 'A', 'D']
+      },
+      {
+        name: 'Drop D Tuning',
+        value: 'drop-d-tuning',
+        stringTunings: ['D', 'A', 'D', 'G', 'B', 'E']
+      },
+      {
+        name: 'Drop Flat D Tuning',
+        value: 'drop-flat-e-tuning',
+        stringTunings: ['C#', 'G#', 'C#', 'F#', 'A#', 'D#']
+      },
+      {
+        name: 'Drop C Tuning',
+        value: 'drop-c-tuning',
+        stringTunings: ['C', 'G', 'C', 'F', 'A', 'D']
+      }
+    ]
+  ];
 
   type SelectedNote = {
     value: string;
@@ -22,12 +126,38 @@
 
   let guitarElement: HTMLElement;
 
+  function setStringTunings(tunings: string[]) {
+    stringTunings = [...tunings];
+  }
+
+  function updateStringTunings() {
+    stringTunings = [...stringTunings];
+  }
+
+  $: console.log(stringTunings);
+
   $: strings = stringTunings
-    .toReversed()  
+    .toReversed()
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
 
+  $: tuningPresets = tuningPresetsPerNumberOfStrings[numberOfStrings];
+    
+  $: presetTuning = tuningPresets?.find(preset => selectedPreset === preset.value)?.stringTunings;
+
+  $: {
+    if (presetTuning) {
+      setStringTunings(presetTuning);
+    }
+  }
+
+  $: {
+    if (tuningPresets && !tuningPresets.find(({value}) => selectedPreset === value)) {
+      selectedPreset = tuningPresets[0].value;
+    }
+  }
+    
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
 
   $: isSelected = (note: string) => (
@@ -166,6 +296,23 @@
         <legend>
           Tuning
         </legend>
+        {#if tuningPresets}
+          <label>
+            <span>Presets:</span>
+            <select
+              bind:value={selectedPreset}
+              on:change={updateStringTunings}
+            >
+              {#each tuningPresets as { name, value }}
+                <option {value}>
+                  {name}
+                </option>
+              {/each}
+            </select>
+          </label>
+          <br />
+          <br />
+        {/if}
         {#each { length: numberOfStrings } as _, i}
           <label>
             <span>{formatOrdinal(numberOfStrings - i)}</span>
