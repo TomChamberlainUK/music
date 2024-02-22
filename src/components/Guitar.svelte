@@ -64,6 +64,21 @@
         name: 'Standard A Tuning',
         value: 'standard-a-tuning',
         stringTunings: ['A', 'D', 'G', 'C', 'F']
+      },
+      {
+        name: 'Drop A Tuning',
+        value: 'drop-a-tuning',
+        stringTunings: ['A', 'E', 'A', 'D', 'G']
+      },
+      {
+        name: 'Drop Flat A Tuning',
+        value: 'flat-b-tuning',
+        stringTunings: ['G#', 'D#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Drop G Tuning',
+        value: 'standard-a-tuning',
+        stringTunings: ['G', 'D', 'G', 'C', 'F']
       }
     ],
     [
