@@ -9,7 +9,95 @@
 
   let numberOfFrets = 22;
   let numberOfStrings = 6;
-  let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
+  let selectedPreset: string;
+
+  const tuningPresetsPerNumberOfStrings = [
+    null,
+    null,
+    null,
+    null,
+    [
+      {
+        name: 'Standard E Tuning',
+        value: 'standard-e-tuning',
+        stringTunings: ['E', 'A', 'D', 'G']
+      },
+      {
+        name: 'Flat E Tuning',
+        value: 'flat-e-tuning',
+        stringTunings: ['D#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Standard D Tuning',
+        value: 'standard-d-tuning',
+        stringTunings: ['D', 'G', 'C', 'F']
+      },
+      {
+        name: 'Drop D Tuning',
+        value: 'drop-d-tuning',
+        stringTunings: ['D', 'A', 'D', 'G']
+      },
+      {
+        name: 'Drop Flat D Tuning',
+        value: 'drop-flat-e-tuning',
+        stringTunings: ['C#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Drop C Tuning',
+        value: 'drop-c-tuning',
+        stringTunings: ['C', 'G', 'C', 'F']
+      }
+    ],
+    [
+      {
+        name: 'Standard B Tuning',
+        value: 'standard-b-tuning',
+        stringTunings: ['B', 'E', 'A', 'D', 'G']
+      },
+      {
+        name: 'Flat B Tuning',
+        value: 'flat-b-tuning',
+        stringTunings: ['A#', 'D#', 'G#', 'C#', 'F#']
+      },
+      {
+        name: 'Standard A Tuning',
+        value: 'standard-a-tuning',
+        stringTunings: ['A', 'D', 'G', 'C', 'F']
+      }
+    ],
+    [
+      {
+        name: 'Standard E Tuning',
+        value: 'standard-e-tuning',
+        stringTunings: ['E', 'A', 'D', 'G', 'B', 'E']
+      },
+      {
+        name: 'Flat E Tuning',
+        value: 'flat-e-tuning',
+        stringTunings: ['D#', 'G#', 'C#', 'F#', 'A#', 'D#']
+      },
+      {
+        name: 'Standard D Tuning',
+        value: 'standard-d-tuning',
+        stringTunings: ['D', 'G', 'C', 'F', 'A', 'D']
+      },
+      {
+        name: 'Drop D Tuning',
+        value: 'drop-d-tuning',
+        stringTunings: ['D', 'A', 'D', 'G', 'B', 'E']
+      },
+      {
+        name: 'Drop Flat D Tuning',
+        value: 'drop-flat-e-tuning',
+        stringTunings: ['C#', 'G#', 'C#', 'F#', 'A#', 'D#']
+      },
+      {
+        name: 'Drop C Tuning',
+        value: 'drop-c-tuning',
+        stringTunings: ['C', 'G', 'C', 'F', 'A', 'D']
+      }
+    ]
+  ];
 
   type SelectedNote = {
     value: string;
@@ -28,7 +116,20 @@
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
 
+    
+  $: tuningPresets = tuningPresetsPerNumberOfStrings[numberOfStrings];
+    
+  $: presetTuning = tuningPresets?.find(preset => selectedPreset === preset.value)?.stringTunings;
+
+  $: stringTunings = presetTuning ?? ['E', 'A', 'D', 'G', 'B', 'E'];
+
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
+
+  $: {
+    if (tuningPresets && !tuningPresets.find(({value}) => selectedPreset === value)) {
+      selectedPreset = tuningPresets[0].value;
+    }
+  }
 
   $: isSelected = (note: string) => (
     selectedNote?.value === note
@@ -166,6 +267,20 @@
         <legend>
           Tuning
         </legend>
+        {#if tuningPresets}
+          <label>
+            <span>Presets:</span>
+            <select bind:value={selectedPreset}>
+              {#each tuningPresets as { name, value }}
+                <option {value}>
+                  {name}
+                </option>
+              {/each}
+            </select>
+          </label>
+          <br />
+          <br />
+        {/if}
         {#each { length: numberOfStrings } as _, i}
           <label>
             <span>{formatOrdinal(numberOfStrings - i)}</span>
