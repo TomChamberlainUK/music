@@ -1,7 +1,7 @@
 <script lang="ts">
-  import notes from '../utils/notes';
-  import formatOrdinal from '../utils/formatOrdinal';
-  import getConsecutiveNotes from '../utils/getConsecutiveNotes';
+  import notes from '../../utils/notes';
+  import formatOrdinal from '../../utils/formatOrdinal';
+  import getConsecutiveNotes from '../../utils/getConsecutiveNotes';
 
   export let scale: string[] = [];
 
@@ -329,93 +329,5 @@
 </div>
 
 <style lang="scss">
-  .fret-indicators {
-    display: flex;
-    height: 2rem;
-    width: 100%;
-  }
-
-  .fret-indicator {
-    display: grid;
-    place-content: center;
-    flex: 1 1 0px;
-    height: 100%;
-    color: var(--text-dark-high-emphasis);
-    font-weight: 600;
-  }
-
-  .guitar {
-    width: 100%;
-  }
-    
-  .string {
-    display: flex;
-    height: 2rem;
-    width: 100%;
-  }
-
-  .fret {
-    --background-color: saddlebrown;
-    all: unset;
-    display: grid;
-    place-content: center;
-    flex: 1 1 0px;
-    height: 100%;
-    border: white solid 1px;
-    color: var(--text-dark-low-emphasis);
-    background-color: var(--background-color);
-    cursor: pointer;
-
-    &:hover {
-      background-color: hsl(from var(--background-color) h s 50);
-    }
-
-    &:first-child {
-      --background-color: black;
-      color: var(--text-light-low-emphasis-locked);
-    }
-
-    :global([data-theme="dark"]) & {
-      --background-color: black;
-
-      &:first-child {
-        --background-color: rgb(150, 150, 150);
-        color: var(--text-dark-low-emphasis-locked);
-
-        &:hover {
-          background-color: hsl(from var(--background-color) h s 80);
-        }
-      }
-    }
-
-    &__indicator {
-      display: grid;
-      place-content: center;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      background-color: rgb(255, 255, 255);
-      color: var(--text-dark-contrast-locked);
-      font-weight: 700;
-
-      &--root {
-        background-color: rgb(255, 0, 0);
-      }
-
-      &--selected {
-        border: var(--text-light-low-emphasis-locked) 0.25rem solid;
-        background-color: var(--text-light-disabled-locked);
-
-        :global([data-theme="dark"]) & {
-          color: var(--text-dark-contrast);
-        }
-      }
-    }
-  }
-
-  .colour-block {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-  }
+  @import './Guitar.scss';
 </style>
