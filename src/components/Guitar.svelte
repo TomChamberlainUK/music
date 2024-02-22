@@ -115,13 +115,18 @@
     stringTunings = [...tunings];
   }
 
+  function updateStringTunings() {
+    stringTunings = [...stringTunings];
+  }
+
+  $: console.log(stringTunings);
+
   $: strings = stringTunings
-    .toReversed()  
+    .toReversed()
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
 
-    
   $: tuningPresets = tuningPresetsPerNumberOfStrings[numberOfStrings];
     
   $: presetTuning = tuningPresets?.find(preset => selectedPreset === preset.value)?.stringTunings;
@@ -279,7 +284,10 @@
         {#if tuningPresets}
           <label>
             <span>Presets:</span>
-            <select bind:value={selectedPreset}>
+            <select
+              bind:value={selectedPreset}
+              on:change={updateStringTunings}
+            >
               {#each tuningPresets as { name, value }}
                 <option {value}>
                   {name}
