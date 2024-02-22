@@ -10,6 +10,7 @@
   let numberOfFrets = 22;
   let numberOfStrings = 6;
   let selectedPreset: string;
+  let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
 
   const tuningPresetsPerNumberOfStrings = [
     null,
@@ -46,7 +47,7 @@
         name: 'Drop C Tuning',
         value: 'drop-c-tuning',
         stringTunings: ['C', 'G', 'C', 'F']
-      }
+      },
     ],
     [
       {
@@ -110,6 +111,10 @@
 
   let guitarElement: HTMLElement;
 
+  function setStringTunings(tunings: string[]) {
+    stringTunings = [...tunings];
+  }
+
   $: strings = stringTunings
     .toReversed()  
     .map(string => (
@@ -121,15 +126,19 @@
     
   $: presetTuning = tuningPresets?.find(preset => selectedPreset === preset.value)?.stringTunings;
 
-  $: stringTunings = presetTuning ?? ['E', 'A', 'D', 'G', 'B', 'E'];
-
-  $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
+  $: {
+    if (presetTuning) {
+      setStringTunings(presetTuning);
+    }
+  }
 
   $: {
     if (tuningPresets && !tuningPresets.find(({value}) => selectedPreset === value)) {
       selectedPreset = tuningPresets[0].value;
     }
   }
+    
+  $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
 
   $: isSelected = (note: string) => (
     selectedNote?.value === note
