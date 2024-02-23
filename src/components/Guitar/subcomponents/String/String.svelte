@@ -1,17 +1,12 @@
 <script lang="ts">
   import getConsecutiveNotes from '../../../../utils/getConsecutiveNotes';
+  import type { SelectedNote } from '../../types/SelectedNote';
 
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
   export let scale: string[];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
-  
-  type SelectedNote = {
-    value: string;
-    name: string;
-    color: string;
-  };
 
   function selectNote(note: string) {
     selectedNote = {

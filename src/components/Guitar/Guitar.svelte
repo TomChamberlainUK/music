@@ -1,6 +1,7 @@
 <script lang="ts">
   import Config from './subcomponents/Config/Config.svelte';
   import String from './subcomponents/String/String.svelte';
+  import type { SelectedNote } from './types/SelectedNote';
 
   export let scale: string[] = [];
 
@@ -8,12 +9,6 @@
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
   let displayConfig = false;
-  
-  type SelectedNote = {
-    value: string;
-    name: string;
-    color: string;
-  };
 
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
