@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Fret from '../Fret/Fret.svelte';
   import getConsecutiveNotes from '../../../../utils/getConsecutiveNotes';
   import type { SelectedNote } from '../../types/SelectedNote';
 
@@ -8,45 +9,17 @@
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 
-  function selectNote(note: string) {
-    selectedNote = {
-      value: note,
-      name: '',
-      color: '#76a0ff'
-    };
-  }
-
   $: notes = getConsecutiveNotes(tuning, numberOfFrets + 1);
-
-  $: isSelected = (note: string) => (
-    selectedNote?.value === note
-  );
-
-  $: isHighlighted = (note: string) => (
-    highlightedNotes.some(({ value }) => value === note)
-  );
-
-  $: getHighlightedNote = (note: string) => (
-    highlightedNotes.find(({ value }) => value === note)
-  );
 </script>
 
 <div class="string">
   {#each notes as note}
-  <button
-    class="fret"
-    title={getHighlightedNote(note)?.name}
-    on:click={() => selectNote(note)}
-  >
-    <div
-      class:fret__indicator={scale.includes(note) || isHighlighted(note) || isSelected(note)}
-      class:fret__indicator--root={scale[0] === note}
-      class:fret__indicator--selected={isSelected(note)}
-      style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
-    >
+    <Fret
       {note}
-    </div>
-  </button>
+      {scale}
+      {highlightedNotes}
+      bind:selectedNote={selectedNote}
+    />
   {/each}
 </div>
 
