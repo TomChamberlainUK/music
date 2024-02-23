@@ -1,18 +1,14 @@
 <script lang="ts">
-  import notes from '../../utils/notes';
-  import formatOrdinal from '../../utils/formatOrdinal';
   import getConsecutiveNotes from '../../utils/getConsecutiveNotes';
-  import tuningPresetsPerNumberOfStrings from '../../utils/tuningPresets';
+  import Config from './subcomponents/Config/Config.svelte';
 
   export let scale: string[] = [];
 
-  let displayConfig = false;
-
   let numberOfFrets = 22;
   let numberOfStrings = 6;
-  let selectedPreset: string;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
-
+  let displayConfig = false;
+  
   type SelectedNote = {
     value: string;
     name: string;
@@ -24,36 +20,12 @@
 
   let guitarElement: HTMLElement;
 
-  function setStringTunings(tunings: string[]) {
-    stringTunings = [...tunings];
-  }
-
-  function updateStringTunings() {
-    stringTunings = [...stringTunings];
-  }
-
   $: strings = stringTunings
     .toReversed()
     .map(string => (
       getConsecutiveNotes(string, numberOfFrets + 1)
     ));
 
-  $: tuningPresets = tuningPresetsPerNumberOfStrings[numberOfStrings];
-    
-  $: presetTuning = tuningPresets?.find(preset => selectedPreset === preset.value)?.stringTunings;
-
-  $: {
-    if (presetTuning) {
-      setStringTunings(presetTuning);
-    }
-  }
-
-  $: {
-    if (tuningPresets && !tuningPresets.find(({value}) => selectedPreset === value)) {
-      selectedPreset = tuningPresets[0].value;
-    }
-  }
-    
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
 
   $: isSelected = (note: string) => (
@@ -172,55 +144,11 @@
     Configure
   </button>
   {#if displayConfig}
-    <form>
-      <label>
-        <span>Number of Strings:</span>
-        <input
-          bind:value={numberOfStrings}
-          on:input={() => stringTunings.length = numberOfStrings}
-          type="number"
-        />
-      </label>
-      <label>
-        <span>Number of Frets:</span>
-        <input
-          bind:value={numberOfFrets}
-          type="number"
-        />
-      </label>
-      <fieldset>
-        <legend>
-          Tuning
-        </legend>
-        {#if tuningPresets}
-          <label>
-            <span>Presets:</span>
-            <select
-              bind:value={selectedPreset}
-              on:change={updateStringTunings}
-            >
-              {#each tuningPresets as { name, value }}
-                <option {value}>
-                  {name}
-                </option>
-              {/each}
-            </select>
-          </label>
-          <br />
-          <br />
-        {/if}
-        {#each { length: numberOfStrings } as _, i}
-          <label>
-            <span>{formatOrdinal(numberOfStrings - i)}</span>
-            <select bind:value={stringTunings[i]}>
-              {#each notes as note}
-                <option>{note}</option>
-              {/each}
-            </select>
-          </label>
-        {/each}
-      </fieldset>
-    </form>
+    <Config
+      bind:numberOfFrets={numberOfFrets}
+      bind:numberOfStrings={numberOfStrings}
+      bind:stringTunings={stringTunings}
+    />
   {/if}
 </div>
 
