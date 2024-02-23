@@ -4,23 +4,41 @@
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
   export let scale: string[];
+  export let selectedNote: SelectedNote | null = null;
+  export let highlightedNotes: SelectedNote[] = [];
+  
+  type SelectedNote = {
+    value: string;
+    name: string;
+    color: string;
+  };
+
+  function selectNote(note: string) {
+    selectedNote = {
+      value: note,
+      name: '',
+      color: '#76a0ff'
+    };
+  }
 
   $: notes = getConsecutiveNotes(tuning, numberOfFrets + 1);
+
+  $: isSelected = (note: string) => (
+    selectedNote?.value === note
+  );
+
+  $: isHighlighted = (note: string) => (
+    highlightedNotes.some(({ value }) => value === note)
+  );
+
+  $: getHighlightedNote = (note: string) => (
+    highlightedNotes.find(({ value }) => value === note)
+  );
 </script>
 
 <div class="string">
   {#each notes as note}
   <button
-    class="fret"
-  >
-    <div
-      class:fret__indicator={scale.includes(note)}
-      class:fret__indicator--root={scale[0] === note}
-    >
-      {note}
-    </div>
-  </button>
-  <!-- <button
     class="fret"
     title={getHighlightedNote(note)?.name}
     on:click={() => selectNote(note)}
@@ -33,7 +51,7 @@
     >
       {note}
     </div>
-  </button> -->
+  </button>
   {/each}
 </div>
 
