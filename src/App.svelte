@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Guitar, Layout } from './components';
-  import { getScale, getUID, notes } from './utils';
+  import { Guitar, Layout } from '@/components';
+  import { getScale, getUID, notes } from '@/utils';
 
   let root = 'C';
   let type = 'diatonic';

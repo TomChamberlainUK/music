@@ -1,7 +1,5 @@
 <script lang="ts">
-  import notes from '../../../../utils/notes';
-  import formatOrdinal from '../../../../utils/formatOrdinal';
-  import tuningPresetsPerNumberOfStrings from '../../../../utils/tuningPresets';
+  import { notes, formatOrdinal, tuningPresets as tuningPresetsPerNumberOfStrings } from '@/utils';
 
   export let numberOfFrets = 22;
   export let numberOfStrings = 6;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Fret from '../Fret';
-  import getConsecutiveNotes from '../../../../utils/getConsecutiveNotes';
   import type { SelectedNote } from '../../types/SelectedNote';
+  import { getConsecutiveNotes } from '@/utils';
 
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
