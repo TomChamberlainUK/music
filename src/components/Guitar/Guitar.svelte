@@ -2,6 +2,7 @@
   import Config from './subcomponents/Config/Config.svelte';
   import HighlightConfig from './subcomponents/HighlightConfig/HighlightConfig.svelte';
   import String from './subcomponents/String/String.svelte';
+  import assertEventTargetIsNode from '../../utils/assertEventTargetIsNode';
   import type { SelectedNote } from './types/SelectedNote';
 
   export let scale: string[] = [];
@@ -20,12 +21,6 @@
     assertEventTargetIsNode(target);
     if (!guitarElement.contains(target)) {
       selectedNote = null;
-    }
-  }
-
-  function assertEventTargetIsNode(eventTarget: EventTarget | null): asserts eventTarget is Node {
-    if (!eventTarget || !('nodeType' in eventTarget)) {
-      throw new Error('Expected event target to be Node');
     }
   }
 </script>
