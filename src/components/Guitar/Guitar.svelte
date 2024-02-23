@@ -1,6 +1,6 @@
 <script lang="ts">
-  import getConsecutiveNotes from '../../utils/getConsecutiveNotes';
   import Config from './subcomponents/Config/Config.svelte';
+  import String from './subcomponents/String/String.svelte';
 
   export let scale: string[] = [];
 
@@ -9,73 +9,67 @@
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
   let displayConfig = false;
   
-  type SelectedNote = {
-    value: string;
-    name: string;
-    color: string;
-  };
+  // type SelectedNote = {
+  //   value: string;
+  //   name: string;
+  //   color: string;
+  // };
 
-  let selectedNote: SelectedNote | null = null;
-  let highlightedNotes: SelectedNote[] = [];
+  // let selectedNote: SelectedNote | null = null;
+  // let highlightedNotes: SelectedNote[] = [];
 
   let guitarElement: HTMLElement;
 
-  $: strings = stringTunings
-    .toReversed()
-    .map(string => (
-      getConsecutiveNotes(string, numberOfFrets + 1)
-    ));
+  // $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
 
-  $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
+  // $: isSelected = (note: string) => (
+  //   selectedNote?.value === note
+  // );
 
-  $: isSelected = (note: string) => (
-    selectedNote?.value === note
-  );
+  // $: isHighlighted = (note: string) => (
+  //   highlightedNotes.some(({ value }) => value === note)
+  // );
 
-  $: isHighlighted = (note: string) => (
-    highlightedNotes.some(({ value }) => value === note)
-  );
+  // $: getHighlightedNote = (note: string) => (
+  //   highlightedNotes.find(({ value }) => value === note)
+  // );
 
-  $: getHighlightedNote = (note: string) => (
-    highlightedNotes.find(({ value }) => value === note)
-  );
+  // function selectNote(note: string) {
+  //   selectedNote = {
+  //     value: note,
+  //     name: '',
+  //     color: '#76a0ff'
+  //   };
+  // }
 
-  function selectNote(note: string) {
-    selectedNote = {
-      value: note,
-      name: '',
-      color: '#76a0ff'
-    };
-  }
+  // function highlightNote(note: SelectedNote) {
+  //   const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
+  //   const noteIsAlreadyHighlighted = noteIndex > -1;
+  //   if (!noteIsAlreadyHighlighted) {
+  //     highlightedNotes = [...highlightedNotes, note];
+  //   } else {
+  //     highlightedNotes = [
+  //       ...highlightedNotes.slice(0, noteIndex),
+  //       ...highlightedNotes.slice(noteIndex + 1)
+  //     ];
+  //   }
+  // }
 
-  function highlightNote(note: SelectedNote) {
-    const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
-    const noteIsAlreadyHighlighted = noteIndex > -1;
-    if (!noteIsAlreadyHighlighted) {
-      highlightedNotes = [...highlightedNotes, note];
-    } else {
-      highlightedNotes = [
-        ...highlightedNotes.slice(0, noteIndex),
-        ...highlightedNotes.slice(noteIndex + 1)
-      ];
-    }
-  }
+  // function handleWindowClick({ target }: MouseEvent) {
+  //   assertEventTargetIsNode(target);
+  //   if (!guitarElement.contains(target)) {
+  //     selectedNote = null;
+  //   }
+  // }
 
-  function handleWindowClick({ target }: MouseEvent) {
-    assertEventTargetIsNode(target);
-    if (!guitarElement.contains(target)) {
-      selectedNote = null;
-    }
-  }
-
-  function assertEventTargetIsNode(eventTarget: EventTarget | null): asserts eventTarget is Node {
-    if (!eventTarget || !('nodeType' in eventTarget)) {
-      throw new Error('Expected event target to be Node');
-    }
-  }
+  // function assertEventTargetIsNode(eventTarget: EventTarget | null): asserts eventTarget is Node {
+  //   if (!eventTarget || !('nodeType' in eventTarget)) {
+  //     throw new Error('Expected event target to be Node');
+  //   }
+  // }
 </script>
 
-<svelte:window on:click={handleWindowClick} />
+<!-- <svelte:window on:click={handleWindowClick} /> -->
 
 <div bind:this={guitarElement}>
   <div class="guitar">
@@ -86,8 +80,13 @@
         </div>
       {/each}
     </div>
-    {#each strings as string}
-      <div class="string">
+    {#each stringTunings.toReversed() as tuning}
+      <String
+        {tuning}
+        {numberOfFrets}
+        {scale}
+      />
+      <!-- <div class="string">
         {#each string as note}
         <button
           class="fret"
@@ -104,10 +103,10 @@
           </div>
         </button>
         {/each}
-      </div>
+      </div> -->
     {/each}
   </div>
-  {#if selectedNote}
+  <!-- {#if selectedNote}
     <div>
       <h1>
         {selectedNote.value}
@@ -136,7 +135,7 @@
       </button>
       <hr>
     </div>
-  {/if}
+  {/if} -->
   <button
     on:click={() => displayConfig = !displayConfig}
     type="button"
