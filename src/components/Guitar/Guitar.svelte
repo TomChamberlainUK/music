@@ -32,8 +32,6 @@
     stringTunings = [...stringTunings];
   }
 
-  $: console.log(stringTunings);
-
   $: strings = stringTunings
     .toReversed()
     .map(string => (
