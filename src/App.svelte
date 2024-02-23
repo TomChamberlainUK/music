@@ -1,9 +1,6 @@
 <script lang="ts">
-  import Layout from './components/Layout/Layout.svelte';
-  import Guitar from './components/Guitar/Guitar.svelte';
-  import notes from './utils/notes';
-  import getScale from './utils/getScale';
-  import getUID from './utils/getUID';
+  import { Guitar, Layout } from './components';
+  import { getScale, getUID, notes } from './utils';
 
   let root = 'C';
   let type = 'diatonic';

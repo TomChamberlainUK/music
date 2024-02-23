@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Fret from '../Fret/Fret.svelte';
+  import Fret from '../Fret';
   import getConsecutiveNotes from '../../../../utils/getConsecutiveNotes';
   import type { SelectedNote } from '../../types/SelectedNote';
 

@@ -1,9 +1,7 @@
 <script lang="ts">
-  import Config from './subcomponents/Config/Config.svelte';
-  import HighlightConfig from './subcomponents/HighlightConfig/HighlightConfig.svelte';
-  import String from './subcomponents/String/String.svelte';
-  import assertEventTargetIsNode from '../../utils/assertEventTargetIsNode';
-  import type { SelectedNote } from './types/SelectedNote';
+  import { Config, HighlightConfig, String } from './subcomponents';
+  import { assertEventTargetIsNode } from '../../utils';
+  import type { SelectedNote } from './types';
 
   export let scale: string[] = [];
 
