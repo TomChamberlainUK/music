@@ -1,4 +1,10 @@
 <script lang="ts">
+  let menuIsOpen: boolean = false;
+
+  function toggleMenu() {
+    menuIsOpen = !menuIsOpen;
+  }
+
   function toggleDarkMode() {
     const darkModeIsEnabled = document.documentElement.getAttribute('data-theme') === 'dark';
     if (!darkModeIsEnabled) {
@@ -11,7 +17,10 @@
 
 <div class="container">
   <header class="header">
-    <button class="header__button">
+    <button
+      class="header__button"
+      on:click={toggleMenu}
+    >
       Menu
     </button>
     Music
@@ -22,6 +31,10 @@
       Toggle dark mode
     </button>
   </header>
+  <menu
+    class="menu"
+    class:menu--open={menuIsOpen}
+  />
   <div class="body">
     <slot />
   </div>
