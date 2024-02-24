@@ -51,15 +51,6 @@
   function toggleMenu() {
     menuIsOpen = !menuIsOpen;
   }
-
-  function toggleDarkMode() {
-    const darkModeIsEnabled = document.documentElement.getAttribute('data-theme') === 'dark';
-    if (!darkModeIsEnabled) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  }
 </script>
 
 <div class="container">
@@ -70,13 +61,9 @@
     >
       Menu
     </button>
-    Music
-    <button
-      class="header__button"
-      on:click={toggleDarkMode}
-    >
-      Toggle dark mode
-    </button>
+    <span>
+      Music
+    </span>
   </header>
   <menu
     class="menu"

@@ -1,5 +1,4 @@
 export { default as assertEventTargetIsNode } from './assertEventTargetIsNode';
-export { default as configureTheme } from './configureTheme';
 export { default as formatOrdinal } from './formatOrdinal';
 export { default as getConsecutiveNotes } from './getConsecutiveNotes';
 export { default as getNotesFromIndex } from './getNotesFromIndex';
