@@ -7,11 +7,15 @@
   export let highlightedNotes: SelectedNote[] = [];
 
   function selectNote(note: string) {
-    selectedNote = {
-      value: note,
-      name: '',
-      color: '#76a0ff'
-    };
+    if (selectedNote && selectedNote.value === note) {
+      selectedNote = null;
+    } else {
+      selectedNote = {
+        value: note,
+        name: '',
+        color: '#76a0ff'
+      };
+    }
   }
 
   $: isSelected = (note: string) => (
