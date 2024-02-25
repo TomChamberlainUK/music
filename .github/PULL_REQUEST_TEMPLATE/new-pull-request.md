@@ -1,9 +1,3 @@
----
-name: New Pull Request
-about: Create a new pull request
-
----
-
 # <!-- Add the ticket title here, including ticket number, eg. "#01 Add a feature" -->
 
 <!-- Add a single line describing what's been done -->
