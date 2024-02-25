@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SelectedNote } from '../../types/SelectedNote';
+  import type { SelectedNote } from '@/types/SelectedNote';
 
   export let note = 'E';
   export let scale: string[];

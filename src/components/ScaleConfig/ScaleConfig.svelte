@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SelectedNote } from '../../types/SelectedNote';
+  import type { SelectedNote } from '@/types/SelectedNote';
 
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote;
@@ -50,5 +50,5 @@
 </div>
 
 <style lang="scss">
-  @import './HighlightConfig.scss';
+  @import './ScaleConfig.scss';
 </style>

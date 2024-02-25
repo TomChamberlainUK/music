@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { HighlightConfig } from '@/components/Guitar/subcomponents';
-  import { Guitar, Layout } from '@/components';
+  import { Guitar, Layout, ScaleConfig } from '@/components';
   import { getScale, getUID, notes } from '@/utils';
-  import type { SelectedNote } from '@/components/Guitar/types';
+  import type { SelectedNote } from '@/types';
 
-  
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
@@ -94,7 +92,7 @@
       </button>
     {/if}
     {#if selectedNote}
-      <HighlightConfig
+      <ScaleConfig
         {selectedNote}
         bind:highlightedNotes={highlightedNotes}
       />

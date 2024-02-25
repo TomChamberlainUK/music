@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Config, String } from './subcomponents';
-  import type { SelectedNote } from './types';
+  import type { SelectedNote } from '@/types';
   // import { assertEventTargetIsNode } from '@/utils';
 
   export let scale: string[] = [];
