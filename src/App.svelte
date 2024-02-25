@@ -1,11 +1,17 @@
 <script lang="ts">
+  import { HighlightConfig } from '@/components/Guitar/subcomponents';
   import { Guitar, Layout } from '@/components';
   import { getScale, getUID, notes } from '@/utils';
+  import type { SelectedNote } from '@/components/Guitar/types';
 
+  
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
   let guitarIds: number[] = [getUID()];
+
+  let selectedNote: SelectedNote | null = null;
+  let highlightedNotes: SelectedNote[] = [];
 
   const listFormatter = new Intl.ListFormat();
 
@@ -75,6 +81,8 @@
         {#each guitarIds as id, i (id)}
           <Guitar
             scale={mode.notes}
+            highlightedNotes={highlightedNotes}
+            bind:selectedNote={selectedNote}
           />
           <button on:click={() => removeGuitar(i)}>
             Remove
@@ -84,6 +92,12 @@
       <button on:click={addGuitar}>
         Add Guitar
       </button>
+    {/if}
+    {#if selectedNote}
+      <HighlightConfig
+        {selectedNote}
+        bind:highlightedNotes={highlightedNotes}
+      />
     {/if}
   </main>
 </Layout>
