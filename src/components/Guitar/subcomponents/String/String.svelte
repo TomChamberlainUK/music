@@ -5,7 +5,7 @@
 
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
-  export let scale: string[];
+  // export let scale: string[];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 
@@ -16,7 +16,6 @@
   {#each notes as note}
     <Fret
       {note}
-      {scale}
       {highlightedNotes}
       bind:selectedNote={selectedNote}
     />

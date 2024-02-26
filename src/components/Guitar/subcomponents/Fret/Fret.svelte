@@ -2,7 +2,7 @@
   import type { SelectedNote } from '@/types/SelectedNote';
 
   export let note = 'E';
-  export let scale: string[];
+  // export let scale: string[];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 
@@ -37,8 +37,7 @@
   on:click={() => selectNote(note)}
 >
   <div
-    class:fret__indicator={scale.includes(note) || isHighlighted(note) || isSelected(note)}
-    class:fret__indicator--root={scale[0] === note}
+    class:fret__indicator={isHighlighted(note) || isSelected(note)}
     class:fret__indicator--selected={isSelected(note)}
     style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
   >

@@ -1,17 +1,63 @@
 <script lang="ts">
   import { Guitar, Layout, ScaleConfig } from '@/components';
-  import { getScale, getUID, notes } from '@/utils';
+  import { getNotesFromRoot, getScale, getUID, notes } from '@/utils';
   import type { SelectedNote } from '@/types';
 
   let root = 'C';
   let type = 'diatonic';
   let modeName: string;
   let guitarIds: number[] = [getUID()];
-
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
 
+  $: setHighlightedNotes(root);
+  $: scale = getScale({ root, type });
+  $: mode = scale.getMode(modeName);
+
   const listFormatter = new Intl.ListFormat();
+
+  function setHighlightedNotes(root: string) {
+    const scalePattern = [0, 2, 4, 5, 7, 9, 11];
+    const notes = getNotesFromRoot(root);
+    const scale = notes.filter((note, i) => scalePattern.includes(i));
+    highlightedNotes = [
+      {
+        value: scale[0],
+        name: 'Tonic',
+        color: '#ff0000'
+      },
+      {
+        value: scale[1],
+        name: 'Major 2nd',
+        color: '#ffffff'
+      },
+      {
+        value: scale[2],
+        name: 'Major 3nd',
+        color: '#ffffff'
+      },
+      {
+        value: scale[3],
+        name: 'Perfect 4th',
+        color: '#ffffff'
+      },
+      {
+        value: scale[4],
+        name: 'Perfect 5th',
+        color: '#ffffff'
+      },
+      {
+        value: scale[5],
+        name: 'Major 6th',
+        color: '#ffffff'
+      },
+      {
+        value: scale[6],
+        name: 'Major 7th',
+        color: '#ffffff'
+      }
+    ];
+  }
 
   function addGuitar() {
     guitarIds = [...guitarIds, getUID()];
@@ -21,9 +67,6 @@
     guitarIds.splice(index, 1);
     guitarIds = guitarIds;
   }
-
-  $: scale = getScale({ root, type });
-  $: mode = scale.getMode(modeName);
 </script>
 
 <Layout>
@@ -78,7 +121,6 @@
       <div>
         {#each guitarIds as id, i (id)}
           <Guitar
-            scale={mode.notes}
             highlightedNotes={highlightedNotes}
             bind:selectedNote={selectedNote}
           />

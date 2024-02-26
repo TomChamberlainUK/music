@@ -3,7 +3,7 @@
   import type { SelectedNote } from '@/types';
   // import { assertEventTargetIsNode } from '@/utils';
 
-  export let scale: string[] = [];
+  // export let scale: string[] = [];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 
@@ -38,7 +38,6 @@
       <String
         {tuning}
         {numberOfFrets}
-        {scale}
         {highlightedNotes}
         bind:selectedNote={selectedNote}
       />
