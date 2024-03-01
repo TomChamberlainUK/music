@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Guitar, Layout, ScaleConfig } from '@/components';
-  import { getNotesFromRoot, getScale, getUID, notes } from '@/utils';
+  import { getNotesFromRoot, getUID, notes } from '@/utils';
   import type { SelectedNote } from '@/types';
 
   let root = 'C';
@@ -11,8 +11,6 @@
   let highlightedNotes: SelectedNote[] = [];
 
   $: setHighlightedNotes(root, pattern);
-  $: scale = getScale({ root, type });
-  $: mode = scale.getMode(modeName);
 
   const listFormatter = new Intl.ListFormat();
 
@@ -135,7 +133,7 @@
       <span>Scale</span>
       <select
         bind:value={type}
-        on:change={() => modeName = scale.modes[0].name}
+        on:change={() => modeName = modeNames[0]}
       >
         {#each scaleNames as scaleName}
           <option>{scaleName}</option>
@@ -151,36 +149,28 @@
       </select>
     </label>
     <h2>
-      The {root} major {scale.name} scale
+      The {root} {modeName} mode of the {type} scale
     </h2>
     <p>
-      Featuring the notes: {listFormatter.format(scale.notes)}.
+      Featuring the notes: {listFormatter.format(highlightedNotes.map(({ value }) => value))}.
     </p>
-    {#if mode}
-      <h3>
-        Displaying the {mode.root} {mode.name} mode
-      </h3>
-      <p>
-        Featuring the notes: {listFormatter.format(mode.notes)}.
-      </p>
-      <h2>
-        Guitars
-      </h2>
-      <div>
-        {#each guitarIds as id, i (id)}
-          <Guitar
-            highlightedNotes={highlightedNotes}
-            bind:selectedNote={selectedNote}
-          />
-          <button on:click={() => removeGuitar(i)}>
-            Remove
-          </button>
-        {/each}
-      </div>
-      <button on:click={addGuitar}>
-        Add Guitar
-      </button>
-    {/if}
+    <h2>
+      Guitars
+    </h2>
+    <div>
+      {#each guitarIds as id, i (id)}
+        <Guitar
+          highlightedNotes={highlightedNotes}
+          bind:selectedNote={selectedNote}
+        />
+        <button on:click={() => removeGuitar(i)}>
+          Remove
+        </button>
+      {/each}
+    </div>
+    <button on:click={addGuitar}>
+      Add Guitar
+    </button>
     {#if selectedNote}
       <ScaleConfig
         {selectedNote}
