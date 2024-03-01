@@ -34,69 +34,73 @@
   }
 </script>
 
-<div>
-  <label>
-    <span>Root</span>
-    <select bind:value={root}>
-      {#each notes as note}
-        <option>{note}</option>
-      {/each}
-    </select>
-  </label>
-  <label>
-    <span>Scale</span>
-    <select
-      bind:value={scaleName}
-      on:change={() => modeName = modeNames[0]}
-    >
-      {#each scaleNames as scaleName}
-        <option>{scaleName}</option>
-      {/each}
-    </select>
-  </label>
-  <label>
-    <span>Mode</span>
-    <select bind:value={modeName}>
-      {#each modeNames as modeName}
-        <option>{modeName}</option>
-      {/each}
-    </select>
-  </label>
-  <h2>
-    The {root} {modeName} mode of the {scaleName} scale
-  </h2>
-  <p>
-    Featuring the notes: {listFormatter.format(highlightedNotes.map(({ value }) => value))}.
-  </p>
-  {#if selectedNote}
-    <h1>
-      {selectedNote.value}
-    </h1>
-    <div>
-      <label>
-        <span>Colour</span>
-        <input type="color" bind:value={selectedNote.color} />
-      </label>
-      <div
-        class="colour-block"
-        style="background-color: {selectedNote.color};"
-      />
-      <span>
-        {selectedNote.color}
-      </span>
-    </div>
-    <div>
-      <label>
-        <span>Name</span>
-        <input type="text" bind:value={selectedNote.name} />
-      </label>
-    </div>
-    <button on:click={() => selectedNote && highlightNote(selectedNote)}>
-      {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
-    </button>
-  {/if}
-  <hr>
+<div class="container">
+  <div>
+    <h2>
+      The {root} {modeName} mode of the {scaleName} scale
+    </h2>
+    <label>
+      <span>Root</span>
+      <select bind:value={root}>
+        {#each notes as note}
+          <option>{note}</option>
+        {/each}
+      </select>
+    </label>
+    <label>
+      <span>Scale</span>
+      <select
+        bind:value={scaleName}
+        on:change={() => modeName = modeNames[0]}
+      >
+        {#each scaleNames as scaleName}
+          <option>{scaleName}</option>
+        {/each}
+      </select>
+    </label>
+    <label>
+      <span>Mode</span>
+      <select bind:value={modeName}>
+        {#each modeNames as modeName}
+          <option>{modeName}</option>
+        {/each}
+      </select>
+    </label>
+    <p>
+      Featuring the notes: {listFormatter.format(highlightedNotes.map(({ value }) => value))}.
+    </p>
+  </div>
+  <div>
+    {#if selectedNote}
+      <h2>
+        {selectedNote.value}
+      </h2>
+      <div>
+        <label>
+          <span>Colour</span>
+          <input type="color" bind:value={selectedNote.color} />
+        </label>
+        <div
+          class="colour-block"
+          style="background-color: {selectedNote.color};"
+        />
+        <span>
+          {selectedNote.color}
+        </span>
+      </div>
+      <div>
+        <label>
+          <span>Name</span>
+          <input type="text" bind:value={selectedNote.name} />
+        </label>
+      </div>
+      <button on:click={() => selectedNote && highlightNote(selectedNote)}>
+        {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
+      </button>
+    {/if}
+  </div>
 </div>
+<hr>
 
 <style lang="scss">
   @import './ScaleConfig.scss';
