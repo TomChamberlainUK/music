@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  min-height: 10rem;
+}
+
+.colour-block {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
