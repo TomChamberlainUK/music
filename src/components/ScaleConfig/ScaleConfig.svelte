@@ -1,41 +1,21 @@
 <script lang="ts">
+  import type { SelectedNote } from '@/types';
   import { getNotesFromRoot, notes } from '@/utils';
-  import type { SelectedNote } from '@/types/SelectedNote';
+  import { getModeNames, getScaleNames, getScalePattern } from './utils';
 
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
 
   let root = 'C';
-  let type = 'diatonic';
+  let scaleName: string = 'diatonic';
   let modeName: string;
   
   const listFormatter = new Intl.ListFormat();
-
-  type ScaleModePatterns = Record<string, number[]>;
-
-  const patterns: Record<string, ScaleModePatterns> = {
-    chromatic: {
-      chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    },
-    diatonic: {
-      ionian: [0, 2, 4, 5, 7, 9, 11],
-      dorian: [0, 2, 3, 5, 7, 9, 10],
-      phrygian: [0, 1, 3, 5, 7, 8, 10],
-      lydian: [0, 2, 4, 6, 7, 9, 11],
-      mixolydian: [0, 2, 4, 5, 7, 9, 10],
-      aeolian: [0, 2, 3, 5, 7, 8, 10],
-      locrian: [0, 1, 3, 5, 6, 8, 10],
-    },
-    pentatonic: {
-      major: [0, 2, 4, 7, 9],
-      minor: [0, 3, 5, 7, 10]
-    }
-  };
   
-  const scaleNames = Object.keys(patterns);
+  const scaleNames = getScaleNames();
   
-  $: modeNames = Object.keys(patterns[type]);
-  $: pattern = patterns[type][modeName] as number[];
+  $: modeNames = getModeNames(scaleName);
+  $: pattern = getScalePattern(scaleName, modeName);
 
   $: setHighlightedNotes(root, pattern);
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
@@ -135,7 +115,7 @@
   <label>
     <span>Scale</span>
     <select
-      bind:value={type}
+      bind:value={scaleName}
       on:change={() => modeName = modeNames[0]}
     >
       {#each scaleNames as scaleName}
@@ -152,7 +132,7 @@
     </select>
   </label>
   <h2>
-    The {root} {modeName} mode of the {type} scale
+    The {root} {modeName} mode of the {scaleName} scale
   </h2>
   <p>
     Featuring the notes: {listFormatter.format(highlightedNotes.map(({ value }) => value))}.
