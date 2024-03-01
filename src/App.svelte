@@ -10,53 +10,102 @@
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
 
-  $: setHighlightedNotes(root);
+  $: setHighlightedNotes(root, pattern);
   $: scale = getScale({ root, type });
   $: mode = scale.getMode(modeName);
 
   const listFormatter = new Intl.ListFormat();
 
-  function setHighlightedNotes(root: string) {
-    const scalePattern = [0, 2, 4, 5, 7, 9, 11];
+  type ScaleModePatterns = Record<string, number[]>;
+
+  const patterns: Record<string, ScaleModePatterns> = {
+    diatonic: {
+      ionian: [0, 2, 4, 5, 7, 9, 11],
+      dorian: [0, 2, 3, 5, 7, 9, 10],
+      phrygian: [0, 1, 3, 5, 7, 8, 10],
+      lydian: [0, 2, 4, 6, 7, 9, 11],
+      mixolydian: [0, 2, 4, 5, 7, 9, 10],
+      aeolian: [0, 2, 3, 5, 7, 8, 10],
+      locrian: [0, 1, 3, 5, 6, 8, 10],
+    },
+    pentatonic: {
+      major: [0, 2, 4, 7, 9],
+      minor: [0, 3, 5, 7, 10]
+    }
+  };
+
+  const scaleNames = Object.keys(patterns);
+
+  $: modeNames = Object.keys(patterns[type]);
+  $: pattern = patterns[type][modeName] as number[];
+
+  function setHighlightedNotes(root: string, pattern: number[] = []) {
     const notes = getNotesFromRoot(root);
-    const scale = notes.filter((note, i) => scalePattern.includes(i));
-    highlightedNotes = [
+    const describedNotes = [
       {
-        value: scale[0],
-        name: 'Tonic',
-        color: '#ff0000'
+        value: notes[0],
+        name: 'Root'
       },
       {
-        value: scale[1],
-        name: 'Major 2nd',
-        color: '#ffffff'
+        value: notes[1],
+        name: 'Minor 2nd'
       },
       {
-        value: scale[2],
-        name: 'Major 3nd',
-        color: '#ffffff'
+        value: notes[2],
+        name: 'Major 2nd'
       },
       {
-        value: scale[3],
-        name: 'Perfect 4th',
-        color: '#ffffff'
+        value: notes[3],
+        name: 'Minor 3rd'
       },
       {
-        value: scale[4],
-        name: 'Perfect 5th',
-        color: '#ffffff'
+        value: notes[4],
+        name: 'Major 3rd'
       },
       {
-        value: scale[5],
-        name: 'Major 6th',
-        color: '#ffffff'
+        value: notes[5],
+        name: 'Perfect 4th'
       },
       {
-        value: scale[6],
-        name: 'Major 7th',
-        color: '#ffffff'
-      }
+        value: notes[6],
+        name: 'Augmented 4th/Diminished 5th'
+      },
+      {
+        value: notes[7],
+        name: 'Perfect 5th'
+      },
+      {
+        value: notes[8],
+        name: 'Minor 6th'
+      },
+      {
+        value: notes[9],
+        name: 'Major 6th'
+      },
+      {
+        value: notes[10],
+        name: 'Minor 7th'
+      },
+      {
+        value: notes[11],
+        name: 'Major 7th'
+      },
     ];
+    const scale = describedNotes.filter((note, i) => pattern.includes(i));
+    const colouredScale = scale.map(({ value, name }, i) => (
+      i === 0
+        ? {
+          color: '#ff0000',
+          name,
+          value
+        }
+        : {
+          color: '#ffffff',
+          name,
+          value
+        }
+    ));
+    highlightedNotes = colouredScale;
   }
 
   function addGuitar() {
@@ -88,17 +137,16 @@
         bind:value={type}
         on:change={() => modeName = scale.modes[0].name}
       >
-        <option>diatonic</option>
-        <option>pentatonic</option>
+        {#each scaleNames as scaleName}
+          <option>{scaleName}</option>
+        {/each}
       </select>
     </label>
     <label>
       <span>Mode</span>
       <select bind:value={modeName}>
-        {#each scale.modes as mode}
-          {#if mode}
-            <option>{mode.name}</option>
-          {/if}
+        {#each modeNames as modeName}
+          <option>{modeName}</option>
         {/each}
       </select>
     </label>
