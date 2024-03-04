@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Guitar, Layout, ScaleConfig } from '@/components';
+  import { Guitar, Layout, Piano, ScaleConfig } from '@/components';
   import { getUID } from '@/utils';
   import type { SelectedNote } from '@/types';
 
@@ -43,5 +43,8 @@
     <button on:click={addGuitar}>
       Add Guitar
     </button>
+    <Piano
+      {highlightedNotes}
+    />
   </main>
 </Layout>
