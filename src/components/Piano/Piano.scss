@@ -1,0 +1,114 @@
+.container {  
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.piano {
+  --white-key-width: calc(1.73 * 4rem);
+  --black-key-width: calc(1 * 4rem);
+  position: relative;
+}
+
+.white-keys {
+  display: flex;
+  
+  &__key {
+    position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0.125rem solid black;
+    padding: 1rem;
+    width: var(--white-key-width);
+    height: 15rem;
+    background-color: white;
+
+    &:not(:last-child) {
+      border-right: none;
+    }
+
+    :global([data-theme="dark"]) & {
+      border-color: white;
+      background-color: rgb(60, 60, 60);
+    }
+  }
+
+  &__indicator {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: var(--text-dark-low-emphasis);
+
+    &--highlighted {
+      color: var(--text-dark-contrast-locked);
+      font-weight: 700;
+
+      :global([data-theme="light"]) & {
+        box-shadow: rgba(0, 0, 0, 1) 0 0 0.25rem;
+      }
+    }
+  }
+}
+
+.black-keys {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+
+  &__key {
+    position: absolute;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0.125rem solid black;
+    padding: 1rem;
+    width: var(--black-key-width);
+    height: 10rem;
+    background-color: black;
+
+    &:nth-child(1) {
+      left: calc(var(--white-key-width) - (var(--black-key-width) / 2));
+    }
+
+    &:nth-child(2) {
+      left: calc((var(--white-key-width) * 2) - (var(--black-key-width) / 2));
+    }
+
+    &:nth-child(3) {
+      left: calc((var(--white-key-width) * 4) - (var(--black-key-width) / 2));
+    }
+
+    &:nth-child(4) {
+      left: calc((var(--white-key-width) * 5) - (var(--black-key-width) / 2));
+
+    }
+
+    &:nth-child(5) {
+      left: calc((var(--white-key-width) * 6) - (var(--black-key-width) / 2));
+    }
+
+    :global([data-theme="dark"]) & {
+      border: 0.125rem solid white;
+    }
+  }
+
+  &__indicator {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: var(--text-light-low-emphasis-locked);
+
+    &--highlighted {
+      color: var(--text-dark-contrast-locked);
+      font-weight: 700;
+    }
+  }
+}
