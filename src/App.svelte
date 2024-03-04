@@ -3,17 +3,36 @@
   import { getUID } from '@/utils';
   import type { SelectedNote } from '@/types';
 
-  let guitarIds: number[] = [getUID()];
+  type InstrumentTypes = 'guitar' | 'piano';
+
+  type Instrument = {
+    id: number;
+    type: InstrumentTypes;
+  };
+
+  let instruments: Instrument[] = [
+    {
+      id: getUID(),
+      type: 'guitar'
+    }
+  ];
+
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
 
-  function addGuitar() {
-    guitarIds = [...guitarIds, getUID()];
+  function addInstrument(type: InstrumentTypes) {
+    instruments = [
+      ...instruments,
+      {
+        id: getUID(),
+        type
+      }
+    ];
   }
 
-  function removeGuitar(index: number) {
-    guitarIds.splice(index, 1);
-    guitarIds = guitarIds;
+  function removeInstrument(index: number) {
+    instruments.splice(index, 1);
+    instruments = instruments;
   }
 </script>
 
@@ -27,24 +46,30 @@
       bind:highlightedNotes={highlightedNotes}
     />
     <h2>
-      Guitars
+      Instruments
     </h2>
     <div>
-      {#each guitarIds as id, i (id)}
-        <Guitar
-          highlightedNotes={highlightedNotes}
-          bind:selectedNote={selectedNote}
-        />
-        <button on:click={() => removeGuitar(i)}>
+      {#each instruments as { id, type }, i (id)}
+        {#if type === 'guitar'}
+          <Guitar
+            highlightedNotes={highlightedNotes}
+            bind:selectedNote={selectedNote}
+          />
+        {:else if type === 'piano'}
+          <Piano
+            {highlightedNotes}
+          />
+        {/if}
+        <button on:click={() => removeInstrument(i)}>
           Remove
         </button>
       {/each}
     </div>
-    <button on:click={addGuitar}>
+    <button on:click={() => addInstrument('guitar')}>
       Add Guitar
     </button>
-    <Piano
-      {highlightedNotes}
-    />
+    <button on:click={() => addInstrument('piano')}>
+      Add Piano
+    </button>
   </main>
 </Layout>
