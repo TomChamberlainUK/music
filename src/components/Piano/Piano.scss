@@ -1,10 +1,12 @@
-.container {
+.container {  
   position: relative;
   display: flex;
   justify-content: center;
 }
 
 .piano {
+  --white-key-width: calc(1.73 * 4rem);
+  --black-key-width: calc(1 * 4rem);
   position: relative;
 }
 
@@ -19,7 +21,7 @@
     box-sizing: border-box;
     border: 0.125rem solid black;
     padding: 1rem;
-    width: 4rem;
+    width: var(--white-key-width);
     height: 15rem;
     background-color: white;
 
@@ -60,28 +62,29 @@
     box-sizing: border-box;
     border: 0.125rem solid black;
     padding: 1rem;
-    width: 2rem;
+    width: var(--black-key-width);
     height: 10rem;
     background-color: black;
 
     &:nth-child(1) {
-      left: 3rem;
+      left: calc(var(--white-key-width) - (var(--black-key-width) / 2));
     }
 
     &:nth-child(2) {
-      left: 7rem;
+      left: calc((var(--white-key-width) * 2) - (var(--black-key-width) / 2));
     }
 
     &:nth-child(3) {
-      left: 15rem;
+      left: calc((var(--white-key-width) * 4) - (var(--black-key-width) / 2));
     }
 
     &:nth-child(4) {
-      left: 19rem;
+      left: calc((var(--white-key-width) * 5) - (var(--black-key-width) / 2));
+
     }
 
     &:nth-child(5) {
-      left: 23rem;
+      left: calc((var(--white-key-width) * 6) - (var(--black-key-width) / 2));
     }
 
     :global([data-theme="dark"]) & {
