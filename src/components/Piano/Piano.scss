@@ -41,9 +41,11 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
+    color: var(--text-dark-low-emphasis);
 
     &--highlighted {
-      color: black;
+      color: var(--text-dark-contrast-locked);
+      font-weight: 700;
 
       :global([data-theme="light"]) & {
         box-shadow: rgba(0, 0, 0, 1) 0 0 0.25rem;
@@ -102,10 +104,11 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
+    color: var(--text-light-low-emphasis-locked);
 
     &--highlighted {
-      color: black;
+      color: var(--text-dark-contrast-locked);
+      font-weight: 700;
     }
-
   }
 }
