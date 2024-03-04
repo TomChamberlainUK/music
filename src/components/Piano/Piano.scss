@@ -13,8 +13,12 @@
   
   &__key {
     position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: center;
     box-sizing: border-box;
     border: 0.125rem solid black;
+    padding: 1rem;
     width: 4rem;
     height: 15rem;
     background-color: white;
@@ -29,15 +33,15 @@
     }
   }
 
-  &__text {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
+  &__indicator {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
 
     &--highlighted {
-      color: red;
+      color: black;
     }
   }
 }
@@ -50,6 +54,12 @@
 
   &__key {
     position: absolute;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0.125rem solid black;
+    padding: 1rem;
     width: 2rem;
     height: 10rem;
     background-color: black;
@@ -79,15 +89,15 @@
     }
   }
 
-  &__text {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
+  &__indicator {
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
 
     &--highlighted {
-      color: red;
+      color: black;
     }
   }
 }

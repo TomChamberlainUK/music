@@ -24,6 +24,10 @@
   $: isHighlighted = (note: string) => (
     highlightedNotes.some(({ value }) => value === note)
   );
+
+  $: getHighlightedNote = (note: string) => (
+    highlightedNotes.find(({ value }) => value === note)
+  );
 </script>
 
 <div class="container">
@@ -31,24 +35,26 @@
     <div class="white-keys">
       {#each whiteKeys as note}
         <div class="white-keys__key">
-          <p
-            class="white-keys__text"
-            class:white-keys__text--highlighted={isHighlighted(note)}
+          <div
+            class="white-keys__indicator"
+            class:white-keys__indicator--highlighted={isHighlighted(note)}
+            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
-          </p>
+          </div>
         </div>
       {/each}
     </div>
     <div class="black-keys">
       {#each blackKeys as note}
         <div class="black-keys__key">
-          <p
-            class="black-keys__text"
-            class:black-keys__text--highlighted={isHighlighted(note)}
+          <div
+            class="black-keys__indicator"
+            class:black-keys__indicator--highlighted={isHighlighted(note)}
+            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
-          </p>
+          </div>
         </div>
       {/each}
     </div>
