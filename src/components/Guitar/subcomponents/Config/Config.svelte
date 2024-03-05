@@ -4,7 +4,7 @@
   export let numberOfFrets = 22;
   export let numberOfStrings = 6;
   export let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
-  export let indicatedFrets = [3, 5, 7, 9, 12, 15, 17, 19, 21];
+  export let fretMarkers = [3, 5, 7, 9, 12, 15, 17, 19, 21];
 
   let selectedPreset: string;
 
@@ -84,7 +84,7 @@
   </fieldset>
   <fieldset>
     <legend>
-      Fret Indicators
+      Fret Markers
     </legend>
     {#each { length: numberOfFrets + 1 } as _, i}
       <label>
@@ -92,7 +92,7 @@
         <input
           type="checkbox"
           value={i}
-          bind:group={indicatedFrets}
+          bind:group={fretMarkers}
         >
       </label>
     {/each}

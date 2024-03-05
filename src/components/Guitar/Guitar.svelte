@@ -8,24 +8,24 @@
   let numberOfFrets = 22;
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
-  let indicatedFrets = [3, 5, 7, 9, 12, 15, 17, 19, 21];
+  let fretMarkers = [3, 5, 7, 9, 12, 15, 17, 19, 21];
   let displayConfig = false;
 
 </script>
 
 <div>
   <div class="guitar">
-    <div class="fret-measure">
+    <div class="fret-markers">
       {#each { length: numberOfFrets + 1 } as _, i}
-        <div class="fret-measure__item">
+        <div class="fret-markers__item">
           <div
-            class="fret-measure__number"
-            class:fret-measure__number--highlighted={indicatedFrets.includes(i)}
+            class="fret-markers__number"
+            class:fret-markers__number--highlighted={fretMarkers.includes(i)}
           >
             {i}
           </div>
-          {#if indicatedFrets.includes(i)}
-            <div class="fret-measure__indicator" />
+          {#if fretMarkers.includes(i)}
+            <div class="fret-markers__indicator" />
           {/if}
         </div>
       {/each}
@@ -38,11 +38,11 @@
         bind:selectedNote={selectedNote}
       />
     {/each}
-    <div class="fret-measure">
+    <div class="fret-markers">
       {#each { length: numberOfFrets + 1 } as _, i}
-        <div class="fret-measure__item">
-          {#if indicatedFrets.includes(i)}
-            <div class="fret-measure__indicator" />
+        <div class="fret-markers__item">
+          {#if fretMarkers.includes(i)}
+            <div class="fret-markers__indicator" />
           {/if}
         </div>
       {/each}
@@ -59,7 +59,7 @@
       bind:numberOfFrets={numberOfFrets}
       bind:numberOfStrings={numberOfStrings}
       bind:stringTunings={stringTunings}
-      bind:indicatedFrets={indicatedFrets}
+      bind:fretMarkers={fretMarkers}
     />
   {/if}
 </div>
