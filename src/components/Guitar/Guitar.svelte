@@ -10,13 +10,10 @@
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
   let displayConfig = false;
 
-
-  let guitarElement: HTMLElement;
-
   const indicatedFrets = [3, 5, 7, 9, 12, 15, 17, 19, 21];
 </script>
 
-<div bind:this={guitarElement}>
+<div>
   <div class="guitar">
     <div class="fret-measure">
       {#each { length: numberOfFrets + 1 } as _, i}
