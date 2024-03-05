@@ -52,6 +52,15 @@
         bind:selectedNote={selectedNote}
       />
     {/each}
+    <div class="fret-measure">
+      {#each { length: numberOfFrets + 1 } as _, i}
+        <div class="fret-measure__item">
+          {#if indicatedFrets.includes(i)}
+            <div class="fret-measure__indicator" />
+          {/if}
+        </div>
+      {/each}
+    </div>
   </div>
   <button
     on:click={() => displayConfig = !displayConfig}
