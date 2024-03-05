@@ -8,9 +8,9 @@
   let numberOfFrets = 22;
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
+  let indicatedFrets = [3, 5, 7, 9, 12, 15, 17, 19, 21];
   let displayConfig = false;
 
-  const indicatedFrets = [3, 5, 7, 9, 12, 15, 17, 19, 21];
 </script>
 
 <div>
@@ -59,6 +59,7 @@
       bind:numberOfFrets={numberOfFrets}
       bind:numberOfStrings={numberOfStrings}
       bind:stringTunings={stringTunings}
+      bind:indicatedFrets={indicatedFrets}
     />
   {/if}
 </div>
