@@ -32,15 +32,15 @@
     <div class="fret-measure">
       {#each { length: numberOfFrets + 1 } as _, i}
         <div class="fret-measure__item">
-          {#if indicatedFrets.includes(i)}
-            <div class="fret-measure__indicator" />
-          {/if}
           <div
             class="fret-measure__number"
             class:fret-measure__number--highlighted={indicatedFrets.includes(i)}
           >
             {i}
           </div>
+          {#if indicatedFrets.includes(i)}
+            <div class="fret-measure__indicator" />
+          {/if}
         </div>
       {/each}
     </div>
