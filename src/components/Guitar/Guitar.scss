@@ -1,16 +1,31 @@
-.fret-indicators {
+.fret-markers {
   display: flex;
-  height: 2rem;
+  box-sizing: border-box;
   width: 100%;
-}
 
-.fret-indicator {
-  display: grid;
-  place-content: center;
-  flex: 1 1 0px;
-  height: 100%;
-  color: var(--text-dark-high-emphasis);
-  font-weight: 600;
+  &__item {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1 1 0px;
+    color: var(--text-dark-high-emphasis);
+  }
+
+  &__number {
+    color: var(--text-dark-low-emphasis);
+
+    &--highlighted {
+      color: var(--text-dark-high-emphasis);
+      font-weight: 700;
+    }
+  }
+
+  &__indicator {
+    width: 100%;
+    height: 0.5rem;
+    background-color: var(--text-dark-high-emphasis);
+  }
 }
 
 .guitar {

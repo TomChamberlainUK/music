@@ -4,6 +4,7 @@
   export let numberOfFrets = 22;
   export let numberOfStrings = 6;
   export let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
+  export let fretMarkers = [3, 5, 7, 9, 12, 15, 17, 19, 21];
 
   let selectedPreset: string;
 
@@ -78,6 +79,21 @@
             <option>{note}</option>
           {/each}
         </select>
+      </label>
+    {/each}
+  </fieldset>
+  <fieldset>
+    <legend>
+      Fret Markers
+    </legend>
+    {#each { length: numberOfFrets + 1 } as _, i}
+      <label>
+        <span>{i}</span>
+        <input
+          type="checkbox"
+          value={i}
+          bind:group={fretMarkers}
+        >
       </label>
     {/each}
   </fieldset>

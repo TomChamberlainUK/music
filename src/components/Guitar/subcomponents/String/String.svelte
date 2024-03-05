@@ -5,7 +5,6 @@
 
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
-  // export let scale: string[];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 
