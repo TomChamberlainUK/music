@@ -2,7 +2,6 @@
   import type { SelectedNote } from '@/types/SelectedNote';
 
   export let note = 'E';
-  // export let scale: string[];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 

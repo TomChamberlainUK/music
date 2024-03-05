@@ -1,9 +1,7 @@
 <script lang="ts">
   import { Config, String } from './subcomponents';
   import type { SelectedNote } from '@/types';
-  // import { assertEventTargetIsNode } from '@/utils';
 
-  // export let scale: string[] = [];
   export let selectedNote: SelectedNote | null = null;
   export let highlightedNotes: SelectedNote[] = [];
 
@@ -16,16 +14,7 @@
   let guitarElement: HTMLElement;
 
   const indicatedFrets = [3, 5, 7, 9, 12, 15, 17, 19, 21];
-
-  // function handleWindowClick({ target }: MouseEvent) {
-  //   assertEventTargetIsNode(target);
-  //   if (!guitarElement.contains(target)) {
-  //     selectedNote = null;
-  //   }
-  // }
 </script>
-
-<!-- <svelte:window on:click={handleWindowClick} /> -->
 
 <div bind:this={guitarElement}>
   <div class="guitar">
