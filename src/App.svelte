@@ -14,6 +14,10 @@
     {
       id: getUID(),
       type: 'guitar'
+    },
+    {
+      id: getUID(),
+      type: 'piano'
     }
   ];
 
