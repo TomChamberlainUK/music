@@ -1,0 +1,9 @@
+.tooltip {
+  position: absolute;
+  padding: 1rem;
+  color: white;
+  background-color: black;
+  outline: 2px solid red;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
