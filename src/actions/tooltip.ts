@@ -2,43 +2,59 @@ import type { Action } from 'svelte/action';
 import Tooltip from '@/components/Tooltip';
 
 const tooltip: Action<HTMLElement, { text?: string }> = (node, { text }) => {
-  const tooltipElement = new Tooltip({
-    props: { details: text },
-    target: document.body
-  });
+  let tooltipElement: Tooltip | null = null;
+  let details = text;
 
-  handleResize();
-
-  node.addEventListener('mouseover', handleMouseOver);
+  node.addEventListener('mouseenter', handleMouseEnter);
   node.addEventListener('mouseleave', handleMouseLeave);
   window.addEventListener('resize', handleResize);
 
-  function handleResize() {
-    const { x, y, width } = node.getBoundingClientRect();
-    tooltipElement.$set({
-      x: x + (width / 2),
-      y
+  function createTooltipElement() {
+    const { x, y } = getTooltipPosition();
+    tooltipElement = new Tooltip({
+      props: { details, x, y },
+      target: document.body
     });
   }
 
-  function handleMouseOver() {
-    handleResize();
-    tooltipElement.$set({ isVisible: true });
+  function destroyTooltipElement() {
+    if (!tooltipElement) return;
+    tooltipElement.$destroy();
+    tooltipElement = null;
+  }
+
+  function getTooltipPosition() {
+    const nodeBounds = node.getBoundingClientRect();
+    return {
+      x: nodeBounds.x + (nodeBounds.width / 2),
+      y: nodeBounds.y
+    };
+  }
+
+  function handleResize() {
+    if (!tooltipElement) return;
+    const { x, y } = getTooltipPosition();
+    tooltipElement.$set({ x, y });
+  }
+
+  function handleMouseEnter() {
+    createTooltipElement();
   }
 
   function handleMouseLeave() {
-    tooltipElement.$set({ isVisible: false });
+    if (!tooltipElement) return;
+    destroyTooltipElement();
   }
 
   return {
     update({ text }) {
-      tooltipElement.$set({ details: text });
+      details = text;
     },
     destroy() {
-      node.removeEventListener('mouseover', handleMouseOver);
+      node.removeEventListener('mouseenter', handleMouseEnter);
       node.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
-      tooltipElement.$destroy();
+      destroyTooltipElement();
     }
   };
 };
