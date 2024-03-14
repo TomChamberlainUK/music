@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types/SelectedNote';
+  import { tooltip } from '@/actions';
 
   export let note = 'E';
   export let selectedNote: SelectedNote | null = null;
@@ -28,12 +29,17 @@
   $: getHighlightedNote = (note: string) => (
     highlightedNotes.find(({ value }) => value === note)
   );
+
+  $: getIntervalName = (note:string) => (
+    getHighlightedNote(note)?.name
+  );
 </script>
 
 <button
   class="fret"
   title={getHighlightedNote(note)?.name}
   on:click={() => selectNote(note)}
+  use:tooltip={{ text: getIntervalName(note) }}
 >
   <div
     class:fret__indicator={isHighlighted(note) || isSelected(note)}
