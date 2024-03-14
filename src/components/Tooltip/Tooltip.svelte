@@ -10,6 +10,7 @@
     style="left: {x}px; top: {y}px;"
   >
     {details}
+    <div class="tooltip__tail" />
   </div>
 {/if}
 
