@@ -26,8 +26,8 @@
   }
 
   const diameter = 200;
-  const height = diameter;
-  const width = diameter;
+  const height = diameter + 1; // Prevent clipping the border
+  const width = diameter + 1; // Prevent clipping the border
 
   $: {
     const radius = diameter / 2;
@@ -72,9 +72,15 @@
   }
 </script>
 
-<svg viewBox="0 0 {width} {height}" width="30rem" height="30rem">
+<svg viewBox="0 0 {width} {height}" width="10rem" height="10rem">
   {#each paths as path, i}
-    <path d={path} class="segment" id="test-{i}" />
+    <path
+      d={path}
+      vector-effect="non-scaling-stroke"
+      stroke-width="1"
+      id="test-{i}"
+      class="segment"
+    />
     <text x={incenters[i].x} y={incenters[i].y} text-anchor="middle" alignment-baseline="middle">
       {labels[i]}
     </text>
