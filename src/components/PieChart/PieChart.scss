@@ -1,4 +1,8 @@
 .segment {
-  stroke: black;
+  stroke: var(--text-dark-low-emphasis);
   fill: transparent;
+}
+
+.text {
+  fill: var(--text-dark-contrast);
 }

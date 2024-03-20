@@ -27,8 +27,8 @@
   }
 
   const diameter = 200;
-  const height = diameter + 1; // Prevent clipping the border
-  const width = diameter + 1; // Prevent clipping the border
+  const height = diameter + 2; // Prevent clipping the border
+  const width = diameter + 2; // Prevent clipping the border
 
   $: {
     const radius = diameter / 2;
@@ -83,11 +83,17 @@
     <path
       d={path}
       vector-effect="non-scaling-stroke"
-      stroke-width="1"
+      stroke-width="2"
       id="test-{i}"
       class="segment"
     />
-    <text x={incenters[i].x} y={incenters[i].y} text-anchor="middle" alignment-baseline="middle">
+    <text
+      x={incenters[i].x}
+      y={incenters[i].y}
+      text-anchor="middle"
+      alignment-baseline="middle"
+      class="text"
+    >
       {labels[i]}
     </text>
   {/each}
