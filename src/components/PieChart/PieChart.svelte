@@ -1,4 +1,9 @@
 <script lang="ts">
+  export let labels: string[] = [];
+
+  let paths: string[] = [];
+  let incenters: { x: number, y: number }[] = [];
+
   class Vector2D {
     x: number;
     y: number;
@@ -20,49 +25,50 @@
     }
   }
 
-
   const diameter = 200;
   const height = diameter;
   const width = diameter;
 
-  const radius = diameter / 2;
-  const centerX = width / 2;
-  const centerY = height / 2;
+  $: {
+    const radius = diameter / 2;
+    const centerX = width / 2;
+    const centerY = height / 2;
 
-  const totalSegments = 12;
-  const totalRadians = Math.PI * 2; // 360 deg angle of full circle rotation
+    const totalSegments = labels.length;
+    const totalRadians = Math.PI * 2; // 360 deg angle of full circle rotation
 
-  const paths: string[] = [];
-  const incenters: { x: number, y: number }[] = [];
+    paths = [];
+    incenters = [];
 
-  for (let i = 0; i < totalSegments; i++) {
-    const startAngle = (i - 0.5) / totalSegments * totalRadians;
-    const endAngle = (i + 0.5) / totalSegments * totalRadians; 
-    const startX = Math.cos(startAngle) * radius + centerX;
-    const startY = Math.sin(startAngle) * radius + centerY;
-    const endX = Math.cos(endAngle) * radius + centerX;
-    const endY = Math.sin(endAngle) * radius + centerY;
-    const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
-    const sweepFlag = 1; // Clockwise
-    const path = [
-      `M ${centerX} ${centerY}`, // Initial position
-      `L ${startX} ${startY}`, // Line out to edge
-      `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
-      `L ${radius} ${radius}`, // Line back into center
-      'Z' // Close path
-    ].join(' ');
-    paths.push(path);
+    for (let i = 0; i < totalSegments; i++) {
+      const startAngle = (i - 0.5) / totalSegments * totalRadians;
+      const endAngle = (i + 0.5) / totalSegments * totalRadians; 
+      const startX = Math.cos(startAngle) * radius + centerX;
+      const startY = Math.sin(startAngle) * radius + centerY;
+      const endX = Math.cos(endAngle) * radius + centerX;
+      const endY = Math.sin(endAngle) * radius + centerY;
+      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
+      const sweepFlag = 1; // Clockwise
+      const path = [
+        `M ${centerX} ${centerY}`, // Initial position
+        `L ${startX} ${startY}`, // Line out to edge
+        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
+        `L ${radius} ${radius}`, // Line back into center
+        'Z' // Close path
+      ].join(' ');
+      paths.push(path);
 
-    const startVector = new Vector2D(startX, startY);
-    const endVector = new Vector2D(endX, endY);
-    const positionVector = endVector.subtract(startVector);
-    const baseLength = positionVector.getLength(); // Length of short side of isoceles triangle
+      const startVector = new Vector2D(startX, startY);
+      const endVector = new Vector2D(endX, endY);
+      const positionVector = endVector.subtract(startVector);
+      const baseLength = positionVector.getLength(); // Length of short side of isoceles triangle
 
-    // Central coordinates of triangle
-    incenters.push({
-      x: (radius * startX + radius * endX + baseLength * centerX) / (radius + radius + baseLength),
-      y: (radius * startY + radius * endY + baseLength * centerY) / (radius + radius + baseLength)
-    });
+      // Central coordinates of triangle
+      incenters.push({
+        x: (radius * startX + radius * endX + baseLength * centerX) / (radius + radius + baseLength),
+        y: (radius * startY + radius * endY + baseLength * centerY) / (radius + radius + baseLength)
+      });
+    }
   }
 </script>
 
@@ -70,7 +76,7 @@
   {#each paths as path, i}
     <path d={path} class="segment" id="test-{i}" />
     <text x={incenters[i].x} y={incenters[i].y} text-anchor="middle" alignment-baseline="middle">
-      A
+      {labels[i]}
     </text>
   {/each}
 </svg>
