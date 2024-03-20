@@ -42,8 +42,9 @@
     incenters = [];
 
     for (let i = 0; i < totalSegments; i++) {
-      const startAngle = (i - 0.5) / totalSegments * totalRadians;
-      const endAngle = (i + 0.5) / totalSegments * totalRadians; 
+      const angleModifier = 0.5 + (totalSegments / 4);
+      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
       const startX = Math.cos(startAngle) * radius + centerX;
       const startY = Math.sin(startAngle) * radius + centerY;
       const endX = Math.cos(endAngle) * radius + centerX;
