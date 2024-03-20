@@ -3,10 +3,10 @@
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
 
+  export let root = 'C';
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
 
-  let root = 'C';
   let scaleName: string = 'diatonic';
   let modeName: string;
   
