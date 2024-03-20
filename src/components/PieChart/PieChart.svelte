@@ -1,5 +1,6 @@
 <script lang="ts">
   export let labels: string[] = [];
+  export let size: string = '15rem';
 
   let paths: string[] = [];
   let incenters: { x: number, y: number }[] = [];
@@ -72,7 +73,11 @@
   }
 </script>
 
-<svg viewBox="0 0 {width} {height}" width="10rem" height="10rem">
+<svg
+  viewBox="0 0 {width} {height}"
+  width={size}
+  height={size}
+>
   {#each paths as path, i}
     <path
       d={path}
