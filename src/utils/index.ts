@@ -1,6 +1,7 @@
 export { default as assertEventTargetIsNode } from './assertEventTargetIsNode';
 export { default as formatOrdinal } from './formatOrdinal';
 export { default as getConsecutiveNotes } from './getConsecutiveNotes';
+export { default as getFifthsFromRoot } from './getFifthsFromRoot';
 export { default as getNotesFromIndex } from './getNotesFromIndex';
 export { default as getNotesFromRoot } from './getNotesFromRoot';
 export { default as getUID } from './getUID';
