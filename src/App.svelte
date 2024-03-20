@@ -51,6 +51,7 @@
       bind:root={root}
       bind:highlightedNotes={highlightedNotes}
     />
+    <hr>
     <h2>
       Instruments
     </h2>

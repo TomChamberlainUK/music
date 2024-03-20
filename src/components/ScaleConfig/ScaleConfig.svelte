@@ -100,7 +100,6 @@
     {/if}
   </div>
 </div>
-<hr>
 
 <style lang="scss">
   @import './ScaleConfig.scss';
