@@ -43,14 +43,19 @@
 
 <Layout>
   <main class="container">
-    <h1>
-      Music
-    </h1>
-    <ScaleConfig
-      {selectedNote}
-      bind:root={root}
-      bind:highlightedNotes={highlightedNotes}
-    />
+    <div class="header">
+      <div>
+        <h1>
+          Music
+        </h1>
+        <ScaleConfig
+          {selectedNote}
+          bind:root={root}
+          bind:highlightedNotes={highlightedNotes}
+        />
+      </div>
+      <CircleOfFifths {root} />
+    </div>
     <hr>
     <h2>
       Instruments
@@ -78,9 +83,12 @@
     <button on:click={() => addInstrument('piano')}>
       Add Piano
     </button>
-    <h2>
-      Circle of Fifths
-    </h2>
-    <CircleOfFifths {root} />
   </main>
 </Layout>
+
+<style lang="scss">
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
