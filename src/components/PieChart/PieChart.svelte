@@ -27,13 +27,14 @@
   }
 
   const diameter = 200;
-  const height = diameter + 2; // Prevent clipping the border
-  const width = diameter + 2; // Prevent clipping the border
+  const strokeWidth = 2;
+  const height = diameter;
+  const width = diameter;
+  const radius = (diameter - (strokeWidth * 2)) / 2;
+  const centerX = width / 2;
+  const centerY = height / 2;
 
   $: {
-    const radius = diameter / 2;
-    const centerX = width / 2;
-    const centerY = height / 2;
 
     const totalSegments = labels.length;
     const totalRadians = Math.PI * 2; // 360 deg angle of full circle rotation
@@ -55,7 +56,7 @@
         `M ${centerX} ${centerY}`, // Initial position
         `L ${startX} ${startY}`, // Line out to edge
         `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
-        `L ${radius} ${radius}`, // Line back into center
+        `L ${centerX} ${centerY}`, // Line back into center
         'Z' // Close path
       ].join(' ');
       paths.push(path);
@@ -83,7 +84,7 @@
     <path
       d={path}
       vector-effect="non-scaling-stroke"
-      stroke-width="2"
+      stroke-width={strokeWidth}
       id="test-{i}"
       class="segment"
     />
