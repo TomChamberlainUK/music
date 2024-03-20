@@ -8,5 +8,5 @@
 </script>
 
 <div>
-  <PieChart labels={[...fifths]} />
+  <PieChart labels={fifths} />
 </div>
