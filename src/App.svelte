@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Guitar, Layout, Piano, ScaleConfig } from '@/components';
+  import { CircleOfFifths, Guitar, Layout, Piano, ScaleConfig } from '@/components';
   import { getUID } from '@/utils';
   import type { SelectedNote } from '@/types';
 
@@ -21,6 +21,7 @@
     }
   ];
 
+  let root: string;
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
 
@@ -47,6 +48,7 @@
     </h1>
     <ScaleConfig
       {selectedNote}
+      bind:root={root}
       bind:highlightedNotes={highlightedNotes}
     />
     <h2>
@@ -75,5 +77,9 @@
     <button on:click={() => addInstrument('piano')}>
       Add Piano
     </button>
+    <h2>
+      Circle of Fifths
+    </h2>
+    <CircleOfFifths {root} />
   </main>
 </Layout>
