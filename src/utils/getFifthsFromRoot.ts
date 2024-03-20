@@ -19,7 +19,7 @@ export default function getFifthsFromRoot(root: string) {
       throw new Error('Iterated more than expected when generating fifths');
     }
     // Increase index by 5 and loop array when reaching the end
-    currentIndex += 5;
+    currentIndex += 7;
     if (currentIndex >= notes.length) {
       currentIndex = currentIndex % notes.length;
     }
