@@ -54,7 +54,7 @@
           bind:highlightedNotes={highlightedNotes}
         />
       </div>
-      <CircleOfFifths {root} />
+      <CircleOfFifths />
     </div>
     <hr>
     <h2>

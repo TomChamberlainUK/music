@@ -94,8 +94,10 @@
       text-anchor="middle"
       alignment-baseline="middle"
       class="text"
+      font-size="12"
     >
-      {labels[i]}
+      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+      {@html labels[i]}
     </text>
   {/each}
 </svg>
