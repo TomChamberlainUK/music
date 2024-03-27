@@ -1,6 +1,10 @@
 .segment {
   stroke: var(--text-dark-low-emphasis);
   fill: transparent;
+
+  &--highlighted {
+    fill: green;
+  }
 }
 
 .text {

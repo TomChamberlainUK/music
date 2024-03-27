@@ -1,6 +1,8 @@
 <script lang="ts">
   export let labels: string[] = [];
   export let size: string = '15rem';
+  export let diameter: number = 150;
+  export let highlighted = [0, 1, 11];
 
   let paths: string[] = [];
   let incenters: { x: number, y: number }[] = [];
@@ -26,7 +28,6 @@
     }
   }
 
-  const diameter = 200;
   const strokeWidth = 2;
   const height = diameter;
   const width = diameter;
@@ -87,6 +88,7 @@
       stroke-width={strokeWidth}
       id="test-{i}"
       class="segment"
+      class:segment--highlighted={highlighted.includes(i)}
     />
     <text
       x={incenters[i].x}
