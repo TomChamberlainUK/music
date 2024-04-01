@@ -1,4 +1,8 @@
 <script lang="ts">
+  export let radius: number = 75;
+  export let width = '15rem';
+  export let height = '15rem';
+
   class Vector2D {
     x: number;
     y: number;
@@ -9,13 +13,11 @@
     }
   }
 
-  const strokeWidth = 10;
-  const size = 100;
-  const width = size;
-  const height = size;
-  const center = new Vector2D(width / 2, height / 2);
-  const radius = (size / 2) - (strokeWidth / 2); // Compensates for stroke
-  const circumference = 2 * Math.PI * radius;
+  const strokeWidth = 16;
+  const size = 150;
+  const center = new Vector2D(size / 2, size / 2);
+  const alteredRadius = radius - (strokeWidth / 2); // Compensates for stroke
+  const circumference = 2 * Math.PI * alteredRadius;
 
   const segmentCount = 12;
 
@@ -27,7 +29,6 @@
   }
 
   const initialAngleOffset = -90 - (1 / segmentCount * 360 / 2);
-  const segmentGap = 2;
 
   const notes = [
     'C',
@@ -54,8 +55,8 @@
         const degrees = (diameterPercentage * 360 / 2) + angleOffset;
         const radians = getRadiansFromDegrees(degrees);
         return new Vector2D(
-          (radius * Math.cos(radians)) + center.x,
-          (radius * Math.sin(radians)) + center.y
+          (alteredRadius * Math.cos(radians)) + center.x,
+          (alteredRadius * Math.sin(radians)) + center.y
           );
         })(),
       color: getRandomRGB(),
@@ -68,17 +69,17 @@
   }
 </script>
 
-<svg viewBox="0 0 {width} {height}" width="15rem" height="15rem">
+<svg viewBox="0 0 {size} {size}" {width} {height}>
   {#each segments as segment}
     <g>
       <circle
         cx={center.x}
         cy={center.y}
-        r={radius}
+        r={alteredRadius}
         fill="transparent"
         stroke={segment.color}
         stroke-width={strokeWidth}
-        stroke-dasharray={circumference - segmentGap}
+        stroke-dasharray={circumference}
         stroke-dashoffset={segment.dashOffset}
         transform={`rotate(${segment.angleOffset}, ${center.x}, ${center.y})`}
       />
