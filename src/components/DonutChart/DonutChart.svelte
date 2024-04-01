@@ -2,6 +2,20 @@
   export let radius: number = 75;
   export let width = '15rem';
   export let height = '15rem';
+  export let notes = [
+    'C',
+    'G',
+    'D',
+    'A',
+    'E',
+    'B',
+    'G♭/F♯',
+    'D♭',
+    'A♭',
+    'E♭',
+    'B♭',
+    'F'
+  ];
 
   class Vector2D {
     x: number;
@@ -29,21 +43,6 @@
   }
 
   const initialAngleOffset = -90 - (1 / segmentCount * 360 / 2);
-
-  const notes = [
-    'C',
-    'G',
-    'D',
-    'A',
-    'E',
-    'B',
-    'G♭/F♯',
-    'D♭',
-    'A♭',
-    'E♭',
-    'B♭',
-    'F'
-  ];
 
   const segments = notes.map((text, i) => {
     const diameterPercentage = 1 / segmentCount;
