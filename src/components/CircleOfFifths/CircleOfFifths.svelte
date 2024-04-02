@@ -1,6 +1,4 @@
 <script lang="ts">
-  import DonutChart from '../DonutChart/DonutChart.svelte';
-
   const majorFifths = [
     'C',
     'G',
@@ -57,6 +55,7 @@
   }
 
   const size = 150;
+  const strokeWidth = 1;
   const width = '15rem';
   const height = '15rem';
   const center = new Vector2D(size / 2, size / 2);
@@ -65,55 +64,72 @@
   const totalSegments = 12;
 
   const paths: string[] = [];
-  const radii = [75, 59, 43, 27];
+  const radii = [75, 59, 43];
+
+  const textCoordinates: Vector2D[] = [];
+  const allFifths = [...majorFifths, ...minorFifths, ...diminishedFifths];
 
   radii.forEach(radius => {
     for (let i = 0; i < 12; i++) {
       const angleModifier = 0.5 + (totalSegments / 4);
       const startAngle = (i - angleModifier) / totalSegments * totalRadians;
-      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
-      const startX = Math.cos(startAngle) * radius + center.x;
-      const startY = Math.sin(startAngle) * radius + center.y;
-      const endX = Math.cos(endAngle) * radius + center.x;
-      const endY = Math.sin(endAngle) * radius + center.y;
-      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
-      const sweepFlag = 1; // Clockwise
+      const centerAngle = (i + 0.5 - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians;
+      const outerRadius = radius - strokeWidth / 2;
+      const centerRadius = radius - 8 - strokeWidth / 2;
+      const innerRadius = radius - 16 - strokeWidth / 2;
+      const innerStart = new Vector2D(
+        Math.cos(startAngle) * innerRadius + center.x,
+        Math.sin(startAngle) * innerRadius + center.y
+      );
+      const outerStart = new Vector2D(
+        Math.cos(startAngle) * outerRadius + center.x,
+        Math.sin(startAngle) * outerRadius + center.y
+      );
+      const centerMiddle = new Vector2D(
+        Math.cos(centerAngle) * centerRadius + center.x,
+        Math.sin(centerAngle) * centerRadius + center.y
+      );
+      const innerEnd = new Vector2D(
+        Math.cos(endAngle) * innerRadius + center.x,
+        Math.sin(endAngle) * innerRadius + center.y
+      );
+      const outerEnd = new Vector2D(
+        Math.cos(endAngle) * outerRadius + center.x,
+        Math.sin(endAngle) * outerRadius + center.y
+      );
       const path = [
-        `M ${center.x} ${center.y}`, // Initial position
-        `L ${startX} ${startY}`, // Line out to edge
-        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
-        `L ${center.x} ${center.y}`, // Line back into center
-        'Z' // Close path
+        `M ${innerStart.x} ${innerStart.y}`,
+        `L ${outerStart.x} ${outerStart.y}`,
+        `A ${radius} ${radius} 0 0 1 ${outerEnd.x} ${outerEnd.y}`,
+        `L ${innerEnd.x} ${innerEnd.y}`,
+        `A ${innerRadius} ${innerRadius} 0 0 0 ${innerStart.x} ${innerStart.y}`,
+        'Z'
       ].join(' ');
       paths.push(path);
+      textCoordinates.push(centerMiddle);
     }
   });
 </script>
 
-<div class="test">
-  <DonutChart notes={majorFifths} />
-  <DonutChart notes={minorFifths} radius={59} />
-  <DonutChart notes={diminishedFifths} radius={43}/>
-  <svg viewBox="0 0 {size} {size}" {width} {height}>
-    {#each paths as path}
-      <path
-        d={path}
-        fill="transparent"
-        stroke="black"
-      />
-    {/each}
-  </svg>
-</div>
-
-<style lang="scss">
-  .test {
-    display: grid;
-    place-items: center;
-    /* font-family: monospace; */
-
-    & :global(> *) {
-      grid-row: 1;
-      grid-column: 1;
-    }
-  }
-</style>
+<svg viewBox="0 0 {size} {size}" {width} {height}>
+  {#each paths as path, i}
+  <g>
+    <path
+      d={path}
+      fill="transparent"
+      stroke="black"
+      stroke-width={strokeWidth}
+    />
+    <text
+      x={textCoordinates[i].x}
+      y={textCoordinates[i].y}
+      text-anchor="middle"
+      alignment-baseline="middle"
+      font-size="8px"
+    >
+      {allFifths[i]}
+    </text>
+  </g>
+  {/each}
+</svg>
