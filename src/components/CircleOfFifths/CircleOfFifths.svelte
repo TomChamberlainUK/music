@@ -117,19 +117,21 @@
   <g>
     <path
       d={path}
+      class="segment"
       fill="transparent"
-      stroke="black"
       stroke-width={strokeWidth}
     />
     <text
+      class="text"
       x={textCoordinates[i].x}
       y={textCoordinates[i].y}
-      text-anchor="middle"
-      alignment-baseline="middle"
-      font-size="8px"
     >
       {allFifths[i]}
     </text>
   </g>
   {/each}
 </svg>
+
+<style lang="scss">
+  @import './CircleOfFifths.scss';
+</style>

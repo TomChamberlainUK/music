@@ -1,0 +1,10 @@
+.segment {
+  stroke: var(--text-dark-high-emphasis);
+}
+
+.text {
+  fill: var(--text-dark-contrast);
+  font-size: 0.5rem;
+  text-anchor: middle;
+  alignment-baseline: middle;
+}
