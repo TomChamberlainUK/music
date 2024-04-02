@@ -1,24 +1,18 @@
 <script lang="ts">
-  import { PieChart } from '@/components';
-  import { getFifthsFromRoot } from '@/utils';
+  import DonutChart from '../DonutChart/DonutChart.svelte';
 
-  export let key: string = 'C';
-
-  $: notesFromC = getFifthsFromRoot('C');
-  $: highlightOffset = notesFromC.indexOf(key);
-
-  const fifths = [
+  const majorFifths = [
     'C',
     'G',
     'D',
     'A',
     'E',
     'B',
-    '<tspan alignment-baseline="middle">G</tspan><tspan dx="-2" dy="-2" font-size="10">♭</tspan><tspan dx="-4" dy="5">/F</tspan><tspan dy="-6" font-size="8">♯</tspan>',
-    'D<tspan dx="-2" dy="-2" font-size="10">♭</tspan>',
-    'A<tspan dx="-2" dy="-2" font-size="10">♭</tspan>',
-    'E<tspan dx="-2" dy="-2" font-size="10">♭</tspan>',
-    'B<tspan dx="-2" dy="-2" font-size="10">♭</tspan>',
+    'G♭/F♯',
+    'D♭',
+    'A♭',
+    'E♭',
+    'B♭',
     'F'
   ];
 
@@ -26,31 +20,184 @@
     'a',
     'e',
     'b',
-    'f<tspan dy="-2" font-size="8">♯</tspan>',
-    'c<tspan dy="-2" font-size="8">♯</tspan>',
-    'g<tspan dy="-2" font-size="8">♯</tspan>',
-    '<tspan alignment-baseline="middle">e</tspan><tspan dx="-2" dy="-2" font-size="10">♭</tspan><tspan dx="-4" dy="5">/d</tspan><tspan dy="-6" font-size="8">♯</tspan>',
-    'b<tspan dx="-2" dy="-2" font-size="10">♭</tspan>',
+    'f♯',
+    'c♯',
+    'g♯',
+    'e♭/d♯',
+    'b♭',
     'f',
     'c',
     'g',
     'd'
   ];
 
-  $: highlighted = [0, 1, 11].map(value => (
-    (value += highlightOffset) % 12
-  ));
+  const diminishedFifths = [
+    'B°',
+    'F♯°',
+    'C♯°',
+    'G♯°',
+    'D♯°',
+    'A♯°',
+    'E♯°',
+    'C°',
+    'G°',
+    'D°',
+    'A°',
+    'E°',
+  ];
+
+  class Vector2D {
+    x: number;
+    y: number;
+
+    constructor(x: number, y: number) {
+      this.x = x;
+      this.y = y;
+    }
+  }
+
+  const size = 150;
+  const width = '15rem';
+  const height = '15rem';
+  const center = new Vector2D(size / 2, size / 2);
+
+  const totalRadians = Math.PI * 2;
+  const totalSegments = 12;
+
+  const paths = new Array(12)
+    .fill(null)
+    .map((_, i) => {
+      const radius = 75;
+      const angleModifier = 0.5 + (totalSegments / 4);
+      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
+      const startX = Math.cos(startAngle) * radius + center.x;
+      const startY = Math.sin(startAngle) * radius + center.y;
+      const endX = Math.cos(endAngle) * radius + center.x;
+      const endY = Math.sin(endAngle) * radius + center.y;
+      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
+      const sweepFlag = 1; // Clockwise
+      const path = [
+        `M ${center.x} ${center.y}`, // Initial position
+        `L ${startX} ${startY}`, // Line out to edge
+        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
+        `L ${center.x} ${center.y}`, // Line back into center
+        'Z' // Close path
+      ].join(' ');
+      return path;
+    });
+
+  const paths2 = new Array(12)
+    .fill(null)
+    .map((_, i) => {
+      const radius = 59;
+      const angleModifier = 0.5 + (totalSegments / 4);
+      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
+      const startX = Math.cos(startAngle) * radius + center.x;
+      const startY = Math.sin(startAngle) * radius + center.y;
+      const endX = Math.cos(endAngle) * radius + center.x;
+      const endY = Math.sin(endAngle) * radius + center.y;
+      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
+      const sweepFlag = 1; // Clockwise
+      const path = [
+        `M ${center.x} ${center.y}`, // Initial position
+        `L ${startX} ${startY}`, // Line out to edge
+        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
+        `L ${center.x} ${center.y}`, // Line back into center
+        'Z' // Close path
+      ].join(' ');
+      return path;
+    });
+
+  const paths3 = new Array(12)
+    .fill(null)
+    .map((_, i) => {
+      const radius = 43;
+      const angleModifier = 0.5 + (totalSegments / 4);
+      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
+      const startX = Math.cos(startAngle) * radius + center.x;
+      const startY = Math.sin(startAngle) * radius + center.y;
+      const endX = Math.cos(endAngle) * radius + center.x;
+      const endY = Math.sin(endAngle) * radius + center.y;
+      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
+      const sweepFlag = 1; // Clockwise
+      const path = [
+        `M ${center.x} ${center.y}`, // Initial position
+        `L ${startX} ${startY}`, // Line out to edge
+        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
+        `L ${center.x} ${center.y}`, // Line back into center
+        'Z' // Close path
+      ].join(' ');
+      return path;
+    });
+
+  const paths4 = new Array(12)
+    .fill(null)
+    .map((_, i) => {
+      const radius = 27;
+      const angleModifier = 0.5 + (totalSegments / 4);
+      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
+      const startX = Math.cos(startAngle) * radius + center.x;
+      const startY = Math.sin(startAngle) * radius + center.y;
+      const endX = Math.cos(endAngle) * radius + center.x;
+      const endY = Math.sin(endAngle) * radius + center.y;
+      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
+      const sweepFlag = 1; // Clockwise
+      const path = [
+        `M ${center.x} ${center.y}`, // Initial position
+        `L ${startX} ${startY}`, // Line out to edge
+        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
+        `L ${center.x} ${center.y}`, // Line back into center
+        'Z' // Close path
+      ].join(' ');
+      return path;
+    });
 </script>
 
-<div class="container">
-    <PieChart labels={fifths} size="25rem" diameter={250} {highlighted} />
-    <PieChart labels={minorFifths} size="15rem" diameter={200} {highlighted} /> <!-- Swap diameter for font size modifier or something -->
+<div class="test">
+  <DonutChart notes={majorFifths} />
+  <DonutChart notes={minorFifths} radius={59} />
+  <DonutChart notes={diminishedFifths} radius={43}/>
+  <svg viewBox="0 0 {size} {size}" {width} {height}>
+    {#each paths as path}
+      <path
+        d={path}
+        fill="transparent"
+        stroke="black"
+      />
+    {/each}
+    {#each paths2 as path}
+      <path
+        d={path}
+        fill="transparent"
+        stroke="black"
+      />
+    {/each}
+    {#each paths3 as path}
+      <path
+        d={path}
+        fill="transparent"
+        stroke="black"
+      />
+    {/each}
+    {#each paths4 as path}
+      <path
+        d={path}
+        fill="transparent"
+        stroke="black"
+      />
+    {/each}
+  </svg>
 </div>
 
 <style lang="scss">
-  .container {
+  .test {
     display: grid;
     place-items: center;
+    /* font-family: monospace; */
 
     & :global(> *) {
       grid-row: 1;

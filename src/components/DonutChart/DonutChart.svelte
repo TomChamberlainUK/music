@@ -35,21 +35,15 @@
 
   const segmentCount = 12;
 
-  function getRandomRGB() {
-    const r = Math.floor(Math.random() * 255);
-    const g = Math.floor(Math.random() * 255);
-    const b = Math.floor(Math.random() * 255);
-    return `rgb(${r},${g},${b})`;
-  }
-
   const initialAngleOffset = -90 - (1 / segmentCount * 360 / 2);
 
   const segments = notes.map((text, i) => {
     const diameterPercentage = 1 / segmentCount;
-    const angleOffset = initialAngleOffset + (diameterPercentage * i * 360);
+    const angleOffset = initialAngleOffset + ((diameterPercentage) * i * 360);
+    const dashOffset = circumference - ((diameterPercentage) * circumference);
     return {
       angleOffset,
-      dashOffset: circumference - ((diameterPercentage) * circumference),
+      dashOffset,
       textCoordinates: (() => {
         const degrees = (diameterPercentage * 360 / 2) + angleOffset;
         const radians = getRadiansFromDegrees(degrees);
@@ -58,7 +52,6 @@
           (alteredRadius * Math.sin(radians)) + center.y
           );
         })(),
-      color: getRandomRGB(),
       text
     };
   });
@@ -76,7 +69,7 @@
         cy={center.y}
         r={alteredRadius}
         fill="transparent"
-        stroke={segment.color}
+        stroke="transparent"
         stroke-width={strokeWidth}
         stroke-dasharray={circumference}
         stroke-dashoffset={segment.dashOffset}
