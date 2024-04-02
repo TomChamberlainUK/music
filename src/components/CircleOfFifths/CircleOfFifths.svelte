@@ -64,33 +64,11 @@
   const totalRadians = Math.PI * 2;
   const totalSegments = 12;
 
-  const paths = new Array(12)
-    .fill(null)
-    .map((_, i) => {
-      const radius = 75;
-      const angleModifier = 0.5 + (totalSegments / 4);
-      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
-      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
-      const startX = Math.cos(startAngle) * radius + center.x;
-      const startY = Math.sin(startAngle) * radius + center.y;
-      const endX = Math.cos(endAngle) * radius + center.x;
-      const endY = Math.sin(endAngle) * radius + center.y;
-      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
-      const sweepFlag = 1; // Clockwise
-      const path = [
-        `M ${center.x} ${center.y}`, // Initial position
-        `L ${startX} ${startY}`, // Line out to edge
-        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
-        `L ${center.x} ${center.y}`, // Line back into center
-        'Z' // Close path
-      ].join(' ');
-      return path;
-    });
+  const paths: string[] = [];
+  const radii = [75, 59, 43, 27];
 
-  const paths2 = new Array(12)
-    .fill(null)
-    .map((_, i) => {
-      const radius = 59;
+  radii.forEach(radius => {
+    for (let i = 0; i < 12; i++) {
       const angleModifier = 0.5 + (totalSegments / 4);
       const startAngle = (i - angleModifier) / totalSegments * totalRadians;
       const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
@@ -107,54 +85,9 @@
         `L ${center.x} ${center.y}`, // Line back into center
         'Z' // Close path
       ].join(' ');
-      return path;
-    });
-
-  const paths3 = new Array(12)
-    .fill(null)
-    .map((_, i) => {
-      const radius = 43;
-      const angleModifier = 0.5 + (totalSegments / 4);
-      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
-      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
-      const startX = Math.cos(startAngle) * radius + center.x;
-      const startY = Math.sin(startAngle) * radius + center.y;
-      const endX = Math.cos(endAngle) * radius + center.x;
-      const endY = Math.sin(endAngle) * radius + center.y;
-      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
-      const sweepFlag = 1; // Clockwise
-      const path = [
-        `M ${center.x} ${center.y}`, // Initial position
-        `L ${startX} ${startY}`, // Line out to edge
-        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
-        `L ${center.x} ${center.y}`, // Line back into center
-        'Z' // Close path
-      ].join(' ');
-      return path;
-    });
-
-  const paths4 = new Array(12)
-    .fill(null)
-    .map((_, i) => {
-      const radius = 27;
-      const angleModifier = 0.5 + (totalSegments / 4);
-      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
-      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians; 
-      const startX = Math.cos(startAngle) * radius + center.x;
-      const startY = Math.sin(startAngle) * radius + center.y;
-      const endX = Math.cos(endAngle) * radius + center.x;
-      const endY = Math.sin(endAngle) * radius + center.y;
-      const largeArcFlag = totalRadians / totalSegments > Math.PI ? 1 : 0;
-      const sweepFlag = 1; // Clockwise
-      const path = [
-        `M ${center.x} ${center.y}`, // Initial position
-        `L ${startX} ${startY}`, // Line out to edge
-        `A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}`, // Arc: xRadius, yRadius, xAxisRotation, largeArcFlag, sweepFlag, x, y
-        `L ${center.x} ${center.y}`, // Line back into center
-        'Z' // Close path
-      ].join(' ');
-      return path;
-    });
+      paths.push(path);
+    }
+  });
 </script>
 
 <div class="test">
@@ -163,27 +96,6 @@
   <DonutChart notes={diminishedFifths} radius={43}/>
   <svg viewBox="0 0 {size} {size}" {width} {height}>
     {#each paths as path}
-      <path
-        d={path}
-        fill="transparent"
-        stroke="black"
-      />
-    {/each}
-    {#each paths2 as path}
-      <path
-        d={path}
-        fill="transparent"
-        stroke="black"
-      />
-    {/each}
-    {#each paths3 as path}
-      <path
-        d={path}
-        fill="transparent"
-        stroke="black"
-      />
-    {/each}
-    {#each paths4 as path}
       <path
         d={path}
         fill="transparent"
