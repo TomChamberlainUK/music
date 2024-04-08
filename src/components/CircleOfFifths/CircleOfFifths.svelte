@@ -54,6 +54,12 @@
     }
   }
 
+  type Fifth = {
+    name: string;
+    path: string;
+    textCoordinates: Vector2D;
+  };
+
   const size = 150;
   const strokeWidth = 1;
   const width = '15rem';
@@ -63,21 +69,21 @@
   const totalRadians = Math.PI * 2;
   const totalSegments = 12;
 
-  const paths: string[] = [];
   const radii = [75, 59, 43];
-
-  const textCoordinates: Vector2D[] = [];
   const allFifths = [...majorFifths, ...minorFifths, ...diminishedFifths];
 
-  radii.forEach(radius => {
-    for (let i = 0; i < 12; i++) {
-      const angleModifier = 0.5 + (totalSegments / 4);
-      const startAngle = (i - angleModifier) / totalSegments * totalRadians;
-      const centerAngle = (i + 0.5 - angleModifier) / totalSegments * totalRadians;
-      const endAngle = (i + 1 - angleModifier) / totalSegments * totalRadians;
-      const outerRadius = radius - strokeWidth / 2;
-      const centerRadius = radius - 8 - strokeWidth / 2;
-      const innerRadius = radius - 16 - strokeWidth / 2;
+  const fifths: Fifth[] = [];
+
+  radii.forEach((radius, i) => {
+    const outerRadius = radius - strokeWidth / 2;
+    const centerRadius = radius - 8 - strokeWidth / 2;
+    const innerRadius = radius - 16 - strokeWidth / 2;
+    const angleModifier = 0.5 + (totalSegments / 4);
+
+    for (let j = 0; j < 12; j++) {
+      const startAngle = (j - angleModifier) / totalSegments * totalRadians;
+      const centerAngle = (j + 0.5 - angleModifier) / totalSegments * totalRadians;
+      const endAngle = (j + 1 - angleModifier) / totalSegments * totalRadians;
       const innerStart = new Vector2D(
         Math.cos(startAngle) * innerRadius + center.x,
         Math.sin(startAngle) * innerRadius + center.y
@@ -106,14 +112,17 @@
         `A ${innerRadius} ${innerRadius} 0 0 0 ${innerStart.x} ${innerStart.y}`,
         'Z'
       ].join(' ');
-      paths.push(path);
-      textCoordinates.push(centerMiddle);
+      fifths.push({
+        name: allFifths[(i * 12) + j],
+        textCoordinates: centerMiddle,
+        path
+      });
     }
   });
 </script>
 
 <svg viewBox="0 0 {size} {size}" {width} {height}>
-  {#each paths as path, i}
+  {#each fifths as { name, path, textCoordinates }}
   <g>
     <path
       d={path}
@@ -123,10 +132,10 @@
     />
     <text
       class="text"
-      x={textCoordinates[i].x}
-      y={textCoordinates[i].y}
+      x={textCoordinates.x}
+      y={textCoordinates.y}
     >
-      {allFifths[i]}
+      {name}
     </text>
   </g>
   {/each}
