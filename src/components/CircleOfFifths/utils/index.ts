@@ -1,0 +1,1 @@
+export { default as getModeOffset } from './getModeOffset';
