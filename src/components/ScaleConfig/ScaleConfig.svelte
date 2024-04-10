@@ -6,9 +6,9 @@
   export let root = 'C';
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
+  export let modeName: string;
 
   let scaleName: string = 'diatonic';
-  let modeName: string;
   
   const listFormatter = new Intl.ListFormat();
   
