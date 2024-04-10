@@ -51,8 +51,6 @@
     'E°',
   ];
 
-  
-
   type Fifth = {
     name: string;
     path: string;
@@ -72,12 +70,12 @@
   const radii = [75, 59, 43];
   const allFifths = [...majorFifths, ...minorFifths, ...diminishedFifths];
 
-  $: rootIndex = getFifthsFromRoot('C').findIndex(value => value === root);
-  $: offset = rootIndex + getModeOffset(mode);
-  
-  $: fifths = getFifths(offset);
+  $: fifthsFromC = getFifthsFromRoot('C');
+  $: rootIndex = fifthsFromC.findIndex(value => value === root);
+  $: modeOffsetIndex = rootIndex + getModeOffset(mode);
+  $: fifths = getFifths(modeOffsetIndex);
 
-  function getFifths(offset: number) {
+  function getFifths(indexOffset: number) {
     const fifths: Fifth[] = [];
     radii.forEach((radius, i) => {
       const outerRadius = radius - strokeWidth / 2;
@@ -121,9 +119,9 @@
         const isMinor = i === 1;
         const isDiminished = i === 2;
         const isHighlighted = (
-          (isMajor && (j === (0 + offset) % 12 || j === (1 + offset) % 12 || j === (11 + offset) % 12)) ||
-          (isMinor && (j === (0 + offset) % 12 || j === (1 + offset) % 12 || j === (11 + offset) % 12)) ||
-          (isDiminished && j === (0 + offset) % 12)
+          (isMajor && (j === (0 + indexOffset) % 12 || j === (1 + indexOffset) % 12 || j === (11 + indexOffset) % 12)) ||
+          (isMinor && (j === (0 + indexOffset) % 12 || j === (1 + indexOffset) % 12 || j === (11 + indexOffset) % 12)) ||
+          (isDiminished && j === (0 + indexOffset) % 12)
         );
         fifths.push({
           name: allFifths[(i * 12) + j],
