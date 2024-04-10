@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Vector2D } from '@/maths';
   import { getFifthsFromRoot } from '@/utils';
-  import { getFifths, getModeOffset } from './utils';
+  import { getFifthsShapes, getModeOffset } from './utils';
 
   export let root = 'C';
   export let mode = 'ionian';
@@ -59,7 +59,7 @@
   $: fifthsFromC = getFifthsFromRoot('C');
   $: rootIndex = fifthsFromC.findIndex(value => value === root);
   $: modeOffsetIndex = rootIndex + getModeOffset(mode);
-  $: fifths = getFifths({
+  $: fifthsShapes = getFifthsShapes({
     allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
     center: new Vector2D(size / 2, size / 2),
     indexOffset: modeOffsetIndex,
@@ -70,7 +70,7 @@
 </script>
 
 <svg viewBox="0 0 {size} {size}" {width} {height}>
-  {#each fifths as { isHighlighted, name, path, textCoordinates }}
+  {#each fifthsShapes as { isHighlighted, name, path, textCoordinates }}
   <g>
     <path
       d={path}

@@ -16,7 +16,7 @@ type Props = {
   totalSegments: number;
 };
 
-export default function getFifths({
+export default function getFifthsShapes({
   allFifths,
   center,
   indexOffset,
