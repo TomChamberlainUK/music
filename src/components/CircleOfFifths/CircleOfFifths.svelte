@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Vector2D } from '@/maths';
   import { getFifthsFromRoot } from '@/utils';
-  import { getModeOffset } from './utils';
+  import { getFifths, getModeOffset } from './utils';
 
   export let root = 'C';
   export let mode = 'ionian';
@@ -51,88 +51,22 @@
     'E°',
   ];
 
-  type Fifth = {
-    name: string;
-    path: string;
-    textCoordinates: Vector2D;
-    isHighlighted: boolean;
-  };
-
   const size = 150;
   const strokeWidth = 1;
   const width = '15rem';
   const height = '15rem';
-  const center = new Vector2D(size / 2, size / 2);
-
-  const totalRadians = Math.PI * 2;
-  const totalSegments = 12;
-
-  const radii = [75, 59, 43];
-  const allFifths = [...majorFifths, ...minorFifths, ...diminishedFifths];
 
   $: fifthsFromC = getFifthsFromRoot('C');
   $: rootIndex = fifthsFromC.findIndex(value => value === root);
   $: modeOffsetIndex = rootIndex + getModeOffset(mode);
-  $: fifths = getFifths(modeOffsetIndex);
-
-  function getFifths(indexOffset: number) {
-    const fifths: Fifth[] = [];
-    radii.forEach((radius, i) => {
-      const outerRadius = radius - strokeWidth / 2;
-      const centerRadius = radius - 8 - strokeWidth / 2;
-      const innerRadius = radius - 16 - strokeWidth / 2;
-      const angleModifier = 0.5 + (totalSegments / 4);
-  
-      for (let j = 0; j < 12; j++) {
-        const startAngle = (j - angleModifier) / totalSegments * totalRadians;
-        const centerAngle = (j + 0.5 - angleModifier) / totalSegments * totalRadians;
-        const endAngle = (j + 1 - angleModifier) / totalSegments * totalRadians;
-        const innerStart = new Vector2D(
-          Math.cos(startAngle) * innerRadius + center.x,
-          Math.sin(startAngle) * innerRadius + center.y
-        );
-        const outerStart = new Vector2D(
-          Math.cos(startAngle) * outerRadius + center.x,
-          Math.sin(startAngle) * outerRadius + center.y
-        );
-        const centerMiddle = new Vector2D(
-          Math.cos(centerAngle) * centerRadius + center.x,
-          Math.sin(centerAngle) * centerRadius + center.y
-        );
-        const innerEnd = new Vector2D(
-          Math.cos(endAngle) * innerRadius + center.x,
-          Math.sin(endAngle) * innerRadius + center.y
-        );
-        const outerEnd = new Vector2D(
-          Math.cos(endAngle) * outerRadius + center.x,
-          Math.sin(endAngle) * outerRadius + center.y
-        );
-        const path = [
-          `M ${innerStart.x} ${innerStart.y}`,
-          `L ${outerStart.x} ${outerStart.y}`,
-          `A ${radius} ${radius} 0 0 1 ${outerEnd.x} ${outerEnd.y}`,
-          `L ${innerEnd.x} ${innerEnd.y}`,
-          `A ${innerRadius} ${innerRadius} 0 0 0 ${innerStart.x} ${innerStart.y}`,
-          'Z'
-        ].join(' ');
-        const isMajor = i === 0;
-        const isMinor = i === 1;
-        const isDiminished = i === 2;
-        const isHighlighted = (
-          (isMajor && (j === (0 + indexOffset) % 12 || j === (1 + indexOffset) % 12 || j === (11 + indexOffset) % 12)) ||
-          (isMinor && (j === (0 + indexOffset) % 12 || j === (1 + indexOffset) % 12 || j === (11 + indexOffset) % 12)) ||
-          (isDiminished && j === (0 + indexOffset) % 12)
-        );
-        fifths.push({
-          name: allFifths[(i * 12) + j],
-          textCoordinates: centerMiddle,
-          path,
-          isHighlighted
-        });
-      }
-    });
-    return fifths;
-  }
+  $: fifths = getFifths({
+    allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
+    center: new Vector2D(size / 2, size / 2),
+    indexOffset: modeOffsetIndex,
+    radii: [75, 59, 43],
+    totalSegments: 12,
+    strokeWidth,
+  });
 </script>
 
 <svg viewBox="0 0 {size} {size}" {width} {height}>
