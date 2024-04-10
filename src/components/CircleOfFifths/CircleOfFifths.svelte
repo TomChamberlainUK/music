@@ -63,7 +63,7 @@
     name: string;
     path: string;
     textCoordinates: Vector2D;
-    color: string;
+    isHighlighted: boolean;
   };
 
   const size = 150;
@@ -160,7 +160,7 @@
           name: allFifths[(i * 12) + j],
           textCoordinates: centerMiddle,
           path,
-          color: isHighlighted ? 'red' : 'transparent'
+          isHighlighted
         });
       }
     });
@@ -169,18 +169,19 @@
 </script>
 
 <svg viewBox="0 0 {size} {size}" {width} {height}>
-  {#each fifths as { color, name, path, textCoordinates }}
+  {#each fifths as { isHighlighted, name, path, textCoordinates }}
   <g>
     <path
       d={path}
       class="segment"
-      fill={color}
+      fill={isHighlighted ? 'red' : 'transparent'}
       stroke-width={strokeWidth}
     />
     <text
       class="text"
       x={textCoordinates.x}
       y={textCoordinates.y}
+      font-weight={isHighlighted ? 'bold' : 'normal'}
     >
       {name}
     </text>
