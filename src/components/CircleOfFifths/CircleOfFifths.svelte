@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Vector2D } from '@/maths';
   import { getFifthsFromRoot } from '@/utils';
 
   export let root = 'C';
@@ -49,15 +50,7 @@
     'E°',
   ];
 
-  class Vector2D {
-    x: number;
-    y: number;
-
-    constructor(x: number, y: number) {
-      this.x = x;
-      this.y = y;
-    }
-  }
+  
 
   type Fifth = {
     name: string;
