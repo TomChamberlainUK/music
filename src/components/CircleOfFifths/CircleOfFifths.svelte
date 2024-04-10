@@ -86,21 +86,31 @@
    * @param mode - The current mode.
    */
   function getOffset(mode: string) {
+    // Offsets per ring of circle of fifths to compensate for differing starting point
+    const majorOffset = 0;
+    const minorOffset = 9;
+    const diminishedOffset = 7;
+    // Offsets for moving around the circle
+    const fourthOffset = 1; // Moves anticlockwise around the circle
+    const fifthOffset = 11; // Moves clockwise around the circle
     switch (mode) {
+      // Major modes
       case 'ionian':
-        return 0;
-      case 'dorian':
-        return 10;
-      case 'phrygian':
-        return 8;
+        return majorOffset;
       case 'lydian':
-        return 1;
+        return majorOffset + fourthOffset;
       case 'mixolydian':
-        return 11;
+        return majorOffset + fifthOffset;
+      // Minor modes
       case 'aeolian':
-        return 9;
+        return minorOffset;
+      case 'dorian':
+        return minorOffset + fourthOffset;
+      case 'phrygian':
+        return minorOffset + fifthOffset;
+      // Diminished mode
       case 'locrian':
-        return 7;
+        return diminishedOffset;
       default:
         throw new Error(`Cannot determine circle of fifths offset due to unexpected mode: ${mode}`);
     }
