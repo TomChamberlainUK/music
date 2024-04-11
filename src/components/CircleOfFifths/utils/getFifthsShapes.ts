@@ -9,22 +9,23 @@ type Fifth = {
 
 type Props = {
   allFifths: string[];
-  center: Vector2D;
-  indexOffset: number;
+  highlightOffset: number;
   radii: number[];
+  size: number;
   strokeWidth: number;
-  totalSegments: number;
 };
 
 export default function getFifthsShapes({
   allFifths,
-  center,
-  indexOffset,
+  highlightOffset,
   radii,
+  size,
   strokeWidth,
-  totalSegments
 }: Props) {
   const totalRadians = Math.PI * 2;
+  const totalSegments = 12;
+  const center = new Vector2D(size / 2, size / 2);
+
   const fifths: Fifth[] = [];
 
   radii.forEach((radius, i) => {
@@ -68,10 +69,13 @@ export default function getFifthsShapes({
       const isMajor = i === 0;
       const isMinor = i === 1;
       const isDiminished = i === 2;
+      const isStartingPoint = j === (0 + highlightOffset) % 12; // Center between fourth and fifth
+      const isFourthFromStartingPoint = j === (1 + highlightOffset) % 12; // anticlockwise around the circle
+      const isFifthFromStartingPoint = j === (11 + highlightOffset) % 12; // clockwise around the circle
       const isHighlighted = (
-        (isMajor && (j === (0 + indexOffset) % 12 || j === (1 + indexOffset) % 12 || j === (11 + indexOffset) % 12)) ||
-        (isMinor && (j === (0 + indexOffset) % 12 || j === (1 + indexOffset) % 12 || j === (11 + indexOffset) % 12)) ||
-        (isDiminished && j === (0 + indexOffset) % 12)
+        (isMajor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint)) ||
+        (isMinor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint)) ||
+        (isDiminished && isStartingPoint)
       );
       fifths.push({
         name: allFifths[(i * 12) + j],

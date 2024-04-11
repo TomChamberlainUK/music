@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Vector2D } from '@/maths';
   import { getFifthsFromRoot } from '@/utils';
   import { getFifthsShapes, getModeOffset } from './utils';
 
@@ -61,10 +60,9 @@
   $: modeOffsetIndex = rootIndex + getModeOffset(mode);
   $: fifthsShapes = getFifthsShapes({
     allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
-    center: new Vector2D(size / 2, size / 2),
-    indexOffset: modeOffsetIndex,
+    size,
+    highlightOffset: modeOffsetIndex,
     radii: [75, 59, 43],
-    totalSegments: 12,
     strokeWidth,
   });
 </script>
