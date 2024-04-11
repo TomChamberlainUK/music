@@ -10,7 +10,7 @@ type Fifth = {
 type Props = {
   allFifths: string[];
   highlightOffset: number;
-  radii: number[];
+  sectionWidth: number;
   size: number;
   strokeWidth: number;
 };
@@ -18,7 +18,7 @@ type Props = {
 export default function getFifthsShapes({
   allFifths,
   highlightOffset,
-  radii,
+  sectionWidth,
   size,
   strokeWidth,
 }: Props) {
@@ -28,13 +28,19 @@ export default function getFifthsShapes({
 
   const fifths: Fifth[] = [];
 
+  const radii = [
+    (size / 2),
+    (size / 2) - sectionWidth,
+    (size / 2) - (sectionWidth * 2),
+  ];
+
   radii.forEach((radius, i) => {
-    const outerRadius = radius - strokeWidth / 2;
-    const centerRadius = radius - 8 - strokeWidth / 2;
-    const innerRadius = radius - 16 - strokeWidth / 2;
+    const outerRadius = radius - (strokeWidth / 2);
+    const centerRadius = radius - (sectionWidth / 2) - (strokeWidth / 2);
+    const innerRadius = radius - sectionWidth - (strokeWidth / 2);
     const angleModifier = 0.5 + (totalSegments / 4);
 
-    for (let j = 0; j < 12; j++) {
+    for (let j = 0; j < totalSegments; j++) {
       const startAngle = (j - angleModifier) / totalSegments * totalRadians;
       const centerAngle = (j + 0.5 - angleModifier) / totalSegments * totalRadians;
       const endAngle = (j + 1 - angleModifier) / totalSegments * totalRadians;
@@ -69,16 +75,16 @@ export default function getFifthsShapes({
       const isMajor = i === 0;
       const isMinor = i === 1;
       const isDiminished = i === 2;
-      const isStartingPoint = j === (0 + highlightOffset) % 12; // Center between fourth and fifth
-      const isFourthFromStartingPoint = j === (1 + highlightOffset) % 12; // anticlockwise around the circle
-      const isFifthFromStartingPoint = j === (11 + highlightOffset) % 12; // clockwise around the circle
+      const isStartingPoint = j === (0 + highlightOffset) % totalSegments; // Center between fourth and fifth
+      const isFourthFromStartingPoint = j === (1 + highlightOffset) % totalSegments; // anticlockwise around the circle
+      const isFifthFromStartingPoint = j === (totalSegments - 1 + highlightOffset) % totalSegments; // clockwise around the circle
       const isHighlighted = (
         (isMajor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint)) ||
         (isMinor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint)) ||
         (isDiminished && isStartingPoint)
       );
       fifths.push({
-        name: allFifths[(i * 12) + j],
+        name: allFifths[(i * totalSegments) + j],
         textCoordinates: centerMiddle,
         path,
         isHighlighted

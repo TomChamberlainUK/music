@@ -50,7 +50,8 @@
     'E°',
   ];
 
-  const size = 150;
+  const size = 160;
+  const sectionWidth = 16;
   const strokeWidth = 1;
   const width = '15rem';
   const height = '15rem';
@@ -60,9 +61,9 @@
   $: modeOffsetIndex = rootIndex + getModeOffset(mode);
   $: fifthsShapes = getFifthsShapes({
     allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
-    size,
     highlightOffset: modeOffsetIndex,
-    radii: [75, 59, 43],
+    size,
+    sectionWidth,
     strokeWidth,
   });
 </script>
