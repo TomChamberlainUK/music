@@ -3,12 +3,12 @@
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
 
+  export let root = 'C';
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
+  export let modeName: string;
 
-  let root = 'C';
   let scaleName: string = 'diatonic';
-  let modeName: string;
   
   const listFormatter = new Intl.ListFormat();
   
@@ -100,7 +100,6 @@
     {/if}
   </div>
 </div>
-<hr>
 
 <style lang="scss">
   @import './ScaleConfig.scss';

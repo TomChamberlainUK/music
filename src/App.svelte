@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Guitar, Layout, Piano, ScaleConfig } from '@/components';
+  import { CircleOfFifths, Guitar, Layout, Piano, ScaleConfig } from '@/components';
   import { getUID } from '@/utils';
   import type { SelectedNote } from '@/types';
 
@@ -21,6 +21,8 @@
     }
   ];
 
+  let root: string;
+  let mode: string;
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
 
@@ -42,13 +44,21 @@
 
 <Layout>
   <main class="container">
-    <h1>
-      Music
-    </h1>
-    <ScaleConfig
-      {selectedNote}
-      bind:highlightedNotes={highlightedNotes}
-    />
+    <div class="header">
+      <div>
+        <h1>
+          Music
+        </h1>
+        <ScaleConfig
+          {selectedNote}
+          bind:root={root}
+          bind:modeName={mode}
+          bind:highlightedNotes={highlightedNotes}
+        />
+      </div>
+      <CircleOfFifths {root} {mode} />
+    </div>
+    <hr>
     <h2>
       Instruments
     </h2>
@@ -77,3 +87,10 @@
     </button>
   </main>
 </Layout>
+
+<style lang="scss">
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
