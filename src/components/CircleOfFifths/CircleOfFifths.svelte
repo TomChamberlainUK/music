@@ -1,9 +1,7 @@
 <script lang="ts">
   import { getFifthsFromRoot } from '@/utils';
   import { getFifthsShapes, getModeOffset } from './utils';
-  import { root } from '@/stores';
-
-  export let mode = 'ionian';
+  import { mode, root } from '@/stores';
 
   const majorFifths = [
     'C',
@@ -58,7 +56,7 @@
 
   $: fifthsFromC = getFifthsFromRoot('C');
   $: rootIndex = fifthsFromC.findIndex(value => value === $root);
-  $: modeOffsetIndex = rootIndex + getModeOffset(mode);
+  $: modeOffsetIndex = rootIndex + getModeOffset($mode);
   $: fifthsShapes = getFifthsShapes({
     allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
     highlightOffset: modeOffsetIndex,

@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { root } from '@/stores';
+  import { mode, root } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
 
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
-  export let modeName: string;
   
   let scaleName: string = 'diatonic';
   
@@ -15,7 +14,7 @@
   const scaleNames = getScaleNames();
   
   $: modeNames = getModeNames(scaleName);
-  $: scalePattern = getScalePattern(scaleName, modeName);
+  $: scalePattern = getScalePattern(scaleName, $mode);
 
   $: highlightedNotes = getHighlightedNotes($root, scalePattern);
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
@@ -37,7 +36,7 @@
 <div class="container">
   <div>
     <h2>
-      The {$root} {modeName} mode of the {scaleName} scale
+      The {$root} {$mode} mode of the {scaleName} scale
     </h2>
     <label>
       <span>Root</span>
@@ -51,7 +50,7 @@
       <span>Scale</span>
       <select
         bind:value={scaleName}
-        on:change={() => modeName = modeNames[0]}
+        on:change={() => $mode = modeNames[0]}
       >
         {#each scaleNames as scaleName}
           <option>{scaleName}</option>
@@ -60,7 +59,7 @@
     </label>
     <label>
       <span>Mode</span>
-      <select bind:value={modeName}>
+      <select bind:value={$mode}>
         {#each modeNames as modeName}
           <option>{modeName}</option>
         {/each}
