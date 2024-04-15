@@ -6,7 +6,6 @@
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
   export let selectedNote: SelectedNote | null = null;
-  export let highlightedNotes: SelectedNote[] = [];
 
   $: notes = getConsecutiveNotes(tuning, numberOfFrets + 1);
 </script>
@@ -15,7 +14,6 @@
   {#each notes as note}
     <Fret
       {note}
-      {highlightedNotes}
       bind:selectedNote={selectedNote}
     />
   {/each}

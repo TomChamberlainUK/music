@@ -1,8 +1,6 @@
 <script lang="ts">
-  import type { SelectedNote } from '@/types';
   import { tooltip } from '@/actions';
-
-  export let highlightedNotes: SelectedNote[] = [];
+  import { highlightedNotes } from '@/stores';
 
   const whiteKeys = [
     'C',
@@ -23,11 +21,11 @@
   ];
 
   $: isHighlighted = (note: string) => (
-    highlightedNotes.some(({ value }) => value === note)
+    $highlightedNotes.some(({ value }) => value === note)
   );
 
   $: getHighlightedNote = (note: string) => (
-    highlightedNotes.find(({ value }) => value === note)
+    $highlightedNotes.find(({ value }) => value === note)
   );
 
   $: getIntervalName = (note:string) => (

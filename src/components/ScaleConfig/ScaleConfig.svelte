@@ -1,10 +1,9 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { mode, root } from '@/stores';
+  import { highlightedNotes, mode, root } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
 
-  export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
   
   let scaleName: string = 'diatonic';
@@ -16,18 +15,18 @@
   $: modeNames = getModeNames(scaleName);
   $: scalePattern = getScalePattern(scaleName, $mode);
 
-  $: highlightedNotes = getHighlightedNotes($root, scalePattern);
-  $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
+  $: $highlightedNotes = getHighlightedNotes($root, scalePattern);
+  $: selectedNoteIsHighlighted = $highlightedNotes.some(({ value }) => value === selectedNote?.value);
   
   function highlightNote(note: SelectedNote) {
-    const noteIndex = highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
+    const noteIndex = $highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
     const noteIsAlreadyHighlighted = noteIndex > -1;
     if (!noteIsAlreadyHighlighted) {
-      highlightedNotes = [...highlightedNotes, note];
+      $highlightedNotes = [...$highlightedNotes, note];
     } else {
-      highlightedNotes = [
-        ...highlightedNotes.slice(0, noteIndex),
-        ...highlightedNotes.slice(noteIndex + 1)
+      $highlightedNotes = [
+        ...$highlightedNotes.slice(0, noteIndex),
+        ...$highlightedNotes.slice(noteIndex + 1)
       ];
     }
   }
@@ -66,7 +65,7 @@
       </select>
     </label>
     <p>
-      Featuring the notes: {listFormatter.format(highlightedNotes.map(({ value }) => value))}.
+      Featuring the notes: {listFormatter.format($highlightedNotes.map(({ value }) => value))}.
     </p>
   </div>
   <div>

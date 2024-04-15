@@ -22,7 +22,6 @@
   ];
 
   let selectedNote: SelectedNote | null = null;
-  let highlightedNotes: SelectedNote[] = [];
 
   function addInstrument(type: InstrumentTypes) {
     instruments = [
@@ -47,10 +46,7 @@
         <h1>
           Music
         </h1>
-        <ScaleConfig
-          {selectedNote}
-          bind:highlightedNotes={highlightedNotes}
-        />
+        <ScaleConfig {selectedNote} />
       </div>
       <CircleOfFifths />
     </div>
@@ -61,14 +57,9 @@
     <div>
       {#each instruments as { id, type }, i (id)}
         {#if type === 'guitar'}
-          <Guitar
-            highlightedNotes={highlightedNotes}
-            bind:selectedNote={selectedNote}
-          />
+          <Guitar bind:selectedNote={selectedNote} />
         {:else if type === 'piano'}
-          <Piano
-            {highlightedNotes}
-          />
+          <Piano />
         {/if}
         <button on:click={() => removeInstrument(i)}>
           Remove

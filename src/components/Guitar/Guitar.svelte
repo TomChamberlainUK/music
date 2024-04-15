@@ -3,7 +3,6 @@
   import type { SelectedNote } from '@/types';
 
   export let selectedNote: SelectedNote | null = null;
-  export let highlightedNotes: SelectedNote[] = [];
 
   let numberOfFrets = 22;
   let numberOfStrings = 6;
@@ -34,7 +33,6 @@
       <String
         {tuning}
         {numberOfFrets}
-        {highlightedNotes}
         bind:selectedNote={selectedNote}
       />
     {/each}
