@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
+  import { root } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
 
-  export let root = 'C';
   export let highlightedNotes: SelectedNote[] = [];
   export let selectedNote: SelectedNote | null;
   export let modeName: string;
-
+  
   let scaleName: string = 'diatonic';
   
   const listFormatter = new Intl.ListFormat();
@@ -17,7 +17,7 @@
   $: modeNames = getModeNames(scaleName);
   $: scalePattern = getScalePattern(scaleName, modeName);
 
-  $: highlightedNotes = getHighlightedNotes(root, scalePattern);
+  $: highlightedNotes = getHighlightedNotes($root, scalePattern);
   $: selectedNoteIsHighlighted = highlightedNotes.some(({ value }) => value === selectedNote?.value);
   
   function highlightNote(note: SelectedNote) {
@@ -37,11 +37,11 @@
 <div class="container">
   <div>
     <h2>
-      The {root} {modeName} mode of the {scaleName} scale
+      The {$root} {modeName} mode of the {scaleName} scale
     </h2>
     <label>
       <span>Root</span>
-      <select bind:value={root}>
+      <select bind:value={$root}>
         {#each notes as note}
           <option>{note}</option>
         {/each}

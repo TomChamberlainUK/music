@@ -21,7 +21,6 @@
     }
   ];
 
-  let root: string;
   let mode: string;
   let selectedNote: SelectedNote | null = null;
   let highlightedNotes: SelectedNote[] = [];
@@ -51,12 +50,11 @@
         </h1>
         <ScaleConfig
           {selectedNote}
-          bind:root={root}
           bind:modeName={mode}
           bind:highlightedNotes={highlightedNotes}
         />
       </div>
-      <CircleOfFifths {root} {mode} />
+      <CircleOfFifths {mode} />
     </div>
     <hr>
     <h2>
