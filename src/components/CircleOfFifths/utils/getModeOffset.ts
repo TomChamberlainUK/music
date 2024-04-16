@@ -13,6 +13,7 @@ export default function getModeOffset(mode: string) {
   switch (mode) {
     // Major modes
     case 'ionian':
+    case 'major':
       return majorOffset;
     case 'lydian':
       return majorOffset + fourthOffset;
@@ -20,6 +21,7 @@ export default function getModeOffset(mode: string) {
       return majorOffset + fifthOffset;
     // Minor modes
     case 'aeolian':
+    case 'minor':
       return minorOffset;
     case 'dorian':
       return minorOffset + fourthOffset;
