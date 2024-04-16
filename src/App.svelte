@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CircleOfFifths, Guitar, Layout, Piano, ScaleConfig } from '@/components';
   import { getUID } from '@/utils';
-  import type { SelectedNote } from '@/types';
 
   type InstrumentTypes = 'guitar' | 'piano';
 
@@ -20,11 +19,6 @@
       type: 'piano'
     }
   ];
-
-  let root: string;
-  let mode: string;
-  let selectedNote: SelectedNote | null = null;
-  let highlightedNotes: SelectedNote[] = [];
 
   function addInstrument(type: InstrumentTypes) {
     instruments = [
@@ -49,14 +43,9 @@
         <h1>
           Music
         </h1>
-        <ScaleConfig
-          {selectedNote}
-          bind:root={root}
-          bind:modeName={mode}
-          bind:highlightedNotes={highlightedNotes}
-        />
+        <ScaleConfig />
       </div>
-      <CircleOfFifths {root} {mode} />
+      <CircleOfFifths />
     </div>
     <hr>
     <h2>
@@ -65,14 +54,9 @@
     <div>
       {#each instruments as { id, type }, i (id)}
         {#if type === 'guitar'}
-          <Guitar
-            highlightedNotes={highlightedNotes}
-            bind:selectedNote={selectedNote}
-          />
+          <Guitar />
         {:else if type === 'piano'}
-          <Piano
-            {highlightedNotes}
-          />
+          <Piano />
         {/if}
         <button on:click={() => removeInstrument(i)}>
           Remove

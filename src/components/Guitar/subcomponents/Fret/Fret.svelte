@@ -1,33 +1,19 @@
 <script lang="ts">
-  import type { SelectedNote } from '@/types/SelectedNote';
   import { tooltip } from '@/actions';
+  import { highlightedNotes, selectedNote } from '@/stores';
 
   export let note = 'E';
-  export let selectedNote: SelectedNote | null = null;
-  export let highlightedNotes: SelectedNote[] = [];
-
-  function selectNote(note: string) {
-    if (selectedNote && selectedNote.value === note) {
-      selectedNote = null;
-    } else {
-      selectedNote = {
-        value: note,
-        name: '',
-        color: '#76a0ff'
-      };
-    }
-  }
 
   $: isSelected = (note: string) => (
-    selectedNote?.value === note
+    $selectedNote?.value === note
   );
 
   $: isHighlighted = (note: string) => (
-    highlightedNotes.some(({ value }) => value === note)
+    $highlightedNotes.some(({ value }) => value === note)
   );
 
   $: getHighlightedNote = (note: string) => (
-    highlightedNotes.find(({ value }) => value === note)
+    $highlightedNotes.find(({ value }) => value === note)
   );
 
   $: getIntervalName = (note:string) => (
@@ -38,7 +24,7 @@
 <button
   class="fret"
   title={getHighlightedNote(note)?.name}
-  on:click={() => selectNote(note)}
+  on:click={() => selectedNote.set(note)}
   use:tooltip={{ text: getIntervalName(note) }}
 >
   <div
