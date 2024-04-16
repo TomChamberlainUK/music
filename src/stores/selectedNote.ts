@@ -1,5 +1,5 @@
-import type { SelectedNote } from '@/types';
 import { writable } from 'svelte/store';
+import type { SelectedNote } from '@/types';
 
 function createSelectedNote() {
   const { set, subscribe, update } = writable<SelectedNote | null>(null);
