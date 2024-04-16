@@ -29,6 +29,6 @@ export default function getModeOffset(mode: string) {
     case 'locrian':
       return diminishedOffset;
     default:
-      throw new Error(`Cannot determine circle of fifths offset due to unexpected mode: ${mode}`);
+      return 0;
   }
 }
