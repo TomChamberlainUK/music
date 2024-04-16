@@ -1,10 +1,8 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { highlightedNotes, mode, root } from '@/stores';
+  import { highlightedNotes, mode, root, selectedNote } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
-
-  export let selectedNote: SelectedNote | null;
   
   let scaleName: string = 'diatonic';
   
@@ -16,7 +14,7 @@
   $: scalePattern = getScalePattern(scaleName, $mode);
 
   $: $highlightedNotes = getHighlightedNotes($root, scalePattern);
-  $: selectedNoteIsHighlighted = $highlightedNotes.some(({ value }) => value === selectedNote?.value);
+  $: selectedNoteIsHighlighted = $highlightedNotes.some(({ value }) => value === $selectedNote?.value);
   
   function highlightNote(note: SelectedNote) {
     const noteIndex = $highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
@@ -69,30 +67,30 @@
     </p>
   </div>
   <div>
-    {#if selectedNote}
+    {#if $selectedNote}
       <h2>
-        {selectedNote.value}
+        {$selectedNote.value}
       </h2>
       <div>
         <label>
           <span>Colour</span>
-          <input type="color" bind:value={selectedNote.color} />
+          <input type="color" bind:value={$selectedNote.color} />
         </label>
         <div
           class="colour-block"
-          style="background-color: {selectedNote.color};"
+          style="background-color: {$selectedNote.color};"
         />
         <span>
-          {selectedNote.color}
+          {$selectedNote.color}
         </span>
       </div>
       <div>
         <label>
           <span>Name</span>
-          <input type="text" bind:value={selectedNote.name} />
+          <input type="text" bind:value={$selectedNote.name} />
         </label>
       </div>
-      <button on:click={() => selectedNote && highlightNote(selectedNote)}>
+      <button on:click={() => $selectedNote && highlightNote($selectedNote)}>
         {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
       </button>
     {/if}

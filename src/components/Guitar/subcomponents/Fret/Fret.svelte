@@ -1,16 +1,14 @@
 <script lang="ts">
-  import type { SelectedNote } from '@/types/SelectedNote';
   import { tooltip } from '@/actions';
-  import { highlightedNotes } from '@/stores';
+  import { highlightedNotes, selectedNote } from '@/stores';
 
   export let note = 'E';
-  export let selectedNote: SelectedNote | null = null;
 
   function selectNote(note: string) {
-    if (selectedNote && selectedNote.value === note) {
-      selectedNote = null;
+    if ($selectedNote && $selectedNote.value === note) {
+      $selectedNote = null;
     } else {
-      selectedNote = {
+      $selectedNote = {
         value: note,
         name: '',
         color: '#76a0ff'
@@ -19,7 +17,7 @@
   }
 
   $: isSelected = (note: string) => (
-    selectedNote?.value === note
+    $selectedNote?.value === note
   );
 
   $: isHighlighted = (note: string) => (

@@ -1,8 +1,5 @@
 <script lang="ts">
   import { Config, String } from './subcomponents';
-  import type { SelectedNote } from '@/types';
-
-  export let selectedNote: SelectedNote | null = null;
 
   let numberOfFrets = 22;
   let numberOfStrings = 6;
@@ -33,7 +30,6 @@
       <String
         {tuning}
         {numberOfFrets}
-        bind:selectedNote={selectedNote}
       />
     {/each}
     <div class="fret-markers">

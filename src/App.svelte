@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CircleOfFifths, Guitar, Layout, Piano, ScaleConfig } from '@/components';
   import { getUID } from '@/utils';
-  import type { SelectedNote } from '@/types';
 
   type InstrumentTypes = 'guitar' | 'piano';
 
@@ -20,8 +19,6 @@
       type: 'piano'
     }
   ];
-
-  let selectedNote: SelectedNote | null = null;
 
   function addInstrument(type: InstrumentTypes) {
     instruments = [
@@ -46,7 +43,7 @@
         <h1>
           Music
         </h1>
-        <ScaleConfig {selectedNote} />
+        <ScaleConfig />
       </div>
       <CircleOfFifths />
     </div>
@@ -57,7 +54,7 @@
     <div>
       {#each instruments as { id, type }, i (id)}
         {#if type === 'guitar'}
-          <Guitar bind:selectedNote={selectedNote} />
+          <Guitar />
         {:else if type === 'piano'}
           <Piano />
         {/if}
