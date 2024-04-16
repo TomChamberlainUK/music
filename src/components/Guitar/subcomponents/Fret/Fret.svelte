@@ -4,18 +4,6 @@
 
   export let note = 'E';
 
-  function selectNote(note: string) {
-    if ($selectedNote && $selectedNote.value === note) {
-      $selectedNote = null;
-    } else {
-      $selectedNote = {
-        value: note,
-        name: '',
-        color: '#76a0ff'
-      };
-    }
-  }
-
   $: isSelected = (note: string) => (
     $selectedNote?.value === note
   );
@@ -36,7 +24,7 @@
 <button
   class="fret"
   title={getHighlightedNote(note)?.name}
-  on:click={() => selectNote(note)}
+  on:click={() => selectedNote.set(note)}
   use:tooltip={{ text: getIntervalName(note) }}
 >
   <div
