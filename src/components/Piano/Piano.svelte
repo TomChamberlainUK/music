@@ -40,6 +40,7 @@
         <button class="white-keys__key"
           on:click={() => selectedNote.set(note)}
           use:tooltip={{ text: getIntervalName(note) }}
+          class:white-keys__key--selected={$selectedNote?.value === note}
         >
           <div
             class="white-keys__indicator"
@@ -56,6 +57,7 @@
         <button class="black-keys__key"
           on:click={() => selectedNote.set(note)}
           use:tooltip={{ text: getIntervalName(note) }}
+          class:black-keys__key--selected={$selectedNote?.value === note}
         >
           <div
             class="black-keys__indicator"

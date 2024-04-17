@@ -46,6 +46,15 @@
       border-color: white;
       background-color: rgb(60, 60, 60);
     }
+
+    &:hover {
+      background-color: hsl(from orange h s 90);
+      border-color: orange;
+    }
+
+    &--selected {
+      background-color: hsl(from orange h s 75) !important;
+    }
   }
 
   &__indicator {
@@ -99,6 +108,15 @@
 
     :global([data-theme="dark"]) & {
       border: 0.125rem solid white;
+    }
+
+    &:hover {
+      background-color: hsl(from orange h s 10);
+      border-color: orange;
+    }
+
+    &--selected {
+      background-color: hsl(from orange h s 25) !important;
     }
   }
 
