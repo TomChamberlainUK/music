@@ -1,3 +1,20 @@
+%key {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 0.125rem solid black;
+  padding: 1rem;
+}
+
+%indicator {
+  display: grid;
+  place-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
 .container {  
   position: relative;
   display: flex;
@@ -14,13 +31,8 @@
   display: flex;
   
   &__key {
+    @extend %key;
     position: relative;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 0.125rem solid black;
-    padding: 1rem;
     width: var(--white-key-width);
     height: 15rem;
     background-color: white;
@@ -36,11 +48,7 @@
   }
 
   &__indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
+    @extend %indicator;
     color: var(--text-dark-low-emphasis);
 
     &--highlighted {
@@ -61,13 +69,8 @@
   justify-content: center;
 
   &__key {
+    @extend %key;
     position: absolute;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 0.125rem solid black;
-    padding: 1rem;
     width: var(--black-key-width);
     height: 10rem;
     background-color: black;
@@ -99,11 +102,7 @@
   }
 
   &__indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
+    @extend %indicator;
     color: var(--text-light-low-emphasis-locked);
 
     &--highlighted {
