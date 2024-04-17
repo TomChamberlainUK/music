@@ -1,3 +1,21 @@
+%key {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 0.125rem solid black;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+%indicator {
+  display: grid;
+  place-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
 .container {  
   position: relative;
   display: flex;
@@ -14,13 +32,8 @@
   display: flex;
   
   &__key {
+    @extend %key;
     position: relative;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 0.125rem solid black;
-    padding: 1rem;
     width: var(--white-key-width);
     height: 15rem;
     background-color: white;
@@ -33,14 +46,19 @@
       border-color: white;
       background-color: rgb(60, 60, 60);
     }
+
+    &:hover {
+      background-color: hsl(from orange h s 90);
+      border-color: orange;
+    }
+
+    &--selected {
+      background-color: hsl(from orange h s 75) !important;
+    }
   }
 
   &__indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
+    @extend %indicator;
     color: var(--text-dark-low-emphasis);
 
     &--highlighted {
@@ -61,13 +79,8 @@
   justify-content: center;
 
   &__key {
+    @extend %key;
     position: absolute;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 0.125rem solid black;
-    padding: 1rem;
     width: var(--black-key-width);
     height: 10rem;
     background-color: black;
@@ -96,14 +109,19 @@
     :global([data-theme="dark"]) & {
       border: 0.125rem solid white;
     }
+
+    &:hover {
+      background-color: hsl(from orange h s 10);
+      border-color: orange;
+    }
+
+    &--selected {
+      background-color: hsl(from orange h s 25) !important;
+    }
   }
 
   &__indicator {
-    display: grid;
-    place-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
+    @extend %indicator;
     color: var(--text-light-low-emphasis-locked);
 
     &--highlighted {

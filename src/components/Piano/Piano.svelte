@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tooltip } from '@/actions';
-  import { highlightedNotes } from '@/stores';
+  import { highlightedNotes, selectedNote } from '@/stores';
 
   const whiteKeys = [
     'C',
@@ -37,8 +37,10 @@
   <div class="piano">
     <div class="white-keys">
       {#each whiteKeys as note}
-        <div class="white-keys__key"
+        <button class="white-keys__key"
+          on:click={() => selectedNote.set(note)}
           use:tooltip={{ text: getIntervalName(note) }}
+          class:white-keys__key--selected={$selectedNote?.value === note}
         >
           <div
             class="white-keys__indicator"
@@ -47,13 +49,15 @@
           >
             {note}
           </div>
-        </div>
+        </button>
       {/each}
     </div>
     <div class="black-keys">
       {#each blackKeys as note}
-        <div class="black-keys__key"
+        <button class="black-keys__key"
+          on:click={() => selectedNote.set(note)}
           use:tooltip={{ text: getIntervalName(note) }}
+          class:black-keys__key--selected={$selectedNote?.value === note}
         >
           <div
             class="black-keys__indicator"
@@ -62,7 +66,7 @@
           >
             {note}
           </div>
-        </div>
+        </button>
       {/each}
     </div>
   </div>
