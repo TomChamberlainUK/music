@@ -50,6 +50,10 @@
     &:hover {
       background-color: hsl(from orange h s 90);
       border-color: orange;
+
+      :global([data-theme="dark"]) & {
+        background-color: hsl(from orange h 70 20) !important;
+      }
     }
 
     &--selected {
