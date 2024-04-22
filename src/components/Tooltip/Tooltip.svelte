@@ -8,6 +8,7 @@
   <div
     class="tooltip"
     style="left: {x}px; top: {y}px;"
+    role="tooltip"
   >
     {details}
     <div class="tooltip__tail" />
