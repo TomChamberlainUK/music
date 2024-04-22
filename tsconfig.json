@@ -18,6 +18,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "tests"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.svelte",
+    "tests/vitest-setup.ts",
+    "tests/**/*.test.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
