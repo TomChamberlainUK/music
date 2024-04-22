@@ -24,7 +24,7 @@
 <button
   class="fret"
   title={getHighlightedNote(note)?.name}
-  on:click={() => selectedNote.set(note)}
+  on:click={() => selectedNote.select(note)}
   use:tooltip={{ text: getIntervalName(note) }}
 >
   <div

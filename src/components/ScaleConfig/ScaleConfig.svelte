@@ -16,17 +16,32 @@
   $: $highlightedNotes = getHighlightedNotes($root, scalePattern);
   $: selectedNoteIsHighlighted = $highlightedNotes.some(({ value }) => value === $selectedNote?.value);
   
-  function highlightNote(note: SelectedNote) {
-    const noteIndex = $highlightedNotes.findIndex(highlightedNote => highlightedNote.value === note.value);
-    const noteIsAlreadyHighlighted = noteIndex > -1;
-    if (!noteIsAlreadyHighlighted) {
-      $highlightedNotes = [...$highlightedNotes, note];
-    } else {
-      $highlightedNotes = [
-        ...$highlightedNotes.slice(0, noteIndex),
-        ...$highlightedNotes.slice(noteIndex + 1)
-      ];
-    }
+  function addToHighlightedNotes(note: SelectedNote) {
+    $highlightedNotes = [...$highlightedNotes, note];
+    selectedNote.reset();
+  }
+
+  function updateInHighlightedNote(note: SelectedNote) {
+    const noteIndex = $highlightedNotes.findIndex(highlightedNote => (
+      highlightedNote.value === note.value
+    ));
+    $highlightedNotes = [
+      ...$highlightedNotes.slice(0, noteIndex),
+      note,
+      ...$highlightedNotes.slice(noteIndex + 1)
+    ];
+    selectedNote.reset();
+  }
+
+  function removeFromHighlightedNotes(note: SelectedNote) {
+    const noteIndex = $highlightedNotes.findIndex(highlightedNote => (
+      highlightedNote.value === note.value
+    ));
+    $highlightedNotes = [
+      ...$highlightedNotes.slice(0, noteIndex),
+      ...$highlightedNotes.slice(noteIndex + 1)
+    ];
+    selectedNote.reset();
   }
 </script>
 
@@ -90,9 +105,18 @@
           <input type="text" bind:value={$selectedNote.name} />
         </label>
       </div>
-      <button on:click={() => $selectedNote && highlightNote($selectedNote)}>
-        {selectedNoteIsHighlighted ? 'Remove' : 'Add'}
-      </button>
+      {#if !selectedNoteIsHighlighted}
+        <button on:click={() => $selectedNote && addToHighlightedNotes($selectedNote)}>
+          Add
+        </button>
+      {:else}
+        <button on:click={() => $selectedNote && updateInHighlightedNote($selectedNote)}>
+          Update
+        </button>
+        <button on:click={() => $selectedNote && removeFromHighlightedNotes($selectedNote)}>
+          Remove
+        </button>
+      {/if}
     {/if}
   </div>
 </div>

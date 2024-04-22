@@ -38,7 +38,7 @@
     <div class="white-keys">
       {#each whiteKeys as note}
         <button class="white-keys__key"
-          on:click={() => selectedNote.set(note)}
+          on:click={() => selectedNote.select(note)}
           use:tooltip={{ text: getIntervalName(note) }}
           class:white-keys__key--selected={$selectedNote?.value === note}
         >
@@ -55,7 +55,7 @@
     <div class="black-keys">
       {#each blackKeys as note}
         <button class="black-keys__key"
-          on:click={() => selectedNote.set(note)}
+          on:click={() => selectedNote.select(note)}
           use:tooltip={{ text: getIntervalName(note) }}
           class:black-keys__key--selected={$selectedNote?.value === note}
         >
