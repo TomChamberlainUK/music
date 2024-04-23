@@ -5,24 +5,6 @@
   background-color: var(--background-light);
 }
 
-.header {
-  z-index: 2;
-  display: grid;
-  align-items: center;
-  justify-content: space-between;
-  grid-template-columns: 5rem auto 5rem;
-  height: 3rem;
-  background-color: var(--background-light);
-
-  &__button {
-    all: unset;
-    border: solid 0.25rem white;
-    padding: 0 1rem;
-    height: 100%;
-    cursor: pointer;
-  }
-}
-
 .menu {
   all: unset;
   position: absolute;

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Header } from './subcomponents';
+
   let menuIsOpen: boolean = false;
   let theme: Theme = getTheme();
 
@@ -53,18 +55,8 @@
   }
 </script>
 
-<div class="container">
-  <header class="header">
-    <button
-      class="header__button"
-      on:click={toggleMenu}
-    >
-      Menu
-    </button>
-    <span>
-      Music
-    </span>
-  </header>
+<div class="container" data-testid="layout">
+  <Header onMenuButtonClick={toggleMenu} />
   <menu
     class="menu"
     class:menu--open={menuIsOpen}
