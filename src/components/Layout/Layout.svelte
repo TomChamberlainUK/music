@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Dropdown } from '@/components';
   import { Header } from './subcomponents';
 
   let menuIsOpen: boolean = false;
@@ -61,22 +62,15 @@
     class="menu"
     class:menu--open={menuIsOpen}
   >
-    <label>
-      <span>
-        Theme
-      </span>
-      <select bind:value={theme}>
-        <option value="system">
-          System
-        </option>
-        <option value="light">
-          Light
-        </option>
-        <option value="dark">
-          Dark
-        </option>
-      </select>
-    </label>
+    <Dropdown
+      label="Theme"
+      options={[
+        'system',
+        'light',
+        'dark'
+      ]}
+      bind:value={theme}
+    />
   </menu>
   <div class="body">
     <slot />
