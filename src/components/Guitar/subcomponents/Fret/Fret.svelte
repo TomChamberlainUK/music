@@ -21,11 +21,15 @@
   );
 </script>
 
+<!-- TODO: aria-selected should be set to <td /> once Guitar, String, and Fret are an accessible grid -->
+<!-- svelte-ignore a11y-role-supports-aria-props -->
 <button
   class="fret"
   title={getHighlightedNote(note)?.name}
   on:click={() => selectedNote.select(note)}
   use:tooltip={{ text: getIntervalName(note) }}
+  aria-current={isSelected(note) && 'location'}
+  aria-selected={isHighlighted(note) ? 'true' : 'false'}
 >
   <div
     class:fret__indicator={isHighlighted(note) || isSelected(note)}
