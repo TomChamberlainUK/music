@@ -34,7 +34,7 @@
 
 </script>
 
-<form>
+<form name="Guitar Config">
   <label>
     <span>Number of Strings:</span>
     <input
