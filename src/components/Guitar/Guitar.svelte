@@ -9,11 +9,13 @@
 
 </script>
 
-<div>
+<!-- TODO: Replace test id with something accessible -->
+<div data-testId="guitar">
   <div class="guitar">
     <div class="fret-markers">
       {#each { length: numberOfFrets + 1 } as _, i}
-        <div class="fret-markers__item">
+        <!-- TODO: Replace test id with something accessible -->
+        <div class="fret-markers__item" data-testId="fret-marker">
           <div
             class="fret-markers__number"
             class:fret-markers__number--highlighted={fretMarkers.includes(i)}
