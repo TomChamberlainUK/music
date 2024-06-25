@@ -33,18 +33,21 @@
   );
 </script>
 
-<div class="container">
+<!-- TODO: replace testId with accessible role -->
+<div class="container" data-testId="piano">
   <div class="piano">
     <div class="white-keys">
       {#each whiteKeys as note}
-        <button class="white-keys__key"
+        <!-- TODO: aria-selected should be set to <td /> once Piano is an accessible grid -->
+        <!-- svelte-ignore a11y-role-supports-aria-props -->
+        <button class="white-key"
           on:click={() => selectedNote.select(note)}
           use:tooltip={{ text: getIntervalName(note) }}
-          class:white-keys__key--selected={$selectedNote?.value === note}
+          aria-selected={isHighlighted(note)}
+          aria-current={$selectedNote?.value === note ? 'location' : 'false'}
         >
           <div
-            class="white-keys__indicator"
-            class:white-keys__indicator--highlighted={isHighlighted(note)}
+            class="white-key__indicator"
             style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
@@ -54,14 +57,16 @@
     </div>
     <div class="black-keys">
       {#each blackKeys as note}
-        <button class="black-keys__key"
+        <!-- TODO: aria-selected should be set to <td /> once Piano is an accessible grid -->
+        <!-- svelte-ignore a11y-role-supports-aria-props -->
+        <button class="black-key"
           on:click={() => selectedNote.select(note)}
           use:tooltip={{ text: getIntervalName(note) }}
-          class:black-keys__key--selected={$selectedNote?.value === note}
+          aria-selected={isHighlighted(note)}
+          aria-current={$selectedNote?.value === note ? 'location' : 'false'}
         >
           <div
-            class="black-keys__indicator"
-            class:black-keys__indicator--highlighted={isHighlighted(note)}
+            class="black-key__indicator"
             style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
           >
             {note}
