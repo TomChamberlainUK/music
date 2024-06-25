@@ -20,6 +20,10 @@
     'A#'
   ];
 
+  $: isSelected = (note: string) => (
+    $selectedNote?.value === note
+  );
+
   $: isHighlighted = (note: string) => (
     $highlightedNotes.some(({ value }) => value === note)
   );
@@ -43,8 +47,8 @@
         <button class="white-key"
           on:click={() => selectedNote.select(note)}
           use:tooltip={{ text: getIntervalName(note) }}
-          aria-selected={isHighlighted(note)}
-          aria-current={$selectedNote?.value === note ? 'location' : 'false'}
+          aria-current={isSelected(note) && 'location'}
+          aria-selected={isHighlighted(note) ? 'true' : 'false'}
         >
           <div
             class="white-key__indicator"
@@ -62,8 +66,8 @@
         <button class="black-key"
           on:click={() => selectedNote.select(note)}
           use:tooltip={{ text: getIntervalName(note) }}
-          aria-selected={isHighlighted(note)}
-          aria-current={$selectedNote?.value === note ? 'location' : 'false'}
+          aria-current={isSelected(note) && 'location'}
+          aria-selected={isHighlighted(note) ? 'true' : 'false'}
         >
           <div
             class="black-key__indicator"
