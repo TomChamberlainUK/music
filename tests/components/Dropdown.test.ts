@@ -22,6 +22,7 @@ describe('<Dropdown />', () => {
 
   it('Should render a label', () => {
     const label = screen.getByLabelText(/Test Dropdown/);
+    expect(label).toBeInTheDocument();
   });
 
   it('Should render a list of options', () => {
