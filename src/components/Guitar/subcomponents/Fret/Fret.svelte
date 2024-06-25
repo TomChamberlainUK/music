@@ -32,8 +32,7 @@
   aria-selected={isHighlighted(note) ? 'true' : 'false'}
 >
   <div
-    class:fret__indicator={isHighlighted(note) || isSelected(note)}
-    class:fret__indicator--selected={isSelected(note)}
+    class="fret__indicator"
     style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
   >
     {note}

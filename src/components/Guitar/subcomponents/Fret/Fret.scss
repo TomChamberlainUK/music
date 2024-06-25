@@ -38,17 +38,22 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
+  }
+
+  &[aria-selected="true"] > &__indicator {
     background-color: rgb(255, 255, 255);
     color: var(--text-dark-contrast-locked);
     font-weight: 700;
+  }
 
-    &--selected {
-      border: var(--text-light-low-emphasis-locked) 0.25rem solid;
-      background-color: var(--text-light-disabled-locked);
+  &[aria-current="location"] > &__indicator {
+    border: var(--text-light-low-emphasis-locked) 0.25rem solid;
+    background-color: var(--text-light-disabled-locked);
+    color: var(--text-dark-contrast-locked);
+    font-weight: 700;
 
-      :global([data-theme="dark"]) & {
-        color: var(--text-dark-contrast);
-      }
+    :global([data-theme="dark"]) & {
+      color: var(--text-dark-contrast);
     }
   }
 }
