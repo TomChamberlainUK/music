@@ -33,6 +33,9 @@
 <button on:click={() => instruments.add('piano')}>
   Add Piano
 </button>
+<button on:click={() => instruments.reset()}>
+  Reset to Default
+</button>
 
 <style lang="scss">
   @import './Instruments.scss';
