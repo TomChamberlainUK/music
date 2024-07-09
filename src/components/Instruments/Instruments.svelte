@@ -1,56 +1,23 @@
 <script lang="ts">
   import { Guitar, Piano } from '@/components';
-  import { getUID } from '@/utils';
-
-  type InstrumentTypes = 'guitar' | 'piano';
-
-  type Instrument = {
-    id: number;
-    type: InstrumentTypes;
-  };
-
-  let instruments: Instrument[] = [
-    {
-      id: getUID(),
-      type: 'guitar'
-    },
-    {
-      id: getUID(),
-      type: 'piano'
-    }
-  ];
-
-  function addInstrument(type: InstrumentTypes) {
-    instruments = [
-      ...instruments,
-      {
-        id: getUID(),
-        type
-      }
-    ];
-  }
-
-  function removeInstrument(index: number) {
-    instruments.splice(index, 1);
-    instruments = instruments;
-  }
+  import { instruments } from '@/stores';
 </script>
 
 <div>
-  {#each instruments as { id, type }, i (id)}
+  {#each $instruments as { id, type } (id)}
     {#if type === 'guitar'}
       <Guitar />
     {:else if type === 'piano'}
       <Piano />
     {/if}
-    <button on:click={() => removeInstrument(i)}>
+    <button on:click={() => instruments.remove(id)}>
       Remove
     </button>
   {/each}
 </div>
-<button on:click={() => addInstrument('guitar')}>
+<button on:click={() => instruments.add('guitar')}>
   Add Guitar
 </button>
-<button on:click={() => addInstrument('piano')}>
+<button on:click={() => instruments.add('piano')}>
   Add Piano
 </button>
