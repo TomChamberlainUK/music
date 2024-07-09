@@ -17,7 +17,7 @@ const defaultInstruments: Instrument[] = [
   }
 ];
 
-const { set, subscribe, update } = writable<Instrument[]>([...defaultInstruments]);
+const { set, subscribe, update } = writable<Instrument[]>(defaultInstruments);
 
 const localInstruments = window.localStorage.getItem('instruments');
 
@@ -63,6 +63,6 @@ export default {
     });
   },
   reset: () => {
-    set([...defaultInstruments]);
+    set(defaultInstruments);
   }
 };
