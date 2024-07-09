@@ -45,7 +45,10 @@
   }
 </script>
 
-<div class="container">
+<form
+  class="container"
+  name="scale-config"
+>
   <div>
     <h2>
       The {$root} {$mode} mode of the {scaleName} scale
@@ -119,7 +122,7 @@
       {/if}
     {/if}
   </div>
-</div>
+</form>
 
 <style lang="scss">
   @import './ScaleConfig.scss';

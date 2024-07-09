@@ -66,9 +66,18 @@
   });
 </script>
 
-<svg viewBox="0 0 {size} {size}" {width} {height}>
+<svg
+  viewBox="0 0 {size} {size}"
+  {width}
+  {height}
+  role="graphics-document"
+>
   {#each fifthsShapes as { isHighlighted, name, path, textCoordinates }}
-  <g>
+  <g
+    role="gridcell"
+    aria-labelledby={`circle-of-fifths-chord-${name}`}
+    aria-selected={isHighlighted}
+  >
     <path
       d={path}
       class="segment"
@@ -80,6 +89,7 @@
       x={textCoordinates.x}
       y={textCoordinates.y}
       font-weight={isHighlighted ? 'bold' : 'normal'}
+      id={`circle-of-fifths-chord-${name}`}
     >
       {name}
     </text>

@@ -30,107 +30,107 @@
 
 .white-keys {
   display: flex;
+}
   
-  &__key {
-    @extend %key;
-    position: relative;
-    width: var(--white-key-width);
-    height: 15rem;
-    background-color: white;
+.white-key {
+  @extend %key;
+  position: relative;
+  width: var(--white-key-width);
+  height: 15rem;
+  background-color: white;
 
-    &:not(:last-child) {
-      border-right: none;
-    }
+  &:not(:last-child) {
+    border-right: none;
+  }
+
+  :global([data-theme="dark"]) & {
+    border-color: white;
+    background-color: rgb(60, 60, 60);
+  }
+
+  &:hover {
+    background-color: hsl(from orange h s 90);
+    border-color: orange;
 
     :global([data-theme="dark"]) & {
-      border-color: white;
-      background-color: rgb(60, 60, 60);
+      background-color: hsl(from orange h 70 20) !important;
     }
+  }
 
-    &:hover {
-      background-color: hsl(from orange h s 90);
-      border-color: orange;
-
-      :global([data-theme="dark"]) & {
-        background-color: hsl(from orange h 70 20) !important;
-      }
-    }
-
-    &--selected {
-      background-color: hsl(from orange h s 75) !important;
-    }
+  &[aria-current="location"] {
+    background-color: hsl(from orange h s 75) !important;
   }
 
   &__indicator {
     @extend %indicator;
     color: var(--text-dark-low-emphasis);
+  }
 
-    &--highlighted {
-      color: var(--text-dark-contrast-locked);
-      font-weight: 700;
+  &[aria-selected="true"] > &__indicator {
+    color: var(--text-dark-contrast-locked);
+    font-weight: 700;
 
-      :global([data-theme="light"]) & {
-        box-shadow: rgba(0, 0, 0, 1) 0 0 0.25rem;
-      }
+    :global([data-theme="light"]) & {
+      box-shadow: rgba(0, 0, 0, 1) 0 0 0.25rem;
     }
   }
 }
 
-.black-keys {
+.black-key {
   position: absolute;
   top: 0;
   display: flex;
   justify-content: center;
+}
 
-  &__key {
-    @extend %key;
-    position: absolute;
-    width: var(--black-key-width);
-    height: 10rem;
-    background-color: black;
+.black-key {
+  @extend %key;
+  position: absolute;
+  width: var(--black-key-width);
+  height: 10rem;
+  background-color: black;
 
-    &:nth-child(1) {
-      left: calc(var(--white-key-width) - (var(--black-key-width) / 2));
-    }
+  &:nth-child(1) {
+    left: calc(var(--white-key-width) - (var(--black-key-width) / 2));
+  }
 
-    &:nth-child(2) {
-      left: calc((var(--white-key-width) * 2) - (var(--black-key-width) / 2));
-    }
+  &:nth-child(2) {
+    left: calc((var(--white-key-width) * 2) - (var(--black-key-width) / 2));
+  }
 
-    &:nth-child(3) {
-      left: calc((var(--white-key-width) * 4) - (var(--black-key-width) / 2));
-    }
+  &:nth-child(3) {
+    left: calc((var(--white-key-width) * 4) - (var(--black-key-width) / 2));
+  }
 
-    &:nth-child(4) {
-      left: calc((var(--white-key-width) * 5) - (var(--black-key-width) / 2));
+  &:nth-child(4) {
+    left: calc((var(--white-key-width) * 5) - (var(--black-key-width) / 2));
 
-    }
+  }
 
-    &:nth-child(5) {
-      left: calc((var(--white-key-width) * 6) - (var(--black-key-width) / 2));
-    }
+  &:nth-child(5) {
+    left: calc((var(--white-key-width) * 6) - (var(--black-key-width) / 2));
+  }
 
-    :global([data-theme="dark"]) & {
-      border: 0.125rem solid white;
-    }
+  :global([data-theme="dark"]) & {
+    border: 0.125rem solid white;
+  }
 
-    &:hover {
-      background-color: hsl(from orange h s 10);
-      border-color: orange;
-    }
+  &:hover {
+    background-color: hsl(from orange h s 10);
+    border-color: orange;
+  }
 
-    &--selected {
-      background-color: hsl(from orange h s 25) !important;
-    }
+  &[aria-current="location"] {
+    background-color: hsl(from orange h s 25) !important;
   }
 
   &__indicator {
     @extend %indicator;
     color: var(--text-light-low-emphasis-locked);
+  }
 
-    &--highlighted {
-      color: var(--text-dark-contrast-locked);
-      font-weight: 700;
-    }
+  &[aria-selected="true"] > &__indicator {
+    color: var(--text-dark-contrast-locked);
+    font-weight: 700;
   }
 }
