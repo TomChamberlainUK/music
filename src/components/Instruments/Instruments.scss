@@ -1,0 +1,13 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.heading {
+  color: var(--text-dark-high-emphasis);
+
+  &__id {
+    color: var(--text-dark-low-emphasis);
+  }
+}
