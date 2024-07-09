@@ -1,10 +1,13 @@
-import { render, screen } from '@testing-library/svelte';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { cleanup, render, screen } from '@testing-library/svelte';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Dropdown } from '@/components';
+import userEvent from '@testing-library/user-event';
 
 describe('<Dropdown />', () => {
+  let component: Dropdown;
+
   beforeEach(() => {
-    render(Dropdown, {
+    const { component: renderedComponent } = render(Dropdown, {
       label: 'Test Dropdown',
       options: [
         'Test Option 01',
@@ -13,6 +16,7 @@ describe('<Dropdown />', () => {
       ],
       value: 'Test Option 02'
     });
+    component = renderedComponent;
   });
 
   it('Should render', () => {
@@ -35,5 +39,14 @@ describe('<Dropdown />', () => {
   it('Should allow users to set a value', () => {
     const dropdown = screen.getByRole('combobox');
     expect(dropdown).toHaveValue('Test Option 02');
+  });
+
+  it('Should pass an on:change event to the native html element', async () => {
+    const dropdown = screen.getByRole('combobox');
+    const option = screen.getByRole('option', { name: 'Test Option 03' });
+    const onChangeMock = vi.fn();
+    component.$on('change', onChangeMock);
+    await userEvent.selectOptions(dropdown, option);
+    expect(onChangeMock).toHaveBeenCalled();
   });
 });

@@ -8,7 +8,10 @@
   <span>
     {label}
   </span>
-  <select bind:value={value}>
+  <select
+    bind:value={value}
+    on:change
+  >
     {#each options as option}
       <option value={option}>
         {option}
