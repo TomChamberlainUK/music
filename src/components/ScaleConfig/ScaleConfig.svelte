@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { Dropdown } from '@/components';
+  import { Dropdown, TextInput } from '@/components';
   import { highlightedNotes, mode, root, selectedNote } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
@@ -93,10 +93,10 @@
         </span>
       </div>
       <div>
-        <label>
-          <span>Name</span>
-          <input type="text" bind:value={$selectedNote.name} />
-        </label>
+        <TextInput
+          label="Name"
+          bind:value={$selectedNote.name}
+        />
       </div>
       {#if !selectedNoteIsHighlighted}
         <button on:click={() => $selectedNote && addToHighlightedNotes($selectedNote)}>
