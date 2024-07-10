@@ -1,5 +1,5 @@
 export { default as CircleOfFifths } from './CircleOfFifths';
-export { Dropdown } from './FormInputs';
+export * from './FormInputs';
 export { default as Guitar } from './Guitar';
 export { default as Layout } from './Layout';
 export { default as Piano } from './Piano';
