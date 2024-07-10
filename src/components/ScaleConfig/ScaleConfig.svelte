@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
+  import { Dropdown } from '@/components';
   import { highlightedNotes, mode, root, selectedNote } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
@@ -53,33 +54,22 @@
     <h2>
       The {$root} {$mode} mode of the {scaleName} scale
     </h2>
-    <label>
-      <span>Root</span>
-      <select bind:value={$root}>
-        {#each notes as note}
-          <option>{note}</option>
-        {/each}
-      </select>
-    </label>
-    <label>
-      <span>Scale</span>
-      <select
-        bind:value={scaleName}
-        on:change={() => $mode = modeNames[0]}
-      >
-        {#each scaleNames as scaleName}
-          <option>{scaleName}</option>
-        {/each}
-      </select>
-    </label>
-    <label>
-      <span>Mode</span>
-      <select bind:value={$mode}>
-        {#each modeNames as modeName}
-          <option>{modeName}</option>
-        {/each}
-      </select>
-    </label>
+    <Dropdown
+      label="Root"
+      options={notes}
+      bind:value={$root}
+    />
+    <Dropdown
+      label="Scale"
+      options={scaleNames}
+      on:change={() => $mode = modeNames[0]}
+      bind:value={scaleName}
+    />
+    <Dropdown
+      label="Mode"
+      options={modeNames}
+      bind:value={$mode}
+    />
     <p>
       Featuring the notes: {listFormatter.format($highlightedNotes.map(({ value }) => value))}.
     </p>

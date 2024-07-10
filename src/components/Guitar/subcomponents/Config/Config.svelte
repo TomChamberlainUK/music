@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Dropdown } from '@/components';
   import { notes, formatOrdinal, tuningPresets as tuningPresetsPerNumberOfStrings } from '@/utils';
 
   export let numberOfFrets = 22;
@@ -55,31 +56,21 @@
       Tuning
     </legend>
     {#if tuningPresets}
-      <label>
-        <span>Presets:</span>
-        <select
-          bind:value={selectedPreset}
-          on:change={updateStringTunings}
-        >
-          {#each tuningPresets as { name, value }}
-            <option {value}>
-              {name}
-            </option>
-          {/each}
-        </select>
-      </label>
+      <Dropdown
+        label="Presets:"
+        options={tuningPresets}
+        bind:value={selectedPreset}
+        on:change={updateStringTunings}
+      />
       <br />
       <br />
     {/if}
     {#each { length: numberOfStrings } as _, i}
-      <label>
-        <span>{formatOrdinal(numberOfStrings - i)}</span>
-        <select bind:value={stringTunings[i]}>
-          {#each notes as note}
-            <option>{note}</option>
-          {/each}
-        </select>
-      </label>
+      <Dropdown
+        label={formatOrdinal(numberOfStrings - i)}
+        options={notes}
+        bind:value={stringTunings[i]}
+      />
     {/each}
   </fieldset>
   <fieldset>
