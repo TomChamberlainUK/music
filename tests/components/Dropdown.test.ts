@@ -6,15 +6,35 @@ import userEvent from '@testing-library/user-event';
 describe('<Dropdown />', () => {
   let component: Dropdown;
 
+  const labelText = 'Dish';
+
+  const simpleValueOptions = [
+    'lasagne',
+    'bolognese',
+    'carbonara',
+  ];
+
+  const namedValueOptions = [
+    {
+      name: 'cacio e pepe',
+      value: 'cacio-e-pepe'
+    },
+    {
+      name: 'fettuccine alfredo',
+      value: 'fettuccine-alfredo'
+    }
+  ];
+
+  const selectedValue = 'carbonara';
+
   beforeEach(() => {
     const { component: renderedComponent } = render(Dropdown, {
-      label: 'Test Dropdown',
+      label: labelText,
+      value: selectedValue,
       options: [
-        'Test Option 01',
-        'Test Option 02',
-        'Test Option 03'
-      ],
-      value: 'Test Option 02'
+        ...simpleValueOptions,
+        ...namedValueOptions
+      ]
     });
     component = renderedComponent;
   });
@@ -25,25 +45,34 @@ describe('<Dropdown />', () => {
   });
 
   it('Should render a label', () => {
-    const label = screen.getByLabelText(/Test Dropdown/);
+    const label = screen.getByLabelText(labelText);
     expect(label).toBeInTheDocument();
   });
 
-  it('Should render a list of options', () => {
-    const options = screen.getAllByText(/Test Option/);
-    options.forEach(option => (
-      expect(option).toBeInTheDocument()
-    ));
+  it('Should render simple value options', () => {
+    for (const value of simpleValueOptions) {
+      const option = screen.getByRole('option', { name: value });
+      expect(option).toBeInTheDocument();
+      expect(option).toHaveValue(value);
+    }
+  });
+
+  it('Should render named value options', () => {
+    for (const { name, value } of namedValueOptions) {
+      const option = screen.getByRole('option', { name });
+      expect(option).toBeInTheDocument();
+      expect(option).toHaveValue(value);
+    };
   });
 
   it('Should allow users to set a value', () => {
     const dropdown = screen.getByRole('combobox');
-    expect(dropdown).toHaveValue('Test Option 02');
+    expect(dropdown).toHaveValue(selectedValue);
   });
 
   it('Should pass an on:change event to the native html element', async () => {
     const dropdown = screen.getByRole('combobox');
-    const option = screen.getByRole('option', { name: 'Test Option 03' });
+    const option = screen.getByRole('option', { name: 'bolognese' });
     const onChangeMock = vi.fn();
     component.$on('change', onChangeMock);
     await userEvent.selectOptions(dropdown, option);
