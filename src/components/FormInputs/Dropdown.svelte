@@ -1,4 +1,6 @@
 <script lang="ts">
+  import InputWrapper from './InputWrapper.svelte';
+
   export let label: string;
   export let options: Option[] = [];
   export let value: string = getOptionValue(options[0]);
@@ -21,10 +23,9 @@
   }
 </script>
 
-<label>
-  <span>
-    {label}
-  </span>
+<InputWrapper
+  {label}
+>
   <select
     bind:value={value}
     on:change
@@ -35,4 +36,4 @@
       </option>
     {/each}
   </select>
-</label>
+</InputWrapper>
