@@ -3,12 +3,12 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { TextInput } from '@/components';
 
 describe('<TextInput />', () => {
-  const labelText = 'Name';
+  const label = 'Name';
   const value = 'Louis Theroux';
 
   beforeEach(() => {
     render(TextInput, {
-      label: labelText,
+      label,
       value
     });
   });
@@ -18,9 +18,9 @@ describe('<TextInput />', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('Should render a label', () => {
-    const label = screen.getByLabelText(labelText);
-    expect(label).toBeInTheDocument();
+  it('Should be associated with an accessible label', () => {
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveAccessibleName(label);
   });
 
   it('Should bind a passed value', () => {

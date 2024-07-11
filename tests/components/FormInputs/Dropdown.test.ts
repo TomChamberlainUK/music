@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 describe('<Dropdown />', () => {
   let component: Dropdown;
 
-  const labelText = 'Dish';
+  const label = 'Dish';
 
   const simpleValueOptions = [
     'lasagne',
@@ -29,7 +29,7 @@ describe('<Dropdown />', () => {
 
   beforeEach(() => {
     const { component: renderedComponent } = render(Dropdown, {
-      label: labelText,
+      label,
       value: selectedValue,
       options: [
         ...simpleValueOptions,
@@ -44,9 +44,14 @@ describe('<Dropdown />', () => {
     expect(dropdown).toBeInTheDocument();
   });
 
-  it('Should render a label', () => {
-    const label = screen.getByLabelText(labelText);
-    expect(label).toBeInTheDocument();
+  it('Should be associated with an accessible label', () => {
+    const dropdown = screen.getByRole('combobox');
+    expect(dropdown).toHaveAccessibleName(label);
+  });
+
+  it('Should bind a passed value', () => {
+    const dropdown = screen.getByRole('combobox');
+    expect(dropdown).toHaveValue(selectedValue);
   });
 
   it('Should render simple value options', () => {
@@ -63,11 +68,6 @@ describe('<Dropdown />', () => {
       expect(option).toBeInTheDocument();
       expect(option).toHaveValue(value);
     };
-  });
-
-  it('Should allow users to set a value', () => {
-    const dropdown = screen.getByRole('combobox');
-    expect(dropdown).toHaveValue(selectedValue);
   });
 
   it('Should pass an on:change event to the native html element', async () => {
