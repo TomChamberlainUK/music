@@ -11,5 +11,6 @@
   <input
     type="number"
     bind:value={value}
+    on:input
   />
 </InputWrapper>

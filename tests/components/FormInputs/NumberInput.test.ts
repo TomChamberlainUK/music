@@ -1,16 +1,20 @@
-import { NumberInput } from '@/components';
 import { render, screen } from '@testing-library/svelte';
-import { beforeEach, describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { NumberInput } from '@/components';
 
 describe('<NumberInput />', () => {
   const label = 'Age';
   const value = 31;
 
+  let inputComponent: NumberInput;
+
   beforeEach(() => {
-    render(NumberInput, {
+    const { component } = render(NumberInput, {
       label,
       value
     });
+    inputComponent = component;
   });
 
   it('Should render', () => {
@@ -26,5 +30,13 @@ describe('<NumberInput />', () => {
   it('Should bind a passed value', () => {
     const input = screen.getByRole('spinbutton');
     expect(input).toHaveValue(value);
+  });
+
+  it('Should foward on:input events to the native html input', async () => {
+    const input = screen.getByRole('spinbutton');
+    const inputCallback = vi.fn();
+    inputComponent.$on('input', inputCallback);
+    await userEvent.type(input, '29');
+    expect(inputCallback).toHaveBeenCalled();
   });
 });
