@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Dropdown } from '@/components';
+  import { Dropdown, NumberInput } from '@/components';
   import { notes, formatOrdinal, tuningPresets as tuningPresetsPerNumberOfStrings } from '@/utils';
 
   export let numberOfFrets = 22;
@@ -36,21 +36,15 @@
 </script>
 
 <form name="Guitar Config">
-  <label>
-    <span>Number of Strings:</span>
-    <input
-      bind:value={numberOfStrings}
-      on:input={() => stringTunings.length = numberOfStrings}
-      type="number"
-    />
-  </label>
-  <label>
-    <span>Number of Frets:</span>
-    <input
-      bind:value={numberOfFrets}
-      type="number"
-    />
-  </label>
+  <NumberInput
+    label="Number of Strings:"
+    bind:value={numberOfStrings}
+    on:input={() => stringTunings.length = numberOfStrings}
+  />
+  <NumberInput
+    label="Number of Frets:"
+    bind:value={numberOfFrets}
+  />
   <fieldset>
     <legend>
       Tuning
