@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { Dropdown, TextInput } from '@/components';
+  import { ColorInput, Dropdown, TextInput } from '@/components';
   import { highlightedNotes, mode, root, selectedNote } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
@@ -80,10 +80,10 @@
         {$selectedNote.value}
       </h2>
       <div>
-        <label>
-          <span>Colour</span>
-          <input type="color" bind:value={$selectedNote.color} />
-        </label>
+        <ColorInput
+          label="Colour"
+          bind:value={$selectedNote.color}
+        />
         <div
           class="colour-block"
           style="background-color: {$selectedNote.color};"
