@@ -1,18 +1,21 @@
-type Options = {
-  format?: 'number' | 'string';
-};
-
-export default function getRange(
+function getRange(min: number, max: number): number[];
+function getRange<T extends 'string' | 'number' = 'number'>(min: number, max: number, options?: { format?: T }): (T extends 'string' ? string : number)[];
+function getRange(
   min: number,
   max: number,
   {
-    format = 'number'
-  }: Options = {}
+    format
+  }: {
+    format?: 'string' | 'number'
+  } = {}
 ) {
   const range = [
     ...Array(max + 1).keys()
   ].slice(min);
-  return format === 'string'
-    ? range.map(number => number.toString())
-    : range;
+  const formattedRange = format !== 'string'
+    ? range
+    : range.map(number => number.toString());
+  return formattedRange;
 }
+
+export default getRange;
