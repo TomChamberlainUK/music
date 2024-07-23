@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Config } from '@/components/Guitar/subcomponents';
-import { notes } from '@/utils';
+import { getRange, notes } from '@/utils';
 
 describe('<Config />', () => {
   const numberOfStrings = 6;
@@ -75,9 +75,7 @@ describe('<Config />', () => {
   });
 
   it('Should render a control for a fret marker for each fret', () => {
-    const labels = new Array(numberOfFrets + 1)
-      .fill(null)
-      .map((_, i) => i.toString());
+    const labels = getRange(0, numberOfFrets, { format: 'string' });
     const controls = labels.map(label => (
       screen.getByRole('checkbox', { name: label })
     ));
