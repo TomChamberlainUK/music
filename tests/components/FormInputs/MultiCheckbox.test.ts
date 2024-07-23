@@ -1,36 +1,23 @@
 import { render, screen, within } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { GroupInput } from '@/components';
+import { MultiCheckbox } from '@/components';
 
-describe('<GroupInput />', () => {
-  const label = 'Dietary Requirements';
+describe('<MultiCheckbox />', () => {
   const checkboxes = ['nut-free', 'gluten-free', 'vegetarian'];
   let group: string[] = [];
 
   beforeEach(() => {
-    const { component } = render(GroupInput, {
-      label,
+    const { component } = render(MultiCheckbox, {
       checkboxes,
       group
     });
     component
   });
 
-  it('Should render', () => {
-    const fieldset = screen.getByRole('group');
-    expect(fieldset).toBeInTheDocument();
-  });
-
-  it('Should be associated with an accessible label', () => {
-    const fieldset = screen.getByRole('group');
-    expect(fieldset).toHaveAccessibleName(label);
-  });
-
-  it('Should render a group of inputs', () => {
-    const fieldset = screen.getByRole('group');
+  it('Should render each input', () => {
     for (const checkbox of checkboxes) {
-      const input = within(fieldset).getByRole('checkbox', { name: checkbox });
+      const input = screen.getByRole('checkbox', { name: checkbox });
       expect(input).toBeInTheDocument();
     }
   });
