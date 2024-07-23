@@ -4,20 +4,20 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { MultiCheckbox } from '@/components';
 
 describe('<MultiCheckbox />', () => {
-  const checkboxes = ['nut-free', 'gluten-free', 'vegetarian'];
-  let group: string[] = [];
+  const values = ['nut-free', 'gluten-free', 'vegetarian'];
+  let checked: string[] = [];
 
   beforeEach(() => {
     const { component } = render(MultiCheckbox, {
-      checkboxes,
-      group
+      values,
+      checked
     });
     component
   });
 
   it('Should render each input', () => {
-    for (const checkbox of checkboxes) {
-      const input = screen.getByRole('checkbox', { name: checkbox });
+    for (const value of values) {
+      const input = screen.getByRole('checkbox', { name: value });
       expect(input).toBeInTheDocument();
     }
   });
@@ -26,8 +26,8 @@ describe('<MultiCheckbox />', () => {
   // - so bind:group cannot accurately be tested here
   it.skip('Should bind and update a passed group', async () => {
     const fieldset = screen.getByRole('group');
-    const input = within(fieldset).getByRole('checkbox', { name: checkboxes[2] });
+    const input = within(fieldset).getByRole('checkbox', { name: values[2] });
     await userEvent.click(input);
-    expect(group).toContain(checkboxes[2]);
+    expect(checked).toContain(values[2]);
   });
 });
