@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { ColorInput, Dropdown, TextInput } from '@/components';
+  import { ColorInput, Dropdown, Form, TextInput } from '@/components';
   import { highlightedNotes, mode, root, selectedNote } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
@@ -46,11 +46,8 @@
   }
 </script>
 
-<form
-  class="container"
-  name="scale-config"
->
-  <div>
+<div class="container">
+  <Form label="Scale Config">
     <h2>
       The {$root} {$mode} mode of the {scaleName} scale
     </h2>
@@ -73,46 +70,48 @@
     <p>
       Featuring the notes: {listFormatter.format($highlightedNotes.map(({ value }) => value))}.
     </p>
-  </div>
-  <div>
-    {#if $selectedNote}
-      <h2>
-        {$selectedNote.value}
-      </h2>
-      <div>
-        <ColorInput
-          label="Colour"
-          bind:value={$selectedNote.color}
-        />
-        <div
-          class="colour-block"
-          style="background-color: {$selectedNote.color};"
-        />
-        <span>
-          {$selectedNote.color}
-        </span>
-      </div>
-      <div>
-        <TextInput
-          label="Name"
-          bind:value={$selectedNote.name}
-        />
-      </div>
-      {#if !selectedNoteIsHighlighted}
-        <button on:click={() => $selectedNote && addToHighlightedNotes($selectedNote)}>
-          Add
-        </button>
-      {:else}
-        <button on:click={() => $selectedNote && updateInHighlightedNote($selectedNote)}>
-          Update
-        </button>
-        <button on:click={() => $selectedNote && removeFromHighlightedNotes($selectedNote)}>
-          Remove
-        </button>
+  </Form>
+  <Form label="Note Config">
+    <div>
+      {#if $selectedNote}
+        <h2>
+          {$selectedNote.value}
+        </h2>
+        <div>
+          <ColorInput
+            label="Colour"
+            bind:value={$selectedNote.color}
+          />
+          <div
+            class="colour-block"
+            style="background-color: {$selectedNote.color};"
+          />
+          <span>
+            {$selectedNote.color}
+          </span>
+        </div>
+        <div>
+          <TextInput
+            label="Name"
+            bind:value={$selectedNote.name}
+          />
+        </div>
+        {#if !selectedNoteIsHighlighted}
+          <button on:click={() => $selectedNote && addToHighlightedNotes($selectedNote)}>
+            Add
+          </button>
+        {:else}
+          <button on:click={() => $selectedNote && updateInHighlightedNote($selectedNote)}>
+            Update
+          </button>
+          <button on:click={() => $selectedNote && removeFromHighlightedNotes($selectedNote)}>
+            Remove
+          </button>
+        {/if}
       {/if}
-    {/if}
-  </div>
-</form>
+    </div>
+  </Form>
+</div>
 
 <style lang="scss">
   @import './ScaleConfig.scss';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Dropdown, MultiCheckbox, NumberInput } from '@/components';
+  import { Dropdown, Form, MultiCheckbox, NumberInput } from '@/components';
   import {
     formatOrdinal,
     getRange,
@@ -42,7 +42,7 @@
 
 </script>
 
-<form name="Guitar Config">
+<Form label="Guitar Config">
   <NumberInput
     label="Number of Strings:"
     bind:value={numberOfStrings}
@@ -83,4 +83,4 @@
       bind:checked={fretMarkers}
     />
   </fieldset>
-</form>
+</Form>

@@ -10,8 +10,8 @@ describe('<ScaleConfig />', () => {
     render(ScaleConfig);
   });
 
-  it('Should render', () => {
-    const scaleConfig = screen.getByRole('form');
+  it('Should render a scale config form', () => {
+    const scaleConfig = screen.getByRole('form', { name: 'Scale Config' });
     expect(scaleConfig).toBeInTheDocument();
   });
 
