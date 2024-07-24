@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Dropdown, Form, MultiCheckbox, NumberInput } from '@/components';
+  import { Dropdown, Form, FormGroup, MultiCheckbox, NumberInput } from '@/components';
   import {
     formatOrdinal,
     getRange,
@@ -52,10 +52,7 @@
     label="Number of Frets:"
     bind:value={numberOfFrets}
   />
-  <fieldset>
-    <legend>
-      Tuning
-    </legend>
+  <FormGroup label="Tuning">
     {#if tuningPresets}
       <Dropdown
         label="Presets:"
@@ -73,14 +70,11 @@
         bind:value={stringTunings[i]}
       />
     {/each}
-  </fieldset>
-  <fieldset>
-    <legend>
-      Fret Markers
-    </legend>
+  </FormGroup>
+  <FormGroup label="Fret Markers">
     <MultiCheckbox
       values={frets}
       bind:checked={fretMarkers}
     />
-  </fieldset>
+  </FormGroup>
 </Form>
