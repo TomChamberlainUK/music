@@ -1,10 +1,24 @@
 <script lang="ts">
-  import { notes, formatOrdinal, tuningPresets as tuningPresetsPerNumberOfStrings } from '@/utils';
+  import {
+    Form,
+    FormControlCheckboxMulti,
+    FormControlDropdown,
+    FormControlNumber,
+    FormGroup
+  } from '@/components';
+  import {
+    formatOrdinal,
+    getRange,
+    notes,
+    tuningPresets as tuningPresetsPerNumberOfStrings
+  } from '@/utils';
 
   export let numberOfFrets = 22;
   export let numberOfStrings = 6;
   export let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
-  export let fretMarkers = [3, 5, 7, 9, 12, 15, 17, 19, 21];
+  export let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
+
+  $: frets = getRange(0, numberOfFrets, { format: 'string' });
 
   let selectedPreset: string;
 
@@ -34,67 +48,39 @@
 
 </script>
 
-<form name="Guitar Config">
-  <label>
-    <span>Number of Strings:</span>
-    <input
-      bind:value={numberOfStrings}
-      on:input={() => stringTunings.length = numberOfStrings}
-      type="number"
-    />
-  </label>
-  <label>
-    <span>Number of Frets:</span>
-    <input
-      bind:value={numberOfFrets}
-      type="number"
-    />
-  </label>
-  <fieldset>
-    <legend>
-      Tuning
-    </legend>
+<Form label="Guitar Config">
+  <FormControlNumber
+    label="Number of Strings:"
+    bind:value={numberOfStrings}
+    on:input={() => stringTunings.length = numberOfStrings}
+  />
+  <FormControlNumber
+    label="Number of Frets:"
+    bind:value={numberOfFrets}
+  />
+  <FormGroup label="Tuning">
     {#if tuningPresets}
-      <label>
-        <span>Presets:</span>
-        <select
-          bind:value={selectedPreset}
-          on:change={updateStringTunings}
-        >
-          {#each tuningPresets as { name, value }}
-            <option {value}>
-              {name}
-            </option>
-          {/each}
-        </select>
-      </label>
+      <FormControlDropdown
+        label="Presets:"
+        options={tuningPresets}
+        bind:value={selectedPreset}
+        on:change={updateStringTunings}
+      />
       <br />
       <br />
     {/if}
     {#each { length: numberOfStrings } as _, i}
-      <label>
-        <span>{formatOrdinal(numberOfStrings - i)}</span>
-        <select bind:value={stringTunings[i]}>
-          {#each notes as note}
-            <option>{note}</option>
-          {/each}
-        </select>
-      </label>
+      <FormControlDropdown
+        label={formatOrdinal(numberOfStrings - i)}
+        options={notes}
+        bind:value={stringTunings[i]}
+      />
     {/each}
-  </fieldset>
-  <fieldset>
-    <legend>
-      Fret Markers
-    </legend>
-    {#each { length: numberOfFrets + 1 } as _, i}
-      <label>
-        <span>{i}</span>
-        <input
-          type="checkbox"
-          value={i}
-          bind:group={fretMarkers}
-        >
-      </label>
-    {/each}
-  </fieldset>
-</form>
+  </FormGroup>
+  <FormGroup label="Fret Markers">
+    <FormControlCheckboxMulti
+      values={frets}
+      bind:checked={fretMarkers}
+    />
+  </FormGroup>
+</Form>
