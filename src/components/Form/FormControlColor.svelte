@@ -1,11 +1,11 @@
 <script lang="ts">
-  import InputWrapper from './InputWrapper.svelte';
+  import FormControlWrapper from './FormControlWrapper.svelte';
 
   export let label: string;
   export let value: string;
 </script>
 
-<InputWrapper
+<FormControlWrapper
   {label}
 >
   <input
@@ -13,4 +13,4 @@
     bind:value={value}
     data-testId="color-input"
   />
-</InputWrapper>
+</FormControlWrapper>

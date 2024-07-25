@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/svelte';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Checkbox } from '@/components';
+import { FormControlCheckbox } from '@/components';
 
-describe('<Checkbox />', () => {
+describe('<FormControlCheckbox />', () => {
   const label = 'Vegetarian';
   const isChecked = true;
 
   beforeEach(() => {
-    render(Checkbox, {
+    render(FormControlCheckbox, {
       label,
       isChecked
     });

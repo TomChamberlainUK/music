@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SelectedNote } from '@/types';
-  import { ColorInput, Dropdown, Form, TextInput } from '@/components';
+  import { Form, FormControlColor, FormControlDropdown, FormControlText } from '@/components';
   import { highlightedNotes, mode, root, selectedNote } from '@/stores';
   import { notes } from '@/utils';
   import { getHighlightedNotes, getModeNames, getScaleNames, getScalePattern } from './utils';
@@ -51,18 +51,18 @@
     <h2>
       The {$root} {$mode} mode of the {scaleName} scale
     </h2>
-    <Dropdown
+    <FormControlDropdown
       label="Root"
       options={notes}
       bind:value={$root}
     />
-    <Dropdown
+    <FormControlDropdown
       label="Scale"
       options={scaleNames}
       on:change={() => $mode = modeNames[0]}
       bind:value={scaleName}
     />
-    <Dropdown
+    <FormControlDropdown
       label="Mode"
       options={modeNames}
       bind:value={$mode}
@@ -78,7 +78,7 @@
           {$selectedNote.value}
         </h2>
         <div>
-          <ColorInput
+          <FormControlColor
             label="Colour"
             bind:value={$selectedNote.color}
           />
@@ -91,7 +91,7 @@
           </span>
         </div>
         <div>
-          <TextInput
+          <FormControlText
             label="Name"
             bind:value={$selectedNote.name}
           />

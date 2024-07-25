@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Dropdown } from '@/components';
+  import { FormControlDropdown } from '@/components';
   import { getTheme, setTheme } from './utils';
 
   export let isOpen = false;
@@ -13,7 +13,7 @@
   class="container"
   class:container--open={isOpen}
 >
-  <Dropdown
+  <FormControlDropdown
     label="Theme"
     options={[
       'system',

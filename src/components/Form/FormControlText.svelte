@@ -1,15 +1,15 @@
 <script lang="ts">
-  import InputWrapper from './InputWrapper.svelte';
+  import FormControlWrapper from './FormControlWrapper.svelte';
 
   export let label: string;
   export let value: string;
 </script>
 
-<InputWrapper
+<FormControlWrapper
   {label}
 >
   <input
     type="text"
     bind:value={value}
   />
-</InputWrapper>
+</FormControlWrapper>

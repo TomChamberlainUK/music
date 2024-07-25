@@ -1,12 +1,12 @@
 <script lang="ts">
-  import InputWrapper from './InputWrapper.svelte';
+  import FormControlWrapper from './FormControlWrapper.svelte';
 
   export let values: string[];
   export let checked: string[];
 </script>
 
 {#each values as value}
-  <InputWrapper
+  <FormControlWrapper
     label={value}
   >
     <input
@@ -14,5 +14,5 @@
       {value}
       bind:group={checked}
     />
-  </InputWrapper>
+  </FormControlWrapper>
 {/each}

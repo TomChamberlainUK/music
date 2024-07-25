@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { Dropdown, Form, FormGroup, MultiCheckbox, NumberInput } from '@/components';
+  import {
+    Form,
+    FormControlCheckboxMulti,
+    FormControlDropdown,
+    FormControlNumber,
+    FormGroup
+  } from '@/components';
   import {
     formatOrdinal,
     getRange,
@@ -43,18 +49,18 @@
 </script>
 
 <Form label="Guitar Config">
-  <NumberInput
+  <FormControlNumber
     label="Number of Strings:"
     bind:value={numberOfStrings}
     on:input={() => stringTunings.length = numberOfStrings}
   />
-  <NumberInput
+  <FormControlNumber
     label="Number of Frets:"
     bind:value={numberOfFrets}
   />
   <FormGroup label="Tuning">
     {#if tuningPresets}
-      <Dropdown
+      <FormControlDropdown
         label="Presets:"
         options={tuningPresets}
         bind:value={selectedPreset}
@@ -64,7 +70,7 @@
       <br />
     {/if}
     {#each { length: numberOfStrings } as _, i}
-      <Dropdown
+      <FormControlDropdown
         label={formatOrdinal(numberOfStrings - i)}
         options={notes}
         bind:value={stringTunings[i]}
@@ -72,7 +78,7 @@
     {/each}
   </FormGroup>
   <FormGroup label="Fret Markers">
-    <MultiCheckbox
+    <FormControlCheckboxMulti
       values={frets}
       bind:checked={fretMarkers}
     />

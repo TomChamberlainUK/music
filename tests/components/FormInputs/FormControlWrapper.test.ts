@@ -1,12 +1,12 @@
-import InputWrapper from '@/components/FormInputs/InputWrapper.svelte';
 import { render, screen } from '@testing-library/svelte';
 import { beforeEach, describe, expect, it } from 'vitest';
+import FormControlWrapper from '@/components/Form/FormControlWrapper.svelte';
 
-describe('<InputWrapper />', () => {
+describe('<FormControlWrapper />', () => {
   const labelText = 'Input';
 
   beforeEach(() => {
-    render(InputWrapper, {
+    render(FormControlWrapper, {
       label: labelText
     });
   });

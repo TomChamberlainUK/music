@@ -1,14 +1,14 @@
 import { render, screen, within } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { MultiCheckbox } from '@/components';
+import { FormControlCheckboxMulti } from '@/components';
 
-describe('<MultiCheckbox />', () => {
+describe('<FormControlCheckboxMulti />', () => {
   const values = ['nut-free', 'gluten-free', 'vegetarian'];
   let checked: string[] = [];
 
   beforeEach(() => {
-    const { component } = render(MultiCheckbox, {
+    const { component } = render(FormControlCheckboxMulti, {
       values,
       checked
     });

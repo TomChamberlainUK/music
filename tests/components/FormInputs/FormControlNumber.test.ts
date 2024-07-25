@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { NumberInput } from '@/components';
+import { FormControlNumber } from '@/components';
 
-describe('<NumberInput />', () => {
+describe('<FormControlNumber />', () => {
   const label = 'Age';
   const value = 31;
 
-  let inputComponent: NumberInput;
+  let inputComponent: FormControlNumber;
 
   beforeEach(() => {
-    const { component } = render(NumberInput, {
+    const { component } = render(FormControlNumber, {
       label,
       value
     });

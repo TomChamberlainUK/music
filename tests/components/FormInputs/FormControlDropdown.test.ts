@@ -1,10 +1,10 @@
-import { cleanup, render, screen } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { Dropdown } from '@/components';
+import { FormControlDropdown } from '@/components';
 import userEvent from '@testing-library/user-event';
 
-describe('<Dropdown />', () => {
-  let component: Dropdown;
+describe('<FormControlDropdown />', () => {
+  let component: FormControlDropdown;
 
   const label = 'Dish';
 
@@ -28,7 +28,7 @@ describe('<Dropdown />', () => {
   const selectedValue = 'carbonara';
 
   beforeEach(() => {
-    const { component: renderedComponent } = render(Dropdown, {
+    const { component: renderedComponent } = render(FormControlDropdown, {
       label,
       value: selectedValue,
       options: [

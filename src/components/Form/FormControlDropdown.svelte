@@ -1,5 +1,5 @@
 <script lang="ts">
-  import InputWrapper from './InputWrapper.svelte';
+  import FormControlWrapper from './FormControlWrapper.svelte';
 
   export let label: string;
   export let options: Option[] = [];
@@ -23,7 +23,7 @@
   }
 </script>
 
-<InputWrapper
+<FormControlWrapper
   {label}
 >
   <select
@@ -36,4 +36,4 @@
       </option>
     {/each}
   </select>
-</InputWrapper>
+</FormControlWrapper>
