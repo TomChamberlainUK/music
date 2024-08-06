@@ -8,12 +8,11 @@
   $: notes = getConsecutiveNotes(tuning, numberOfFrets + 1);
 </script>
 
-<!-- TODO: Replace testId with better role -->
-<div class="string" data-testId="guitar-string">
+<tr class="string" data-testId="guitar-string">
   {#each notes as note}
     <Fret {note} />
   {/each}
-</div>
+</tr>
 
 <style lang="scss">
   @import './String.scss';

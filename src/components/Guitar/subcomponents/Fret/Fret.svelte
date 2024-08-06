@@ -21,9 +21,7 @@
   );
 </script>
 
-<!-- TODO: aria-selected should be set to <td /> once Guitar, String, and Fret are an accessible grid -->
-<!-- svelte-ignore a11y-role-supports-aria-props -->
-<button
+<td
   class="fret"
   title={getHighlightedNote(note)?.name}
   on:click={() => selectedNote.select(note)}
@@ -37,7 +35,7 @@
   >
     {note}
   </div>
-</button>
+</td>
 
 <style lang="scss">
   @import './Fret.scss';

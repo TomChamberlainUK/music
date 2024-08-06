@@ -30,12 +30,14 @@
         </div>
       {/each}
     </div>
-    {#each stringTunings.toReversed() as tuning}
-      <String
-        {tuning}
-        {numberOfFrets}
-      />
-    {/each}
+    <table class="fretboard">
+      {#each stringTunings.toReversed() as tuning}
+        <String
+          {tuning}
+          {numberOfFrets}
+        />
+      {/each}
+    </table>
     <div class="fret-markers">
       {#each frets as fret}
         <div class="fret-markers__item">
