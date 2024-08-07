@@ -3,6 +3,8 @@
   import { highlightedNotes, selectedNote } from '@/stores';
 
   export let note = 'E';
+  export let fretNumber: number;
+  export let stringNumber: number;
 
   $: isSelected = (note: string) => (
     $selectedNote?.value === note
@@ -23,11 +25,15 @@
 
 <td
   class="fret"
+  role="gridcell"
+  tabindex="-1"
   title={getHighlightedNote(note)?.name}
   on:click={() => selectedNote.select(note)}
   use:tooltip={{ text: getIntervalName(note) }}
   aria-current={isSelected(note) && 'location'}
   aria-selected={isHighlighted(note) ? 'true' : 'false'}
+  data-row={stringNumber}
+  data-column={fretNumber}
 >
   <div
     class="fret__indicator"

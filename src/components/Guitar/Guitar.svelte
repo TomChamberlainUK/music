@@ -8,7 +8,26 @@
   let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
   let displayConfig = false;
 
+  let fretboardElement: HTMLTableElement;
+
   $: frets = getRange(0, numberOfFrets, { format: 'string' });
+
+  const current = {
+    string: 0,
+    fret: 0
+  };
+
+  function moveTo({ string, fret }: { string: number, fret: number }) {
+    const target = document.querySelector<HTMLTableCellElement>(
+      `[data-row="${string}"][data-column="${fret}"]`
+    );
+    if (!target) {
+      return;
+    }
+    current.string = string;
+    current.fret = fret;
+    target.focus();
+  }
 </script>
 
 <!-- TODO: Replace test id with something accessible -->
@@ -30,11 +49,66 @@
         </div>
       {/each}
     </div>
-    <table class="fretboard">
-      {#each stringTunings.toReversed() as tuning}
+    <table
+      class="fretboard"
+      role="grid"
+      tabindex="0"
+      bind:this={fretboardElement}
+      on:keydown={(event) => {
+        switch (event.key) {
+          case 'Enter': {
+            event.preventDefault();
+            moveTo({
+              string: current.string,
+              fret: current.fret
+            });
+            break;
+          }
+          case 'Escape': {
+            event.preventDefault();
+            fretboardElement.focus();
+            break;
+          }
+          case 'ArrowLeft': {
+            event.preventDefault();
+            moveTo({
+              string: current.string,
+              fret: current.fret - 1
+            });
+            break;
+          }
+          case 'ArrowRight': {
+            event.preventDefault();
+            moveTo({
+              string: current.string,
+              fret: current.fret + 1
+            });
+            break;
+          }
+          case 'ArrowUp': {
+            event.preventDefault();
+            moveTo({
+              string: current.string - 1,
+              fret: current.fret
+            });
+            break;
+          }
+          case 'ArrowDown': {
+            event.preventDefault();
+            moveTo({
+              string: current.string + 1,
+              fret: current.fret
+            });
+            break;
+          }
+        }
+      }}
+    >
+      {#each stringTunings.toReversed() as tuning, stringNumber}
         <String
           {tuning}
           {numberOfFrets}
+          {stringNumber}
         />
       {/each}
     </table>
