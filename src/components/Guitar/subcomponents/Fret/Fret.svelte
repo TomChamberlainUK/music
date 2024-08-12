@@ -28,7 +28,8 @@
   role="gridcell"
   tabindex="-1"
   title={getHighlightedNote(note)?.name}
-  on:focus={() => selectedNote.select(note)}
+  on:focusin={() => selectedNote.select(note)}
+  on:focusout={() => selectedNote.reset()}
   use:tooltip={{ text: getIntervalName(note) }}
   aria-current={isSelected(note) && 'location'}
   aria-selected={isHighlighted(note) ? 'true' : 'false'}
