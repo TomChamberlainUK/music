@@ -22,7 +22,7 @@ describe('<Guitar />', () => {
   });
   
   it('Should render strings', () => {
-    const strings = screen.getAllByTestId('guitar-string');
+    const strings = screen.getAllByRole('row');
     expect(strings.length).toBe(6);
     strings.forEach(string => {
       expect(string).toBeInTheDocument();
