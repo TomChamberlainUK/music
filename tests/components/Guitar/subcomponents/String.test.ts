@@ -15,7 +15,7 @@ describe('<String />', () => {
   });
 
   it('Should render', () => {
-    const string = screen.getByTestId('guitar-string');
+    const string = screen.getByRole('row');
     expect(string).toBeInTheDocument();
   });
 

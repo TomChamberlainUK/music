@@ -9,10 +9,7 @@
   $: notes = getConsecutiveNotes(tuning, numberOfFrets + 1);
 </script>
 
-<tr
-  class="string"
-  data-testId="guitar-string"
->
+<tr class="string">
   {#each notes as note, fretNumber}
     <Fret
       {note}
