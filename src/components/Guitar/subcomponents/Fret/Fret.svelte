@@ -1,6 +1,7 @@
 <script lang="ts">
   import { tooltip } from '@/actions';
   import { highlightedNotes, selectedNote } from '@/stores';
+  import { focusFret } from '../../utils';
 
   export let note = 'E';
   export let fretNumber: number;
@@ -28,7 +29,7 @@
   role="gridcell"
   tabindex="-1"
   title={getHighlightedNote(note)?.name}
-  on:click
+  on:click={() => focusFret({ string: stringNumber, fret: fretNumber })}
   on:focusin={() => selectedNote.select(note)}
   on:focusout={() => selectedNote.reset()}
   use:tooltip={{ text: getIntervalName(note) }}
