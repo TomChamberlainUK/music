@@ -28,6 +28,7 @@
   role="gridcell"
   tabindex="-1"
   title={getHighlightedNote(note)?.name}
+  on:click
   on:focusin={() => selectedNote.select(note)}
   on:focusout={() => selectedNote.reset()}
   use:tooltip={{ text: getIntervalName(note) }}

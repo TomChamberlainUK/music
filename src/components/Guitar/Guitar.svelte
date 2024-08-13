@@ -17,7 +17,7 @@
     fret: 0
   };
 
-  function moveTo({ string, fret }: { string: number, fret: number }) {
+  function focusFret({ string, fret }: { string: number, fret: number }) {
     const target = document.querySelector<HTMLTableCellElement>(
       `[data-row="${string}"][data-column="${fret}"]`
     );
@@ -58,7 +58,7 @@
         switch (event.key) {
           case 'Enter': {
             event.preventDefault();
-            moveTo({
+            focusFret({
               string: current.string,
               fret: current.fret
             });
@@ -71,7 +71,7 @@
           }
           case 'ArrowLeft': {
             event.preventDefault();
-            moveTo({
+            focusFret({
               string: current.string,
               fret: current.fret - 1
             });
@@ -79,7 +79,7 @@
           }
           case 'ArrowRight': {
             event.preventDefault();
-            moveTo({
+            focusFret({
               string: current.string,
               fret: current.fret + 1
             });
@@ -87,7 +87,7 @@
           }
           case 'ArrowUp': {
             event.preventDefault();
-            moveTo({
+            focusFret({
               string: current.string - 1,
               fret: current.fret
             });
@@ -95,7 +95,7 @@
           }
           case 'ArrowDown': {
             event.preventDefault();
-            moveTo({
+            focusFret({
               string: current.string + 1,
               fret: current.fret
             });
@@ -109,6 +109,7 @@
           {tuning}
           {numberOfFrets}
           {stringNumber}
+          {focusFret}
         />
       {/each}
     </table>
