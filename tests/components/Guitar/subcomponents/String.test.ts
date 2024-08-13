@@ -9,7 +9,8 @@ describe('<String />', () => {
   beforeEach(() => {
     render(String, {
       tuning,
-      numberOfFrets
+      numberOfFrets,
+      stringNumber: 0
     });
   });
 
@@ -19,12 +20,12 @@ describe('<String />', () => {
   });
 
   it('Should start with the correct tuning', () => {
-    const frets = screen.getAllByRole('button');
+    const frets = screen.getAllByRole('gridcell');
     expect(frets[0]).toHaveTextContent(tuning);
   });
 
   it('Should render the correct number of frets, including open string', () => {
-    const frets = screen.getAllByRole('button');
+    const frets = screen.getAllByRole('gridcell');
     expect(frets.length).toBe(numberOfFrets + 1);
   });
 });
