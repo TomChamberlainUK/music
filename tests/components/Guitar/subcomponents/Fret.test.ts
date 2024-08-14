@@ -15,7 +15,11 @@ vi.mock('@/stores/highlightedNotes', async () => {
 describe('<Fret />', () => {
   describe('Default behaviour', () => {
     beforeEach(() => {
-      render(Fret, { note: 'C' });
+      render(Fret, {
+        note: 'C',
+        fretNumber: 0,
+        stringNumber: 0
+      });
     });
   
     afterEach(() => {
@@ -23,32 +27,36 @@ describe('<Fret />', () => {
     });
   
     it('Should render', () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       expect(fret).toBeInTheDocument();
     });
   
     it('Should set aria-current to false', () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       expect(fret).toHaveAttribute('aria-current', 'false');
     });
   
     it('Should set aria-current to location when clicked', async () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       expect(fret).toHaveAttribute('aria-current', 'false');
       await userEvent.click(fret);
       expect(fret).toHaveAttribute('aria-current', 'location');
     });
 
     it('Should set aria-selected to false', () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       expect(fret).toHaveAttribute('aria-selected', 'false');
     });
   });
 
   describe('When the note is selected', () => {
     beforeEach(async () => {
-      render(Fret, { note: 'C' });
-      const fret = screen.getByRole('button', { name: /C/ });
+      render(Fret, {
+        note: 'C',
+        fretNumber: 0,
+        stringNumber: 0
+      });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       await userEvent.click(fret);
     });
   
@@ -57,20 +65,24 @@ describe('<Fret />', () => {
     });
 
     it('Should set aria-current to location', () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       expect(fret).toHaveAttribute('aria-current', 'location');
     });
   
-    it('Should set aria-current to false when clicked', async () => {
-      const fret = screen.getByRole('button', { name: /C/ });
-      await userEvent.click(fret);
+    it('Should set aria-current to false when clicked away', async () => {
+      const fret = screen.getByRole('gridcell', { name: /C/ });
+      await userEvent.click(document.body);
       expect(fret).toHaveAttribute('aria-current', 'false');
     });
   });
 
   describe('When the note is highlighted', () => {
     beforeEach(() => {
-      render(Fret, { note: 'C' });
+      render(Fret, {
+        note: 'C',
+        fretNumber: 0,
+        stringNumber: 0
+      });
       highlightedNotes.set([
         {
           color: '#ff0000',
@@ -91,14 +103,14 @@ describe('<Fret />', () => {
     });
   
     it('Should display a tooltip when hovered', async () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       await userEvent.hover(fret);
       const tooltip = screen.getByRole('tooltip', { name: 'Root' });
       expect(tooltip).toBeInTheDocument();
     });
 
     it('Should set aria-selected to true', () => {
-      const fret = screen.getByRole('button', { name: /C/ });
+      const fret = screen.getByRole('gridcell', { name: /C/ });
       expect(fret).toHaveAttribute('aria-selected', 'true');
     });
   });

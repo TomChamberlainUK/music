@@ -4,16 +4,20 @@
 
   export let tuning: string = 'E';
   export let numberOfFrets: number = 22;
+  export let stringNumber: number;
 
   $: notes = getConsecutiveNotes(tuning, numberOfFrets + 1);
 </script>
 
-<!-- TODO: Replace testId with better role -->
-<div class="string" data-testId="guitar-string">
-  {#each notes as note}
-    <Fret {note} />
+<tr class="string">
+  {#each notes as note, fretNumber}
+    <Fret
+      {note}
+      {stringNumber}
+      {fretNumber}
+    />
   {/each}
-</div>
+</tr>
 
 <style lang="scss">
   @import './String.scss';

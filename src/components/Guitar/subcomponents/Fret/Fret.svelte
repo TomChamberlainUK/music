@@ -1,8 +1,11 @@
 <script lang="ts">
   import { tooltip } from '@/actions';
   import { highlightedNotes, selectedNote } from '@/stores';
+  import { focusFret } from '../../utils';
 
   export let note = 'E';
+  export let fretNumber: number;
+  export let stringNumber: number;
 
   $: isSelected = (note: string) => (
     $selectedNote?.value === note
@@ -21,15 +24,19 @@
   );
 </script>
 
-<!-- TODO: aria-selected should be set to <td /> once Guitar, String, and Fret are an accessible grid -->
-<!-- svelte-ignore a11y-role-supports-aria-props -->
-<button
+<td
   class="fret"
+  role="gridcell"
+  tabindex="-1"
   title={getHighlightedNote(note)?.name}
-  on:click={() => selectedNote.select(note)}
+  on:click={() => focusFret({ string: stringNumber, fret: fretNumber })}
+  on:focusin={() => selectedNote.select(note)}
+  on:focusout={() => selectedNote.reset()}
   use:tooltip={{ text: getIntervalName(note) }}
   aria-current={isSelected(note) && 'location'}
   aria-selected={isHighlighted(note) ? 'true' : 'false'}
+  data-row={stringNumber}
+  data-column={fretNumber}
 >
   <div
     class="fret__indicator"
@@ -37,7 +44,7 @@
   >
     {note}
   </div>
-</button>
+</td>
 
 <style lang="scss">
   @import './Fret.scss';

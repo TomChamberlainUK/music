@@ -1,7 +1,9 @@
 <script lang="ts">
   import { getRange } from '@/utils';
   import { Config, String } from './subcomponents';
+  import { handleKeyboardEvent } from './utils';
 
+  let fretboardElement: HTMLTableElement;
   let numberOfFrets = 22;
   let numberOfStrings = 6;
   let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
@@ -30,12 +32,22 @@
         </div>
       {/each}
     </div>
-    {#each stringTunings.toReversed() as tuning}
-      <String
-        {tuning}
-        {numberOfFrets}
-      />
-    {/each}
+    <table
+      aria-label="Guitar Fretboard"
+      class="fretboard"
+      role="grid"
+      tabindex="0"
+      bind:this={fretboardElement}
+      on:keydown={(event) => handleKeyboardEvent(event, fretboardElement)}
+    >
+      {#each stringTunings.toReversed() as tuning, stringNumber}
+        <String
+          {tuning}
+          {numberOfFrets}
+          {stringNumber}
+        />
+      {/each}
+    </table>
     <div class="fret-markers">
       {#each frets as fret}
         <div class="fret-markers__item">

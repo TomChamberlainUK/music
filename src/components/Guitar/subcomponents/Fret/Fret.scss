@@ -27,12 +27,14 @@
       color: var(--text-dark-low-emphasis-locked);
 
       &:hover {
-        background-color: hsl(from var(--background-color) h s 80);
+        background-color: hsl(from var(--background-color) h s 70);
       }
     }
   }
 
   &__indicator {
+    position: relative;
+    z-index: 1;
     display: grid;
     place-content: center;
     width: 1.5rem;
@@ -46,14 +48,24 @@
     font-weight: 700;
   }
 
-  &[aria-current="location"] > &__indicator {
-    border: var(--text-light-low-emphasis-locked) 0.25rem solid;
-    background-color: var(--text-light-disabled-locked);
-    color: var(--text-dark-contrast-locked);
-    font-weight: 700;
+  &[aria-current="location"] {
+    position: relative;
 
-    :global([data-theme="dark"]) & {
-      color: var(--text-dark-contrast);
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:focus {
+      &::after {
+        outline: solid rgb(238, 212, 19) 0.25rem;
+        outline-offset: -0.25rem;
+      }
     }
   }
 }
