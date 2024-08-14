@@ -33,6 +33,7 @@
       {/each}
     </div>
     <table
+      aria-label="Guitar Fretboard"
       class="fretboard"
       role="grid"
       tabindex="0"
