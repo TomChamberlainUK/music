@@ -1,0 +1,47 @@
+.piano {
+  display: inline-flex;
+  gap: 0.125rem;
+  padding: 0.125rem;
+  background-color: black;
+}
+
+.key {
+  --white-key-width: calc(1.73 * 4rem);
+
+  position: relative;
+  display: block;
+  width: var(--white-key-width);
+  height: 15rem;
+  background-color: white;
+
+  &:focus-within {
+    background-color: pink;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  &__label {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    display: grid;
+    place-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: var(--text-dark-contrast-locked);
+    font-size: 1rem;
+    transform: translateX(-50%);
+  }
+
+  &__input:checked + &__label {
+    background-color: red;
+    color: var(--text-light-contrast-locked);
+  }
+}
