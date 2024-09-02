@@ -1,18 +1,18 @@
 .piano {
   display: inline-flex;
-  gap: 0.125rem;
   padding: 0.125rem;
   background-color: black;
 }
 
 .key {
-  --white-key-width: calc(1.73 * 4rem);
+  --key-width: calc(1.73 * 4rem);
 
   position: relative;
   display: block;
-  width: var(--white-key-width);
+  width: var(--key-width);
   height: 15rem;
   background-color: white;
+  color: var(--text-dark-contrast-locked);
 
   &:focus-within {
     background-color: pink;
@@ -35,7 +35,6 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    color: var(--text-dark-contrast-locked);
     font-size: 1rem;
     transform: translateX(-50%);
   }
@@ -43,5 +42,20 @@
   &__input:checked + &__label {
     background-color: red;
     color: var(--text-light-contrast-locked);
+  }
+
+  &--sharp {
+    --key-width: calc(1 * 4rem);
+    
+    z-index: 1;
+    margin-left: calc(var(--key-width) * -1);
+    height: 10rem;
+    background-color: black;
+    color: var(--text-light-contrast-locked);
+    transform: translateX(50%);
+  }
+
+  &:not(:last-child, &--sharp) {
+    margin-right: 0.125rem;
   }
 }

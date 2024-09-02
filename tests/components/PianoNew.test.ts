@@ -13,7 +13,7 @@ describe('<Piano />', () => {
   });
 
   it('Should render each key for natural notes', () => {
-    for (const note of ['C', 'D', 'E', 'F', 'G', 'A', 'B']) {
+    for (const note of ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']) {
       const key = screen.getByRole('checkbox', { name: note });
       expect(key).toBeInTheDocument();
     }

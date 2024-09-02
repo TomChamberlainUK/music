@@ -3,8 +3,11 @@
   tabindex="0"
   role="listbox"
 >
-  {#each ['C', 'D', 'E', 'F', 'G', 'A', 'B'] as note}
-    <label class="key">
+  {#each ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] as note}
+    <label
+      class="key"
+      class:key--sharp={note.includes('♯')}
+    >
       <input
         class="key__input"
         type="checkbox"
