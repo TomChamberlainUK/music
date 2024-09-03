@@ -1,5 +1,5 @@
 <script lang="ts">
-  let scale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  import { scale } from '@/stores';
 </script>
 
 <div
@@ -17,7 +17,7 @@
         type="checkbox"
         tabindex="0"
         value={note}
-        bind:group={scale}
+        bind:group={$scale}
       />
       <span class="key__label">
         {note}
