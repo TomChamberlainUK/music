@@ -15,7 +15,18 @@
   color: var(--text-dark-contrast-locked);
 
   &:focus-within {
-    background-color: pink;
+    outline: solid rgb(238, 212, 19) 0.25rem;
+    outline-offset: -0.25rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(238, 212, 19, 0.3);
+    }
   }
 
   &__input {
@@ -27,6 +38,7 @@
   }
 
   &__label {
+    z-index: 1;
     position: absolute;
     bottom: 1rem;
     left: 50%;
