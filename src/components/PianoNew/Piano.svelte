@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { scale } from '@/stores';
+  import { intervalNames, scale } from '@/stores';
+  import { tooltip } from '@/actions';
 </script>
 
 <div
@@ -11,6 +12,7 @@
     <label
       class="key"
       class:key--sharp={note.includes('♯')}
+      use:tooltip={{ text: $intervalNames[note] }}
     >
       <input
         class="key__input"

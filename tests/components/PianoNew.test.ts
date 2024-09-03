@@ -1,5 +1,6 @@
 import { Piano } from '@/components/PianoNew';
 import { render, screen } from '@testing-library/svelte';
+import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('<Piano />', () => {
@@ -24,5 +25,12 @@ describe('<Piano />', () => {
       const key = screen.getByRole('checkbox', { name: note });
       expect(key).toBeChecked();
     }
+  });
+
+  it('Should render an interval name in a tooltip when hovered', async () => {
+    const key = screen.getByRole('checkbox', { name: 'C' });
+    await userEvent.hover(key);
+    const tooltip = screen.getByRole('tooltip', { name: 'Root' });
+    expect(tooltip).toBeInTheDocument();
   });
 });
