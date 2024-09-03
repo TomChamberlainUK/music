@@ -18,4 +18,11 @@ describe('<Piano />', () => {
       expect(key).toBeInTheDocument();
     }
   });
+
+  it('Should check notes in the current scale', () => {
+    for (const note of ['C', 'D', 'E', 'F', 'G', 'A', 'B']) {
+      const key = screen.getByRole('checkbox', { name: note });
+      expect(key).toBeChecked();
+    }
+  });
 });

@@ -1,3 +1,7 @@
+<script lang="ts">
+  let scale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+</script>
+
 <div
   class="piano"
   tabindex="0"
@@ -12,6 +16,8 @@
         class="key__input"
         type="checkbox"
         tabindex="0"
+        value={note}
+        bind:group={scale}
       />
       <span class="key__label">
         {note}
