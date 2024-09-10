@@ -1,9 +1,18 @@
 import { Piano } from '@/components/PianoNew';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('<Piano />', () => {
+  const scale = vi.hoisted(() => ['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+
+  vi.mock('@/stores/scale', async () => {
+    const { writable } = await import('svelte/store');
+    return {
+      default: writable(scale)
+    }
+  });
+
   beforeEach(() => {
     render(Piano);
   });
@@ -21,7 +30,7 @@ describe('<Piano />', () => {
   });
 
   it('Should check notes in the current scale', () => {
-    for (const note of ['C', 'D', 'E', 'F', 'G', 'A', 'B']) {
+    for (const note of scale) {
       const key = screen.getByRole('checkbox', { name: note });
       expect(key).toBeChecked();
     }
