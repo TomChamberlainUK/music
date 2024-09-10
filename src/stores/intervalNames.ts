@@ -1,11 +1,16 @@
-import { writable } from 'svelte/store';
+import { readable } from 'svelte/store';
 
-export default writable<Record<string, string>>({
-  'C': 'Root',
-  'D': 'Major 2nd',
-  'E': 'Major 3rd',
-  'F': 'Perfect 4th',
-  'G': 'Perfect 5th',
-  'A': 'Major 6th',
-  'B': 'Major 7th'
-});
+export default readable<string[]>([
+  'Root',
+  'Minor 2nd',
+  'Major 2nd',
+  'Minor 3rd',
+  'Major 3rd',
+  'Perfect 4th',
+  'Augmented 4th/Diminished 5th',
+  'Perfect 5th',
+  'Minor 6th',
+  'Major 6th',
+  'Minor 7th',
+  'Major 7th'
+]);
