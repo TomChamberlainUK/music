@@ -1,10 +1,12 @@
 import { get, writable } from 'svelte/store';
 import { getNotesFromRoot } from '@/utils';
-import notes from './notes';
+import notesStore from './notes';
 
 const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+const defaultRoot = 'C';
 
-let root = 'C';
+let currentRoot = defaultRoot;
+let currentNotes = defaultScale;
 let currentScaleName = 'diatonic';
 let currentModeName = 'ionian';
 
@@ -29,34 +31,48 @@ const scalePatterns: Record<string, ScalePatterns> = {
   }
 };
 
-const store = writable(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+const store = writable({
+  notes: defaultScale,
+  root: defaultRoot
+});
 
 export default {
   ...store,
-  setRoot: (note: string) => {
-    root = note;
-    setScale(currentScaleName, currentModeName);
-  },
   setScale,
   setMode,
-  getRoot: () => root,
+  getRoot: () => currentRoot,
   getScaleName: () => currentScaleName,
   getModeName: () => currentModeName,
   reset: () => {
-    root = 'C';
+    // root = 'C';
     currentScaleName = 'diatonic';
     currentModeName = 'ionian';
-    store.set(defaultScale);
+    store.set({
+      notes: defaultScale,
+      root: defaultRoot
+    });
+  },
+  set: ({ notes, root }: { notes?: string[], root?: string }) => {
+    if (root && root !== currentRoot) {
+      currentRoot = root;
+      const notesFromRoot = getNotesFromRoot(root, get(notesStore));
+      const scalePattern = scalePatterns[currentScaleName][currentModeName];
+      const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
+      store.update(({ root }) => ({ root, notes: scaleNotes }));
+    }
+    if (notes && notes !== currentNotes) {
+      currentNotes = notes;
+    }
   }
 };
 
 function setScale(scaleName: string, modeName?: string) {
   currentScaleName = scaleName;
   currentModeName = modeName ?? Object.keys(scalePatterns[scaleName])[0];
-  const notesFromRoot = getNotesFromRoot(root, get(notes));
+  const notesFromRoot = getNotesFromRoot(get(store).root, get(notesStore));
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
   const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-  store.set(scaleNotes);
+  store.update(({ root }) => ({ root, notes: scaleNotes }));
 }
 
 function setMode(modeName: string) {
