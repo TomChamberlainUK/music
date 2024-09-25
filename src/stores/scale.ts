@@ -40,12 +40,11 @@ const store = writable({
 
 export default {
   ...store,
-  setScale,
   setMode,
   getModeName: () => currentModeName,
   reset: () => {
-    // root = 'C';
-    currentScaleName = 'diatonic';
+    currentRoot = defaultRoot;
+    currentScaleName = defaultScaleName;
     currentModeName = 'ionian';
     store.set({
       notes: defaultScale,
@@ -67,28 +66,38 @@ export default {
     }
     if (scaleName && scaleName !== currentScaleName) {
       currentScaleName = scaleName;
-      setScale(scaleName);
+      setScale({ scaleName });
     }
   }
 };
 
-function setScale(scaleName: string, {
+function setScale({
+  scaleName,
   modeName,
   root
 }: {
+  scaleName?: string;
   modeName?: string;
   root?: string;
 } = {}) {
-  currentScaleName = scaleName;
-  currentModeName = modeName ?? Object.keys(scalePatterns[scaleName])[0];
-  currentRoot = root ?? get(store).root;
-  const notesFromRoot = getNotesFromRoot(currentRoot, get(notesStore));
+  if (root) currentRoot = root;
+  if (modeName) currentModeName = modeName;
+  if (scaleName) {
+    currentScaleName = scaleName;
+    currentModeName = Object.keys(scalePatterns[scaleName])[0];
+  }
+  const allNotes = get(notesStore);
+  const notesFromRoot = getNotesFromRoot(currentRoot, allNotes);
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
   const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-  store.set({ root: currentRoot, notes: scaleNotes, scaleName: currentScaleName });
+  store.set({
+    notes: scaleNotes,
+    root: currentRoot,
+    scaleName: currentScaleName
+  });
 }
 
 function setMode(modeName: string) {
   currentModeName = modeName;
-  setScale(currentScaleName, { modeName: currentModeName });
+  setScale({ modeName });
 }
