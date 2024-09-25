@@ -58,7 +58,7 @@ describe('Scale Store', () => {
     });
 
     it('Should set the current scale notes based on a scale and mode name', () => {
-      scale.setScale('pentatonic', 'minor');
+      scale.setScale('pentatonic', { modeName: 'minor' });
       const { notes } = get(scale);
       expect(notes).toEqual(['C', 'D♯', 'F', 'G', 'A♯']);
     });
@@ -87,6 +87,12 @@ describe('Scale Store', () => {
   });
 
   describe('set()', () => {
+    it('Should set the current scale notes', () => {
+      scale.set({ notes: ['C', 'D', 'E', 'G', 'A'] });
+      const { notes } = get(scale);
+      expect(notes).toEqual(['C', 'D', 'E', 'G', 'A']);
+    });
+
     it('Should update the current scale to be relative to the new root note', () => {
       scale.set({ root: 'D' });
       const { notes } = get(scale);

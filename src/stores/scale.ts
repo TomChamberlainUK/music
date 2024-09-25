@@ -58,24 +58,32 @@ export default {
       const notesFromRoot = getNotesFromRoot(root, get(notesStore));
       const scalePattern = scalePatterns[currentScaleName][currentModeName];
       const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-      store.update(({ root }) => ({ root, notes: scaleNotes }));
+      store.set({ notes: scaleNotes, root });
     }
     if (notes && notes !== currentNotes) {
       currentNotes = notes;
+      store.set({ root: currentRoot, notes });
     }
   }
 };
 
-function setScale(scaleName: string, modeName?: string) {
+function setScale(scaleName: string, {
+  modeName,
+  root
+}: {
+  modeName?: string;
+  root?: string;
+} = {}) {
   currentScaleName = scaleName;
   currentModeName = modeName ?? Object.keys(scalePatterns[scaleName])[0];
-  const notesFromRoot = getNotesFromRoot(get(store).root, get(notesStore));
+  currentRoot = root ?? get(store).root;
+  const notesFromRoot = getNotesFromRoot(currentRoot, get(notesStore));
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
   const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-  store.update(({ root }) => ({ root, notes: scaleNotes }));
+  store.set({ root: currentRoot, notes: scaleNotes });
 }
 
 function setMode(modeName: string) {
   currentModeName = modeName;
-  setScale(currentScaleName, currentModeName);
+  setScale(currentScaleName, { modeName: currentModeName });
 }
