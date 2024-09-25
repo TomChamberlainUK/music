@@ -4,10 +4,11 @@ import notesStore from './notes';
 
 const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const defaultRoot = 'C';
+const defaultScaleName = 'diatonic';
 
 let currentRoot = defaultRoot;
 let currentNotes = defaultScale;
-let currentScaleName = 'diatonic';
+let currentScaleName = defaultScaleName;
 let currentModeName = 'ionian';
 
 type ScalePatterns = Record<string, number[]>;
@@ -33,15 +34,14 @@ const scalePatterns: Record<string, ScalePatterns> = {
 
 const store = writable({
   notes: defaultScale,
-  root: defaultRoot
+  root: defaultRoot,
+  scaleName: defaultScaleName
 });
 
 export default {
   ...store,
   setScale,
   setMode,
-  getRoot: () => currentRoot,
-  getScaleName: () => currentScaleName,
   getModeName: () => currentModeName,
   reset: () => {
     // root = 'C';
@@ -49,20 +49,25 @@ export default {
     currentModeName = 'ionian';
     store.set({
       notes: defaultScale,
-      root: defaultRoot
+      root: defaultRoot,
+      scaleName: defaultScaleName
     });
   },
-  set: ({ notes, root }: { notes?: string[], root?: string }) => {
+  set: ({ notes, root, scaleName }: { notes?: string[], root?: string, scaleName?: string }) => {
     if (root && root !== currentRoot) {
       currentRoot = root;
       const notesFromRoot = getNotesFromRoot(root, get(notesStore));
       const scalePattern = scalePatterns[currentScaleName][currentModeName];
       const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-      store.set({ notes: scaleNotes, root });
+      store.set({ notes: scaleNotes, root, scaleName: currentScaleName });
     }
     if (notes && notes !== currentNotes) {
       currentNotes = notes;
-      store.set({ root: currentRoot, notes });
+      store.set({ root: currentRoot, notes, scaleName: currentScaleName });
+    }
+    if (scaleName && scaleName !== currentScaleName) {
+      currentScaleName = scaleName;
+      setScale(scaleName);
     }
   }
 };
@@ -80,7 +85,7 @@ function setScale(scaleName: string, {
   const notesFromRoot = getNotesFromRoot(currentRoot, get(notesStore));
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
   const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-  store.set({ root: currentRoot, notes: scaleNotes });
+  store.set({ root: currentRoot, notes: scaleNotes, scaleName: currentScaleName });
 }
 
 function setMode(modeName: string) {

@@ -5,29 +5,17 @@ import { scale } from '@/stores';
 describe('Scale Store', () => {
   const defaultRoot = 'C';
   const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  const defaultScaleName = 'diatonic';
 
   afterEach(() => {
     scale.reset();
   });
 
   it('Should initialise with default properties', () => {
-    const { notes, root } = get(scale);
+    const { notes, root, scaleName } = get(scale);
     expect(notes).toEqual(defaultScale);
     expect(root).toBe(defaultRoot);
-  });
-
-  describe('getRoot()', () => {
-    it('Should return the current root note', () => {
-      const root = scale.getRoot();
-      expect(root).toBe('C');
-    });
-  });
-
-  describe('getScaleName()', () => {
-    it('Should return the current scale name', () => {
-      const scaleName = scale.getScaleName();
-      expect(scaleName).toBe('diatonic');
-    });
+    expect(scaleName).toBe(defaultScaleName);
   });
 
   describe('getModeName()', () => {
@@ -39,12 +27,12 @@ describe('Scale Store', () => {
 
   describe('reset()', () => {
     it('Should reset values to their defaults', () => {
-      scale.set({ notes: [], root: 'A' });
+      scale.set({ notes: [], root: 'A', scaleName: 'pentatonic' });
       scale.reset();
-      const { notes, root } = get(scale);
+      const { notes, root, scaleName } = get(scale);
       expect(notes).toEqual(defaultScale);
-      expect(root).toBe('C');
-      expect(scale.getScaleName()).toBe('diatonic');
+      expect(root).toBe(defaultRoot);
+      expect(scaleName).toBe(defaultScaleName);
       expect(scale.getModeName()).toBe('ionian');
     });
   });
@@ -74,13 +62,13 @@ describe('Scale Store', () => {
 
   describe('update()', () => {
     it('Should update the current scale notes', () => {
-      scale.update(({ root }) => ({ root, notes: ['C', 'D', 'E', 'G', 'A'] }));
+      scale.update(({ root, scaleName }) => ({ notes: ['C', 'D', 'E', 'G', 'A'], root, scaleName }));
       const { notes } = get(scale);
       expect(notes).toEqual(['C', 'D', 'E', 'G', 'A']);
     });
 
     it('Should update the current root note', () => {
-      scale.update(({ notes }) => ({ notes, root: 'D' }));
+      scale.update(({ notes, scaleName }) => ({ notes, root: 'D', scaleName }));
       const { root } = get(scale);
       expect(root).toBe('D');
     });
