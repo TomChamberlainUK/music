@@ -6,6 +6,7 @@ describe('Scale Store', () => {
   const defaultRoot = 'C';
   const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   const defaultScaleName = 'diatonic';
+  const defaultModeName = 'ionian';
 
   afterEach(() => {
     scale.reset();
@@ -18,30 +19,15 @@ describe('Scale Store', () => {
     expect(scaleName).toBe(defaultScaleName);
   });
 
-  describe('getModeName()', () => {
-    it('Should return the current mode name', () => {
-      const modeName = scale.getModeName();
-      expect(modeName).toBe('ionian');
-    });
-  });
-
   describe('reset()', () => {
     it('Should reset values to their defaults', () => {
-      scale.set({ notes: [], root: 'A', scaleName: 'pentatonic' });
+      scale.set({ notes: [], root: 'A', scaleName: 'pentatonic', modeName: 'minor' });
       scale.reset();
-      const { notes, root, scaleName } = get(scale);
+      const { notes, root, scaleName, modeName } = get(scale);
       expect(notes).toEqual(defaultScale);
       expect(root).toBe(defaultRoot);
       expect(scaleName).toBe(defaultScaleName);
-      expect(scale.getModeName()).toBe('ionian');
-    });
-  });
-
-  describe.todo('setMode()', () => {
-    it('Should set the current scale notes based on a mode name', () => {
-      scale.setMode('dorian');
-      const { notes } = get(scale);
-      expect(notes).toEqual(['C', 'D', 'D♯', 'F', 'G', 'A', 'A♯']);
+      expect(modeName).toBe(defaultModeName);
     });
   });
 
@@ -51,13 +37,13 @@ describe('Scale Store', () => {
     });
 
     it('Should update the current scale notes', () => {
-      scale.update(({ root, scaleName }) => ({ notes: ['C', 'D', 'E', 'G', 'A'], root, scaleName }));
+      scale.update(({ root, scaleName, modeName }) => ({ notes: ['C', 'D', 'E', 'G', 'A'], root, scaleName, modeName }));
       const { notes } = get(scale);
       expect(notes).toEqual(['C', 'D', 'E', 'G', 'A']);
     });
 
     it('Should update the current root note', () => {
-      scale.update(({ notes, scaleName }) => ({ notes, root: 'D', scaleName }));
+      scale.update(({ notes, scaleName, modeName }) => ({ notes, root: 'D', scaleName, modeName }));
       const { root } = get(scale);
       expect(root).toBe('D');
     });
@@ -84,6 +70,12 @@ describe('Scale Store', () => {
       scale.set({ scaleName: 'pentatonic' });
       const { notes } = get(scale);
       expect(notes).toEqual(['C', 'D', 'E', 'G', 'A']);
+    });
+
+    it('Should update the current notes from a mode name', () => {
+      scale.set({ modeName: 'dorian' });
+      const { notes } = get(scale);
+      expect(notes).toEqual(['C', 'D', 'D♯', 'F', 'G', 'A', 'A♯']);
     });
   });
 });
