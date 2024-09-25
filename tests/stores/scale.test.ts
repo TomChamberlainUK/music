@@ -78,4 +78,17 @@ describe('Scale Store', () => {
       expect(notes).toEqual(['C', 'D', 'D♯', 'F', 'G', 'A', 'A♯']);
     });
   });
+
+  describe('getAvailableModeNames()', () => {
+    it('Should return the available mode names for the current scale', () => {
+      const availableModes = scale.getAvailableModeNames();
+      expect(availableModes).toEqual(['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']);
+    });
+
+    it('Should update the available mode names when the scale name changes', () => {
+      scale.set({ scaleName: 'pentatonic' });
+      const availableModes = scale.getAvailableModeNames();
+      expect(availableModes).toEqual(['major', 'minor']);
+    });
+  });
 });

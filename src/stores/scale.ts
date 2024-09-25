@@ -73,7 +73,8 @@ export default {
       currentModeName = modeName;
       setScale({ modeName });
     }
-  }
+  },
+  getAvailableModeNames
 };
 
 function setScale({
@@ -86,10 +87,13 @@ function setScale({
   root?: string;
 } = {}) {
   if (root) currentRoot = root;
-  if (modeName) currentModeName = modeName;
+  if (modeName) {
+    if (!getAvailableModeNames().includes(modeName)) return;
+    currentModeName = modeName;
+  }
   if (scaleName) {
     currentScaleName = scaleName;
-    currentModeName = Object.keys(scalePatterns[scaleName])[0];
+    currentModeName = getAvailableModeNames()[0];
   }
   const allNotes = get(notesStore);
   const notesFromRoot = getNotesFromRoot(currentRoot, allNotes);
@@ -101,4 +105,8 @@ function setScale({
     scaleName: currentScaleName,
     modeName: currentModeName
   });
+}
+
+function getAvailableModeNames() {
+  return Object.keys(scalePatterns[currentScaleName]);
 }
