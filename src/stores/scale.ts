@@ -62,21 +62,25 @@ export default {
         scaleName: currentScaleName,
         modeName: currentModeName
       });
-    } else {
-      if (root && root !== currentRoot) {
-        currentRoot = root;
-        setScale({ root });
-      }
-      if (scaleName && scaleName !== currentScaleName) {
-        currentScaleName = scaleName;
-        currentModeName = getAvailableModeNames()[0];
-        setScale({ scaleName });
-      }
-      if (modeName && modeName !== currentModeName && getAvailableModeNames().includes(modeName)) {
-        currentModeName = modeName;
-        setScale({ modeName });
-      }
+      return;
     }
+    if (root && root !== currentRoot) {
+      currentRoot = root;
+    }
+    if (scaleName && scaleName !== currentScaleName) {
+      currentScaleName = scaleName;
+      currentModeName = getAvailableModeNames()[0];
+    }
+    if (modeName && modeName !== currentModeName && getAvailableModeNames().includes(modeName)) {
+      currentModeName = modeName;
+    }
+    currentNotes = getScaleNotes();
+    store.set({
+      notes: currentNotes,
+      root: currentRoot,
+      scaleName: currentScaleName,
+      modeName: currentModeName
+    });
   },
   getAvailableModeNames
 };
@@ -93,36 +97,11 @@ function arraysAreEqual(a: string[], b: string[]) {
   return true;
 }
 
-
-function setScale({
-  scaleName,
-  modeName,
-  root
-}: {
-  scaleName?: string;
-  modeName?: string;
-  root?: string;
-} = {}) {
-  if (root) currentRoot = root;
-  if (modeName) {
-    if (!getAvailableModeNames().includes(modeName)) return;
-    currentModeName = modeName;
-  }
-  if (scaleName) {
-    currentScaleName = scaleName;
-    currentModeName = getAvailableModeNames()[0];
-  }
+function getScaleNotes() {
   const allNotes = get(notesStore);
   const notesFromRoot = getNotesFromRoot(currentRoot, allNotes);
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
-  const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-  currentNotes = scaleNotes;
-  store.set({
-    notes: scaleNotes,
-    root: currentRoot,
-    scaleName: currentScaleName,
-    modeName: currentModeName
-  });
+  return scalePattern.map(interval => notesFromRoot[interval]);
 }
 
 function getAvailableModeNames() {
