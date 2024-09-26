@@ -54,28 +54,45 @@ export default {
     });
   },
   set: ({ notes, root, scaleName, modeName }: { notes?: string[], root?: string, scaleName?: string, modeName?: string }) => {
-    if (root && root !== currentRoot) {
-      currentRoot = root;
-      const notesFromRoot = getNotesFromRoot(root, get(notesStore));
-      const scalePattern = scalePatterns[currentScaleName][currentModeName];
-      const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
-      store.set({ notes: scaleNotes, root, scaleName: currentScaleName, modeName: currentModeName });
-    }
-    if (notes && notes !== currentNotes) {
+    if (notes && !arraysAreEqual(notes, currentNotes)) {
       currentNotes = notes;
-      store.set({ root: currentRoot, notes, scaleName: currentScaleName, modeName: currentModeName });
-    }
-    if (scaleName && scaleName !== currentScaleName) {
-      currentScaleName = scaleName;
-      setScale({ scaleName });
-    }
-    if (modeName && modeName !== currentModeName) {
-      currentModeName = modeName;
-      setScale({ modeName });
+      store.set({
+        root: currentRoot,
+        notes: currentNotes,
+        scaleName: currentScaleName,
+        modeName: currentModeName
+      });
+    } else {
+      if (root && root !== currentRoot) {
+        currentRoot = root;
+        setScale({ root });
+      }
+      if (scaleName && scaleName !== currentScaleName) {
+        currentScaleName = scaleName;
+        currentModeName = getAvailableModeNames()[0];
+        setScale({ scaleName });
+      }
+      if (modeName && modeName !== currentModeName && getAvailableModeNames().includes(modeName)) {
+        currentModeName = modeName;
+        setScale({ modeName });
+      }
     }
   },
   getAvailableModeNames
 };
+
+function arraysAreEqual(a: string[], b: string[]) {
+  if (a.length !== b.length) return false;
+  const sortedA = [...a].sort();
+  const sortedB = [...b].sort();
+  for (let i = 0; i < sortedA.length; i++) {
+    if (sortedA[i] !== sortedB[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 function setScale({
   scaleName,
@@ -99,6 +116,7 @@ function setScale({
   const notesFromRoot = getNotesFromRoot(currentRoot, allNotes);
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
   const scaleNotes = scalePattern.map(interval => notesFromRoot[interval]);
+  currentNotes = scaleNotes;
   store.set({
     notes: scaleNotes,
     root: currentRoot,

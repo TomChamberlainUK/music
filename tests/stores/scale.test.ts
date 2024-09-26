@@ -61,21 +61,55 @@ describe('Scale Store', () => {
     });
 
     it('Should update the current scale to be relative to the new root note', () => {
-      scale.set({ root: 'D' });
-      const { notes } = get(scale);
-      expect(notes).toEqual(['D', 'E', 'F♯', 'G', 'A', 'B', 'C♯']);
+      const scales = [
+        { root: 'A', notes: ['A', 'B', 'C♯', 'D', 'E', 'F♯', 'G♯'] },
+        { root: 'A♯', notes: ['A♯', 'C', 'D', 'D♯', 'F', 'G', 'A'] },
+        { root: 'B', notes: ['B', 'C♯', 'D♯', 'E', 'F♯', 'G♯', 'A♯'] },
+        { root: 'C', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
+        { root: 'C♯', notes: ['C♯', 'D♯', 'F', 'F♯', 'G♯', 'A♯', 'C'] },
+        { root: 'D', notes: ['D', 'E', 'F♯', 'G', 'A', 'B', 'C♯'] },
+        { root: 'D♯', notes: ['D♯', 'F', 'G', 'G♯', 'A♯', 'C', 'D'] },
+        { root: 'E', notes: ['E', 'F♯', 'G♯', 'A', 'B', 'C♯', 'D♯'] },
+        { root: 'F', notes: ['F', 'G', 'A', 'A♯', 'C', 'D', 'E'] },
+        { root: 'F♯', notes: ['F♯', 'G♯', 'A♯', 'B', 'C♯', 'D♯', 'F'] },
+        { root: 'G', notes: ['G', 'A', 'B', 'C', 'D', 'E', 'F♯'] },
+        { root: 'G♯', notes: ['G♯', 'A♯', 'C', 'C♯', 'D♯', 'F', 'G'] }
+      ]
+      for (const { root, notes } of scales) {
+        scale.set({ root });
+        const { notes: currentNotes } = get(scale);
+        expect(currentNotes).toEqual(notes);
+      }
     });
 
     it('Should update the current notes from a scale name', () => {
-      scale.set({ scaleName: 'pentatonic' });
-      const { notes } = get(scale);
-      expect(notes).toEqual(['C', 'D', 'E', 'G', 'A']);
+      const scales = [
+        { scaleName: 'chromatic', notes: ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] },
+        { scaleName: 'diatonic', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
+        { scaleName: 'pentatonic', notes: ['C', 'D', 'E', 'G', 'A'] }
+      ];
+      for (const { scaleName, notes } of scales) {
+        scale.set({ scaleName });
+        const { notes: currentNotes } = get(scale);
+        expect(currentNotes).toEqual(notes);
+      }
     });
 
     it('Should update the current notes from a mode name', () => {
-      scale.set({ modeName: 'dorian' });
-      const { notes } = get(scale);
-      expect(notes).toEqual(['C', 'D', 'D♯', 'F', 'G', 'A', 'A♯']);
+      const scales = [
+        { modeName: 'ionian', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
+        { modeName: 'dorian', notes: ['C', 'D', 'D♯', 'F', 'G', 'A', 'A♯'] },
+        { modeName: 'phrygian', notes: ['C', 'C♯', 'D♯', 'F', 'G', 'G♯', 'A♯'] },
+        { modeName: 'lydian', notes: ['C', 'D', 'E', 'F♯', 'G', 'A', 'B'] },
+        { modeName: 'mixolydian', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'A♯'] },
+        { modeName: 'aeolian', notes: ['C', 'D', 'D♯', 'F', 'G', 'G♯', 'A♯'] },
+        { modeName: 'locrian', notes: ['C', 'C♯', 'D♯', 'F', 'F♯', 'G♯', 'A♯'] }
+      ];
+      for (const { modeName, notes } of scales) {
+        scale.set({ modeName });
+        const { notes: currentNotes } = get(scale);
+        expect(currentNotes).toEqual(notes);
+      }
     });
   });
 
