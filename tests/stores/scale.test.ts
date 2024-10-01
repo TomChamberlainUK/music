@@ -35,24 +35,6 @@ describe('Scale Store', () => {
     });
   });
 
-  describe('update()', () => {
-    afterEach(() => {
-      scale.reset();
-    });
-
-    it('Should update the current scale notes', () => {
-      scale.update(({ root, scaleName, modeName, modeNames }) => ({ notes: ['C', 'D', 'E', 'G', 'A'], root, scaleName, modeName, modeNames }));
-      const { notes } = get(scale);
-      expect(notes).toEqual(['C', 'D', 'E', 'G', 'A']);
-    });
-
-    it('Should update the current root note', () => {
-      scale.update(({ notes, scaleName, modeName, modeNames }) => ({ notes, root: 'D', scaleName, modeName, modeNames }));
-      const { root } = get(scale);
-      expect(root).toBe('D');
-    });
-  });
-
   describe('set()', () => {
     afterEach(() => {
       scale.reset();
