@@ -2,18 +2,6 @@ import { get, writable } from 'svelte/store';
 import { getNotesFromRoot } from '@/utils';
 import notesStore from './notes';
 
-const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-const defaultRoot = 'C';
-const defaultScaleName = 'diatonic';
-const defaultModeName = 'ionian';
-const defaultModeNames = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
-
-let currentRoot = defaultRoot;
-let currentNotes = defaultScale;
-let currentScaleName = defaultScaleName;
-let currentModeName = defaultModeName;
-let currentModeNames = defaultModeNames;
-
 type ScalePatterns = Record<string, number[]>;
 
 const scalePatterns: Record<string, ScalePatterns> = {
@@ -35,12 +23,27 @@ const scalePatterns: Record<string, ScalePatterns> = {
   }
 };
 
+const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+const defaultRoot = 'C';
+const defaultScaleName = 'diatonic';
+const defaultModeName = 'ionian';
+const defaultModeNames = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
+const defaultScaleNames = Object.keys(scalePatterns);
+
+let currentRoot = defaultRoot;
+let currentNotes = defaultScale;
+let currentScaleName = defaultScaleName;
+let currentModeName = defaultModeName;
+let currentModeNames = defaultModeNames;
+
+
 const store = writable({
   notes: defaultScale,
   root: defaultRoot,
   scaleName: defaultScaleName,
   modeName: defaultModeName,
-  modeNames: defaultModeNames
+  modeNames: defaultModeNames,
+  scaleNames: defaultScaleNames
 });
 
 export default {
@@ -55,7 +58,8 @@ export default {
       root: defaultRoot,
       scaleName: defaultScaleName,
       modeName: defaultModeName,
-      modeNames: defaultModeNames
+      modeNames: defaultModeNames,
+      scaleNames: defaultScaleNames
     });
   },
   set: ({ notes, root, scaleName, modeName }: { notes?: string[], root?: string, scaleName?: string, modeName?: string }) => {
@@ -66,7 +70,8 @@ export default {
         notes: currentNotes,
         scaleName: currentScaleName,
         modeName: currentModeName,
-        modeNames: currentModeNames
+        modeNames: currentModeNames,
+        scaleNames: defaultScaleNames
       });
       return;
     }
@@ -87,7 +92,8 @@ export default {
       root: currentRoot,
       scaleName: currentScaleName,
       modeName: currentModeName,
-      modeNames: currentModeNames
+      modeNames: currentModeNames,
+      scaleNames: defaultScaleNames
     });
   }
 };

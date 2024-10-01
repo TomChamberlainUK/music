@@ -14,12 +14,13 @@ describe('Scale Store', () => {
   });
 
   it('Should initialise with default properties', () => {
-    const { notes, root, scaleName, modeName, modeNames } = get(scale);
+    const { notes, root, scaleName, scaleNames, modeName, modeNames } = get(scale);
     expect(notes).toEqual(defaultScale);
     expect(root).toBe(defaultRoot);
     expect(scaleName).toBe(defaultScaleName);
     expect(modeName).toBe(defaultModeName);
     expect(modeNames).toEqual(defaultModeNames);
+    expect(scaleNames).toEqual(['chromatic', 'diatonic', 'pentatonic']);
   });
 
   describe('reset()', () => {
