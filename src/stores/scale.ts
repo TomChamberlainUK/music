@@ -6,11 +6,13 @@ const defaultScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const defaultRoot = 'C';
 const defaultScaleName = 'diatonic';
 const defaultModeName = 'ionian';
+const defaultModeNames = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
 
 let currentRoot = defaultRoot;
 let currentNotes = defaultScale;
 let currentScaleName = defaultScaleName;
 let currentModeName = defaultModeName;
+let currentModeNames = defaultModeNames;
 
 type ScalePatterns = Record<string, number[]>;
 
@@ -37,7 +39,8 @@ const store = writable({
   notes: defaultScale,
   root: defaultRoot,
   scaleName: defaultScaleName,
-  modeName: defaultModeName
+  modeName: defaultModeName,
+  modeNames: defaultModeNames
 });
 
 export default {
@@ -45,12 +48,14 @@ export default {
   reset: () => {
     currentRoot = defaultRoot;
     currentScaleName = defaultScaleName;
-    currentModeName = 'ionian';
+    currentModeName = defaultModeName;
+    currentModeNames = defaultModeNames;
     store.set({
       notes: defaultScale,
       root: defaultRoot,
       scaleName: defaultScaleName,
-      modeName: defaultModeName
+      modeName: defaultModeName,
+      modeNames: defaultModeNames
     });
   },
   set: ({ notes, root, scaleName, modeName }: { notes?: string[], root?: string, scaleName?: string, modeName?: string }) => {
@@ -60,7 +65,8 @@ export default {
         root: currentRoot,
         notes: currentNotes,
         scaleName: currentScaleName,
-        modeName: currentModeName
+        modeName: currentModeName,
+        modeNames: currentModeNames
       });
       return;
     }
@@ -69,9 +75,10 @@ export default {
     }
     if (scaleName && scaleName !== currentScaleName) {
       currentScaleName = scaleName;
-      currentModeName = getAvailableModeNames()[0];
+      currentModeNames = getAvailableModeNames();
+      currentModeName = currentModeNames[0];
     }
-    if (modeName && modeName !== currentModeName && getAvailableModeNames().includes(modeName)) {
+    if (modeName && modeName !== currentModeName && currentModeNames.includes(modeName)) {
       currentModeName = modeName;
     }
     currentNotes = getScaleNotes();
@@ -79,10 +86,10 @@ export default {
       notes: currentNotes,
       root: currentRoot,
       scaleName: currentScaleName,
-      modeName: currentModeName
+      modeName: currentModeName,
+      modeNames: currentModeNames
     });
-  },
-  getAvailableModeNames
+  }
 };
 
 function arraysAreEqual(a: string[], b: string[]) {
