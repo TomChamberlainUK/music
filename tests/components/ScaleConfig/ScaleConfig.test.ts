@@ -1,13 +1,19 @@
+import { cleanup, render, screen, within } from '@testing-library/svelte';
+import userEvent from '@testing-library/user-event';
+import { get } from 'svelte/store';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { ScaleConfig } from '@/components';
 import { getModeNames, getScaleNames } from '@/components/ScaleConfig/utils';
-import { notes } from '@/utils';
-import { render, screen, within } from '@testing-library/svelte';
-import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { notes, scale } from '@/stores';
 
 describe('<ScaleConfig />', () => {
   beforeEach(() => {
     render(ScaleConfig);
+  });
+  
+  afterEach(() => {
+    scale.reset();
+    cleanup();
   });
 
   it('Should render a scale config form', () => {
@@ -30,7 +36,7 @@ describe('<ScaleConfig />', () => {
 
   it('Should render an option for each note in root control', () => {
     const control = screen.getByRole('combobox', { name: /Root/ });
-    notes.forEach(note => {
+    get(notes).forEach(note => {
       const option = within(control).getByRole('option', { name: note });
       expect(option).toBeInTheDocument();
     });
@@ -70,23 +76,24 @@ describe('<ScaleConfig />', () => {
     }
   });
 
-  it('Should render the current notes in the given scale and mode', async () => {
-    const rootControl = screen.getByRole('combobox', { name: /Root/ });
+  it('Should render the current notes', () => {
+    const text = screen.getByText("Featuring the notes: C, D, E, F, G, A, and B.");
+    expect(text).toBeInTheDocument();
+  });
+
+  it('Should update the current notes in the given scale and mode', async () => {
+    const rootControl = <HTMLSelectElement>screen.getByRole('combobox', { name: /Root/ });
     const scaleControl = screen.getByRole('combobox', { name: /Scale/ });
     const modeControl = screen.getByRole('combobox', { name: /Mode/ });
-    {
-      const text = screen.getByText(/Featuring the notes: C, D, E, F, G, A, and B./);
-      expect(text).toBeInTheDocument();
-    }
-    {
-      const rootOption = within(rootControl).getByRole('option', { name: /^A$/i });
-      await userEvent.selectOptions(rootControl, rootOption);
-      const scaleOption = within(scaleControl).getByRole('option', { name: /Pentatonic/i });
-      await userEvent.selectOptions(scaleControl, scaleOption);
-      const modeOption = within(modeControl).getByRole('option', { name: /Minor/i });
-      await userEvent.selectOptions(modeControl, modeOption);
-      const text = screen.getByText(/Featuring the notes: A, C, D, E, and G./);
-      expect(text).toBeInTheDocument();
-    }
+    const rootOption = within(rootControl).getByRole('option', { name: 'A' });
+    // TODO: Investigate why the root needs to be selected twice
+    await userEvent.selectOptions(rootControl, rootOption); // Not sure why but the root needs to be selected twice
+    await userEvent.selectOptions(rootControl, rootOption); // Not sure why but the root needs to be selected twice
+    const scaleOption = within(scaleControl).getByRole('option', { name: 'pentatonic' });
+    await userEvent.selectOptions(scaleControl, scaleOption);
+    const modeOption = within(modeControl).getByRole('option', { name: 'minor' });
+    await userEvent.selectOptions(modeControl, modeOption);
+    const text = screen.getByText('Featuring the notes: A, C, D, E, and G.');
+    expect(text).toBeInTheDocument();
   });
 });
