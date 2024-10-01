@@ -1,9 +1,8 @@
 <script lang="ts">
   import { Form, FormControlDropdown } from '@/components';
-  import { scale } from '@/stores';
-  import { notes } from '@/utils';
+  import { notes, scale } from '@/stores';
 
-  const listFormatter = new Intl.ListFormat();
+  const listFormatter = new Intl.ListFormat('en');
 </script>
 
 <div class="container">
@@ -13,7 +12,7 @@
     </h2>
     <FormControlDropdown
       label="Root"
-      options={notes}
+      options={$notes}
       bind:value={$scale.root}
     />
     <FormControlDropdown
