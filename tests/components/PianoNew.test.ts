@@ -1,20 +1,19 @@
-import { Piano } from '@/components/PianoNew';
-import { render, screen } from '@testing-library/svelte';
+import { cleanup, render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { get } from 'svelte/store';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { Piano } from '@/components/PianoNew';
+import { scale } from '@/stores';
+
 
 describe('<Piano />', () => {
-  const scale = vi.hoisted(() => ['C', 'D', 'E', 'F', 'G', 'A', 'B']);
-
-  vi.mock('@/stores/scale', async () => {
-    const { writable } = await import('svelte/store');
-    return {
-      default: writable(scale)
-    }
-  });
-
   beforeEach(() => {
     render(Piano);
+  });
+  
+  afterEach(() => {
+    cleanup();
+    scale.reset();
   });
 
   it('Should render', () => {
@@ -29,11 +28,30 @@ describe('<Piano />', () => {
     }
   });
 
-  it('Should check notes in the current scale', () => {
-    for (const note of scale) {
+  it('Should select notes in the current scale', () => {
+    const { notes } = get(scale);
+    for (const note of notes) {
       const key = screen.getByRole('checkbox', { name: note });
       expect(key).toBeChecked();
     }
+  });
+
+  it('Should add a note to the current scale when clicked', async () => {
+    let { notes } = get(scale);
+    expect(notes).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+    const key = screen.getByRole('checkbox', { name: 'C♯' });
+    await userEvent.click(key);
+    notes = get(scale).notes;
+    expect(notes).toEqual(['C', 'C♯', 'D', 'E', 'F', 'G', 'A', 'B']);
+  });
+
+  it('Should remove a note from the current scale when clicked', async () => {
+    let { notes } = get(scale);
+    expect(notes).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+    const key = screen.getByRole('checkbox', { name: 'B' });
+    await userEvent.click(key);
+    notes = get(scale).notes;
+    expect(notes).toEqual(['C', 'D', 'E', 'F', 'G', 'A']);
   });
 
   it('Should render an interval name in a tooltip when hovered', async () => {
