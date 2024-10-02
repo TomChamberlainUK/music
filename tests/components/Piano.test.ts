@@ -1,46 +1,63 @@
-import { render, screen } from '@testing-library/svelte';
+import { cleanup, render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { get } from 'svelte/store';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Piano } from '@/components';
-import { notes } from '@/utils';
+import { scale } from '@/stores';
+
 
 describe('<Piano />', () => {
   beforeEach(() => {
     render(Piano);
   });
+  
+  afterEach(() => {
+    cleanup();
+    scale.reset();
+  });
 
   it('Should render', () => {
-    const piano = screen.getByTestId('piano');
+    const piano = screen.getByRole('listbox');
     expect(piano).toBeInTheDocument();
   });
 
-  it('Should render all notes as keys', () => {
-    notes.forEach(note => {
-      const key = screen.getByRole('button', { name: note });
+  it('Should render a key for each note', () => {
+    for (const note of ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']) {
+      const key = screen.getByRole('checkbox', { name: note });
       expect(key).toBeInTheDocument();
-    });
+    }
   });
 
-  it('Should indicate selected keys', () => {
-    ['A', 'B', 'C', 'D', 'E', 'F', 'G'].forEach(note => {
-      const key = screen.getByRole('button', { name: note });
-      expect(key).toHaveAttribute('aria-selected', 'true');
-    });
+  it('Should select notes in the current scale', () => {
+    const { notes } = get(scale);
+    for (const note of notes) {
+      const key = screen.getByRole('checkbox', { name: note });
+      expect(key).toBeChecked();
+    }
   });
 
-  it('Should not indicate non-selected keys', () => {
-    ['C#', 'D#', 'F#', 'G#', 'A#'].forEach(note => {
-      const key = screen.getByRole('button', { name: note });
-      expect(key).toHaveAttribute('aria-selected', 'false');
-    });
-  });
-
-  it('When clicked, should toggle and indicate current key', async () => {
-    const key = screen.getByRole('button', { name: 'C' });
-    expect(key).toHaveAttribute('aria-current', 'false');
+  it('Should add a note to the current scale when clicked', async () => {
+    let { notes } = get(scale);
+    expect(notes).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+    const key = screen.getByRole('checkbox', { name: 'C♯' });
     await userEvent.click(key);
-    expect(key).toHaveAttribute('aria-current', 'location');
+    notes = get(scale).notes;
+    expect(notes).toEqual(['C', 'C♯', 'D', 'E', 'F', 'G', 'A', 'B']);
+  });
+
+  it('Should remove a note from the current scale when clicked', async () => {
+    let { notes } = get(scale);
+    expect(notes).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
+    const key = screen.getByRole('checkbox', { name: 'B' });
     await userEvent.click(key);
-    expect(key).toHaveAttribute('aria-current', 'false');
+    notes = get(scale).notes;
+    expect(notes).toEqual(['C', 'D', 'E', 'F', 'G', 'A']);
+  });
+
+  it('Should render an interval name in a tooltip when hovered', async () => {
+    const key = screen.getByRole('checkbox', { name: 'C' });
+    await userEvent.hover(key);
+    const tooltip = screen.getByRole('tooltip', { name: 'Root' });
+    expect(tooltip).toBeInTheDocument();
   });
 });

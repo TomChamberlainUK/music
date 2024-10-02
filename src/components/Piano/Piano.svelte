@@ -1,84 +1,31 @@
 <script lang="ts">
+  import { intervalNames, scale } from '@/stores';
   import { tooltip } from '@/actions';
-  import { highlightedNotes, selectedNote } from '@/stores';
-
-  const whiteKeys = [
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'A',
-    'B'
-  ];
-
-  const blackKeys = [
-    'C#',
-    'D#',
-    'F#',
-    'G#',
-    'A#'
-  ];
-
-  $: isSelected = (note: string) => (
-    $selectedNote?.value === note
-  );
-
-  $: isHighlighted = (note: string) => (
-    $highlightedNotes.some(({ value }) => value === note)
-  );
-
-  $: getHighlightedNote = (note: string) => (
-    $highlightedNotes.find(({ value }) => value === note)
-  );
-
-  $: getIntervalName = (note:string) => (
-    getHighlightedNote(note)?.name
-  );
 </script>
 
-<!-- TODO: replace testId with accessible role -->
-<div class="container" data-testId="piano">
-  <div class="piano">
-    <div class="white-keys">
-      {#each whiteKeys as note}
-        <!-- TODO: aria-selected should be set to <td /> once Piano is an accessible grid -->
-        <!-- svelte-ignore a11y-role-supports-aria-props -->
-        <button class="white-key"
-          on:click={() => selectedNote.select(note)}
-          use:tooltip={{ text: getIntervalName(note) }}
-          aria-current={isSelected(note) && 'location'}
-          aria-selected={isHighlighted(note) ? 'true' : 'false'}
-        >
-          <div
-            class="white-key__indicator"
-            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
-          >
-            {note}
-          </div>
-        </button>
-      {/each}
-    </div>
-    <div class="black-keys">
-      {#each blackKeys as note}
-        <!-- TODO: aria-selected should be set to <td /> once Piano is an accessible grid -->
-        <!-- svelte-ignore a11y-role-supports-aria-props -->
-        <button class="black-key"
-          on:click={() => selectedNote.select(note)}
-          use:tooltip={{ text: getIntervalName(note) }}
-          aria-current={isSelected(note) && 'location'}
-          aria-selected={isHighlighted(note) ? 'true' : 'false'}
-        >
-          <div
-            class="black-key__indicator"
-            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
-          >
-            {note}
-          </div>
-        </button>
-      {/each}
-    </div>
-  </div>
+<div
+  class="piano"
+  tabindex="0"
+  role="listbox"
+>
+  {#each ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] as note, i}
+    <label
+      class="key"
+      class:key--sharp={note.includes('♯')}
+      use:tooltip={{ text: $intervalNames[i] }}
+    >
+      <input
+        class="key__input"
+        type="checkbox"
+        tabindex="0"
+        value={note}
+        bind:group={$scale.notes}
+      />
+      <span class="key__label">
+        {note}
+      </span>
+    </label>
+  {/each}
 </div>
 
 <style lang="scss">
