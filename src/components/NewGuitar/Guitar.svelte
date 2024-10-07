@@ -7,17 +7,27 @@
   const strings = tuning.map(note => getConsecutiveNotes(note, numberOfFrets));
 </script>
 
-<fieldset>
+<fieldset class="guitar">
   {#each strings as string}
-    <div data-testId="string">
+    <div
+      class="string"
+      data-testId="string"
+    >
       {#each string as note}
-        <label>
-          <span>
+        <label class="fret">
+          <input
+            class="fret__input"
+            type="checkbox"
+          />
+          <span class="fret__label">
             {note}
           </span>
-          <input type="checkbox" />
         </label>
       {/each}
     </div>
   {/each}
 </fieldset>
+
+<style lang="scss">
+  @import './Guitar.scss';
+</style>
