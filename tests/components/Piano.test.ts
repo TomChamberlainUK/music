@@ -17,7 +17,7 @@ describe('<Piano />', () => {
   });
 
   it('Should render', () => {
-    const piano = screen.getByRole('listbox');
+    const piano = screen.getByRole('group');
     expect(piano).toBeInTheDocument();
   });
 
@@ -59,5 +59,37 @@ describe('<Piano />', () => {
     await userEvent.hover(key);
     const tooltip = screen.getByRole('tooltip', { name: 'Root' });
     expect(tooltip).toBeInTheDocument();
+  });
+
+  it('Should focus the next key when focused and the right arrow key is pressed', async () => {
+    const key = screen.getByRole('checkbox', { name: 'E' });
+    const nextKey = screen.getByRole('checkbox', { name: 'F' });
+    await userEvent.click(key);
+    await userEvent.keyboard('{arrowright}');
+    expect(nextKey).toHaveFocus();
+  });
+
+  it('Should focus the previous key when focused and the left arrow key is pressed', async () => {
+    const key = screen.getByRole('checkbox', { name: 'F' });
+    const nextKey = screen.getByRole('checkbox', { name: 'E' });
+    await userEvent.click(key);
+    await userEvent.keyboard('{arrowleft}');
+    expect(nextKey).toHaveFocus();
+  });
+
+  it('Should focus the first key when the last key is focused and the right arrow key is pressed', async () => {
+    const firstKey = screen.getByRole('checkbox', { name: 'C' });
+    const lastKey = screen.getByRole('checkbox', { name: 'B' });
+    await userEvent.click(lastKey);
+    await userEvent.keyboard('{arrowright}');
+    expect(firstKey).toHaveFocus();
+  });
+
+  it('Should focus the last key when the first key is focused and the left arrow key is pressed', async () => {
+    const firstKey = screen.getByRole('checkbox', { name: 'C' });
+    const lastKey = screen.getByRole('checkbox', { name: 'B' });
+    await userEvent.click(firstKey);
+    await userEvent.keyboard('{arrowleft}');
+    expect(lastKey).toHaveFocus();
   });
 });
