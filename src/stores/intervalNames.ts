@@ -1,6 +1,7 @@
-import { readable } from 'svelte/store';
+import { get, readable } from 'svelte/store';
+import notesStore from './notes';
 
-export default readable<string[]>([
+const store = readable<string[]>([
   'Root',
   'Minor 2nd',
   'Major 2nd',
@@ -14,3 +15,13 @@ export default readable<string[]>([
   'Minor 7th',
   'Major 7th'
 ]);
+
+export default {
+  ...store,
+  getIntervalName: (root: string, note: string) => {
+    const intervalNames = get(store);
+    const consecutiveNotes = notesStore.getConsecutiveNotes(root, 12);
+    const index = consecutiveNotes.indexOf(note);
+    return intervalNames[index];
+  }
+};
