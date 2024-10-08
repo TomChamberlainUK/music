@@ -33,7 +33,7 @@ describe('<Guitar />', () => {
   });
 
   it('Should render each fret of each string', () => {
-    const tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+    const tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse();
     const strings = screen.getAllByTestId('string');
     for (const [i, note] of tuning.entries()) {
       const notes = notesStore.getConsecutiveNotes(note, numberOfFrets);
