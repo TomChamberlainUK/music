@@ -88,7 +88,14 @@
   }
 
   &__input:checked + &__label {
+    background-color: white;
+    color: var(--text-dark-contrast-locked);
+    font-weight: bold;
+  }
+
+  &.isRoot > &__input:checked + &__label {
     background-color: red;
     color: var(--text-light-contrast-locked);
+    font-weight: bold;
   }
 }

@@ -17,6 +17,7 @@
       {#each string as note}
         <label
           class="fret"
+          class:isRoot={$scale.root === note}
           use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
         >
           <input
