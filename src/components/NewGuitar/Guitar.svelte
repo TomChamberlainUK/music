@@ -4,7 +4,7 @@
 
   export let numberOfFrets = 22;
 
-  const tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+  const tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse();
   const strings = tuning.map(note => notes.getConsecutiveNotes(note, numberOfFrets));
 </script>
 
