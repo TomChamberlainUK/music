@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { notes, scale } from '@/stores';
+  import { tooltip } from '@/actions';
+  import { intervalNames, notes, scale } from '@/stores';
 
   export let numberOfFrets = 22;
 
@@ -14,7 +15,10 @@
       data-testId="string"
     >
       {#each string as note}
-        <label class="fret">
+        <label
+          class="fret"
+          use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
+        >
           <input
             class="fret__input"
             type="checkbox"
