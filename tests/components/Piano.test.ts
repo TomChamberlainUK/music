@@ -61,6 +61,14 @@ describe('<Piano />', () => {
     expect(tooltip).toBeInTheDocument();
   });
 
+  it('Should update an interval name in a tooltip when the root note changes', async () => {
+    scale.set({ root: 'A' });
+    const key = screen.getAllByRole('checkbox', { name: 'C' })[0];
+    await userEvent.hover(key);
+    const tooltip = screen.getByRole('tooltip', { name: 'Minor 3rd' });
+    expect(tooltip).toBeInTheDocument();
+  });
+
   it('Should focus the next key when focused and the right arrow key is pressed', async () => {
     const key = screen.getByRole('checkbox', { name: 'E' });
     const nextKey = screen.getByRole('checkbox', { name: 'F' });

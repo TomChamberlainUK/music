@@ -33,7 +33,7 @@
     <label
       class="key"
       class:key--sharp={note.includes('♯')}
-      use:tooltip={{ text: $intervalNames[i] }}
+      use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
     >
       <input
         class="key__input"
