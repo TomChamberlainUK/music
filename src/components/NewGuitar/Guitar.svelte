@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getConsecutiveNotes } from '@/utils';
+  import { notes, scale } from '@/stores';
 
   export let numberOfFrets = 22;
 
   const tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
-  const strings = tuning.map(note => getConsecutiveNotes(note, numberOfFrets));
+  const strings = tuning.map(note => notes.getConsecutiveNotes(note, numberOfFrets));
 </script>
 
 <fieldset class="guitar">
@@ -18,6 +18,8 @@
           <input
             class="fret__input"
             type="checkbox"
+            value={note}
+            bind:group={$scale.notes}
           />
           <span class="fret__label">
             {note}
