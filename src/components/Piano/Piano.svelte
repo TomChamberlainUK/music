@@ -32,6 +32,7 @@
   {#each ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] as note, i}
     <label
       class="key"
+      class:isRoot={$scale.root === note}
       class:key--sharp={note.includes('♯')}
       use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
     >

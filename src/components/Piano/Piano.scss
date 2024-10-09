@@ -13,7 +13,7 @@
   width: var(--key-width);
   height: 15rem;
   background-color: white;
-  color: var(--text-dark-contrast-locked);
+  color: var(--text-dark-low-emphasis-locked);
   cursor: pointer;
 
   &:hover {
@@ -66,6 +66,14 @@
   }
 
   &__input:checked + &__label {
+    outline: solid rgba(0, 0, 0, 0.2) 0.125rem;
+    background-color: white;
+    color: var(--text-dark-contrast-locked);
+    font-weight: bold;
+  }
+
+  &.isRoot > &__input:checked + &__label {
+    outline: 0;
     background-color: red;
     color: var(--text-light-contrast-locked);
   }
@@ -77,7 +85,7 @@
     margin-left: calc(var(--key-width) * -1);
     height: 10rem;
     background-color: black;
-    color: var(--text-light-contrast-locked);
+    color: var(--text-light-low-emphasis-locked);
     transform: translateX(50%);
   }
 
