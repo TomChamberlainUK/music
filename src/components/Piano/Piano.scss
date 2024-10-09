@@ -3,6 +3,10 @@
   display: inline-flex;
   padding: 0.125rem;
   background-color: black;
+
+  :global([data-theme="dark"]) & {
+    background-color: white;
+  }
 }
 
 .key {
@@ -15,6 +19,11 @@
   background-color: white;
   color: var(--text-dark-low-emphasis-locked);
   cursor: pointer;
+
+  :global([data-theme="dark"]) & {
+    background-color: rgb(60, 60, 60);
+    color: var(--text-light-low-emphasis-locked);
+  }
 
   &:hover {
     &::after {
@@ -87,6 +96,13 @@
     background-color: black;
     color: var(--text-light-low-emphasis-locked);
     transform: translateX(50%);
+
+    :global([data-theme="dark"]) & {
+      box-sizing: border-box;
+      border: solid 0.125rem white;
+      border-top: 0;
+      background-color: black;
+    }
   }
 
   &:not(:last-child, &--sharp) {
