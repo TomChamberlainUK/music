@@ -99,3 +99,37 @@
     font-weight: bold;
   }
 }
+
+.fret-markers {
+  box-sizing: border-box;
+  display: flex;
+  gap: 0.125rem;
+  padding: 0 0.125rem;
+  width: 100%;
+}
+
+.fret-marker {
+  flex: 1 1 0px;
+  
+  &.isHighlighted {
+    border-color: var(--text-dark-high-emphasis);
+  }
+  
+  &--top {
+    display: grid;
+    place-content: center;
+    padding: 0.25rem;
+    border-bottom: 0.5rem solid transparent;
+    color: var(--text-dark-low-emphasis);
+
+    &.isHighlighted {
+      color: var(--text-dark-high-emphasis);
+      font-weight: bold;
+    }
+  }
+
+  &--bottom {
+    flex: 1 1 0px;
+    border-top: 0.5rem solid transparent;
+  }
+}

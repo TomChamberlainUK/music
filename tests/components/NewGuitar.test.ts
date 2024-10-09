@@ -45,6 +45,23 @@ describe('<Guitar />', () => {
     }
   });
 
+  it('Should render labelled fret markers above the guitar', () => {
+    const fretMarkers = screen.getAllByTestId('fret-marker-top');
+    expect(fretMarkers.length).toBe(numberOfFrets);
+    for (const [index, fretMarker] of fretMarkers.entries()) {
+      expect(fretMarker).toBeInTheDocument();
+      expect(fretMarker).toHaveTextContent(`${index}`);
+    }
+  });
+
+  it('Should render fret markers below the guitar', () => {
+    const fretMarkers = screen.getAllByTestId('fret-marker-bottom');
+    expect(fretMarkers.length).toBe(numberOfFrets);
+    for (const fretMarker of fretMarkers) {
+      expect(fretMarker).toBeInTheDocument();
+    }
+  });
+
   it('Should select notes in the current scale', () => {
     const { notes } = get(scale);
     for (const note of notes) {

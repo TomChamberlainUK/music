@@ -6,8 +6,20 @@
 
   const tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse();
   const strings = tuning.map(note => notes.getConsecutiveNotes(note, numberOfFrets));
+  const fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
 </script>
 
+<div class="fret-markers">
+  {#each { length: numberOfFrets} as _, fretNumber}
+    <div
+      class="fret-marker fret-marker--top"
+      class:isHighlighted={fretMarkers.includes(`${fretNumber}`)}
+      data-testId="fret-marker-top"
+    >
+      {fretNumber}
+    </div>
+  {/each}
+</div>
 <fieldset class="guitar">
   {#each strings as string}
     <div
@@ -34,6 +46,15 @@
     </div>
   {/each}
 </fieldset>
+<div class="fret-markers">
+  {#each { length: numberOfFrets} as _, fretNumber}
+    <div
+      class="fret-marker fret-marker--bottom"
+      class:isHighlighted={fretMarkers.includes(`${fretNumber}`)}
+      data-testId="fret-marker-bottom"
+    />
+  {/each}
+</div>
 
 <style lang="scss">
   @import './Guitar.scss';
