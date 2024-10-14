@@ -62,6 +62,23 @@ describe('<Guitar />', () => {
     }
   });
 
+  it('Should render a configure button', () => {
+    const button = screen.getByRole('button', { name: 'Configure' });
+    expect(button).toBeInTheDocument();
+  });
+
+  it('Should not render configuration controls by default', () => {
+    const config = screen.queryByTestId('guitar-config');
+    expect(config).not.toBeInTheDocument();
+  });
+
+  it('Should render configuration controls when the configure button is clicked', async () => {
+    const button = screen.getByRole('button', { name: 'Configure' });
+    await userEvent.click(button);
+    const config = screen.getByTestId('guitar-config');
+    expect(config).toBeInTheDocument();
+  });
+
   it('Should select notes in the current scale', () => {
     const { notes } = get(scale);
     for (const note of notes) {

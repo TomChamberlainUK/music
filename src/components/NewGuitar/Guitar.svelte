@@ -1,12 +1,19 @@
 <script lang="ts">
   import { tooltip } from '@/actions';
   import { intervalNames, notes, scale } from '@/stores';
+  import { Config } from './subcomponents';
 
   export let numberOfFrets = 22;
 
   const tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse();
   const strings = tuning.map(note => notes.getConsecutiveNotes(note, numberOfFrets));
   const fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
+
+  let displayConfig = false;
+
+  function toggleConfig() {
+    displayConfig = !displayConfig;
+  }
 </script>
 
 <div class="fret-markers">
@@ -55,6 +62,15 @@
     />
   {/each}
 </div>
+<button
+  type="button"
+  on:click={toggleConfig}
+>
+  Configure
+</button>
+{#if displayConfig}
+  <Config />
+{/if}
 
 <style lang="scss">
   @import './Guitar.scss';
