@@ -1,21 +1,23 @@
 <script lang="ts">
   import { tooltip } from '@/actions';
   import { intervalNames, notes, scale } from '@/stores';
+  import { getRange } from '@/utils';
   import { Config } from './subcomponents';
 
   let displayConfig = false;
-  let numberOfFrets = 22;
+  let numberOfFrets = 21;
   let numberOfStrings = 6;
+  let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
 
   const standardTuning = ['E', 'A', 'D', 'G', 'B', 'E'];
-  const fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
   
   $: tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
   $: strings = tuning
     .toReversed()
     .map(note => (
-      notes.getConsecutiveNotes(note, numberOfFrets)
+      notes.getConsecutiveNotes(note, numberOfFrets + 1)
     ));
+  $: frets = getRange(0, numberOfFrets, { format: 'string' });
 
   $: {
     tuning.length = numberOfStrings;
@@ -33,13 +35,13 @@
 </script>
 
 <div class="fret-markers">
-  {#each { length: numberOfFrets} as _, fretNumber}
+  {#each frets as fret}
     <div
       class="fret-marker fret-marker--top"
-      class:isHighlighted={fretMarkers.includes(`${fretNumber}`)}
+      class:isHighlighted={fretMarkers.includes(`${fret}`)}
       data-testId="fret-marker-top"
     >
-      {fretNumber}
+      {fret}
     </div>
   {/each}
 </div>
@@ -70,10 +72,10 @@
   {/each}
 </fieldset>
 <div class="fret-markers">
-  {#each { length: numberOfFrets } as _, fretNumber}
+  {#each frets as fret}
     <div
       class="fret-marker fret-marker--bottom"
-      class:isHighlighted={fretMarkers.includes(`${fretNumber}`)}
+      class:isHighlighted={fretMarkers.includes(`${fret}`)}
       data-testId="fret-marker-bottom"
     />
   {/each}
@@ -88,6 +90,7 @@
   <Config
     bind:numberOfFrets={numberOfFrets}
     bind:numberOfStrings={numberOfStrings}
+    bind:fretMarkers={fretMarkers}
   />
 {/if}
 
