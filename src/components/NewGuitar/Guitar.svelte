@@ -3,14 +3,30 @@
   import { intervalNames, notes, scale } from '@/stores';
   import { Config } from './subcomponents';
 
-  export let numberOfFrets = 22;
-
-  const tuning = ['E', 'A', 'D', 'G', 'B', 'E'].reverse();
-  const strings = tuning.map(note => notes.getConsecutiveNotes(note, numberOfFrets));
-  const fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
-
   let displayConfig = false;
+  let numberOfFrets = 22;
+  let numberOfStrings = 6;
 
+  const standardTuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+  const fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
+  
+  $: tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+  $: strings = tuning
+    .toReversed()
+    .map(note => (
+      notes.getConsecutiveNotes(note, numberOfFrets)
+    ));
+
+  $: {
+    tuning.length = numberOfStrings;
+    if (standardTuning[numberOfStrings - 1]) {
+      tuning[numberOfStrings - 1] = standardTuning[numberOfStrings - 1];
+    } else {
+      tuning[numberOfStrings - 1] = 'E';
+    }
+  }
+
+  
   function toggleConfig() {
     displayConfig = !displayConfig;
   }
@@ -54,7 +70,7 @@
   {/each}
 </fieldset>
 <div class="fret-markers">
-  {#each { length: numberOfFrets} as _, fretNumber}
+  {#each { length: numberOfFrets } as _, fretNumber}
     <div
       class="fret-marker fret-marker--bottom"
       class:isHighlighted={fretMarkers.includes(`${fretNumber}`)}
@@ -69,7 +85,10 @@
   Configure
 </button>
 {#if displayConfig}
-  <Config />
+  <Config
+    bind:numberOfFrets={numberOfFrets}
+    bind:numberOfStrings={numberOfStrings}
+  />
 {/if}
 
 <style lang="scss">
