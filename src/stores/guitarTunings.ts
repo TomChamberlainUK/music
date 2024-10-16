@@ -9,7 +9,7 @@ const store = readable([
   {
     name: 'Flat E Tuning',
     value: 'flat-e-tuning',
-    stringTunings: ['D#', 'G#', 'C#', 'F#', 'A#', 'D#']
+    stringTunings: ['D♯', 'G♯', 'C♯', 'F♯', 'A♯', 'D♯']
   },
   {
     name: 'Standard D Tuning',
@@ -24,7 +24,7 @@ const store = readable([
   {
     name: 'Drop Flat D Tuning',
     value: 'drop-flat-e-tuning',
-    stringTunings: ['C#', 'G#', 'C#', 'F#', 'A#', 'D#']
+    stringTunings: ['C♯', 'G♯', 'C♯', 'F♯', 'A♯', 'D♯']
   },
   {
     name: 'Drop C Tuning',
