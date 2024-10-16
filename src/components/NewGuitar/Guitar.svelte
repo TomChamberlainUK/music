@@ -4,14 +4,14 @@
   import { getRange } from '@/utils';
   import { Config } from './subcomponents';
 
+  const defaultTuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+
   let displayConfig = false;
   let numberOfFrets = 21;
   let numberOfStrings = 6;
   let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
-
-  const standardTuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+  let tuning = [...defaultTuning];
   
-  $: tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
   $: strings = tuning
     .toReversed()
     .map(note => (
@@ -21,8 +21,8 @@
 
   $: {
     tuning.length = numberOfStrings;
-    if (standardTuning[numberOfStrings - 1]) {
-      tuning[numberOfStrings - 1] = standardTuning[numberOfStrings - 1];
+    if (defaultTuning[numberOfStrings - 1]) {
+      tuning[numberOfStrings - 1] = defaultTuning[numberOfStrings - 1];
     } else {
       tuning[numberOfStrings - 1] = 'E';
     }
@@ -90,6 +90,7 @@
   <Config
     bind:numberOfFrets={numberOfFrets}
     bind:numberOfStrings={numberOfStrings}
+    bind:stringTunings={tuning}
     bind:fretMarkers={fretMarkers}
   />
 {/if}
