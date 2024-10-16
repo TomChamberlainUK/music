@@ -1,7 +1,8 @@
+export { default as guitarTunings } from './guitarTunings';
 export { default as highlightedNotes } from './highlightedNotes';
 export { default as instruments } from './instruments';
-export { default as mode } from './mode';
 export { default as intervalNames } from './intervalNames';
+export { default as mode } from './mode';
 export { default as modeName } from './modeName';
 export { default as modeNames } from './modeNames';
 export { default as notes } from './notes';
