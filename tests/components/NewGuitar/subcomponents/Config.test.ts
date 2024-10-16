@@ -1,8 +1,10 @@
 import { render, screen, within } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { get } from 'svelte/store';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Config } from '@/components/NewGuitar/subcomponents';
-import { formatOrdinal } from '@/utils';
+import { guitarTunings } from '@/stores';
+import { formatOrdinal, getRange } from '@/utils';
 
 describe('<Config />', () => {
   const numberOfStrings = 6;
@@ -78,7 +80,7 @@ describe('<Config />', () => {
     }
   });
 
-  it('Should render string tuning controls equal to the number of strings', async () => {
+  it('Should render a string tuning control for each string', async () => {
     const newNumberOfStrings = 12;
     const numberOfStringsControl = screen.getByRole('spinbutton', {
       name: 'Number of Strings'
@@ -86,9 +88,64 @@ describe('<Config />', () => {
     await userEvent.clear(numberOfStringsControl);
     await userEvent.type(numberOfStringsControl, `${newNumberOfStrings}`);
     const group = screen.getByRole('group', {
-      name: 'String Tunings'
+      name: 'Tuning'
     });
-    const stringTuningControls = within(group).getAllByRole('combobox');
-    expect(stringTuningControls.length).toBe(newNumberOfStrings);
+    const stringNames = getRange(1, newNumberOfStrings).map(formatOrdinal);
+    for (const name of stringNames) {
+      const control = within(group).getByRole('combobox', {
+        name
+      });
+      expect(control).toBeInTheDocument();
+    }
+  });
+
+  it('Should render a control for preset tunings', () => {
+    const group = screen.getByRole('group', {
+      name: 'Tuning'
+    });
+    const control = within(group).getByRole('combobox', {
+      name: 'Presets'
+    });
+    expect(control).toBeInTheDocument();
+  });
+
+  it('Should render an option for each preset tuning', () => {
+    const group = screen.getByRole('group', {
+      name: 'Tuning'
+    });
+    const control = within(group).getByRole('combobox', {
+      name: 'Presets'
+    });
+    const presets = get(guitarTunings);
+    for (const { name, value } of presets) { 
+      const option = within(control).getByRole('option', {
+        name
+      });
+      expect(option).toHaveValue(value);
+      expect(option).toBeInTheDocument();
+    }
+  });
+
+  it('Should update the tuning when a preset is selected', async () => {
+    const group = screen.getByRole('group', {
+      name: 'Tuning'
+    });
+    const control = within(group).getByRole('combobox', {
+      name: 'Presets'
+    });
+    const option = within(control).getByRole('option', {
+      name: 'Standard D Tuning'
+    });
+    await userEvent.selectOptions(control, option);
+    const { stringTunings } = get(guitarTunings).find(({ name }) => name === 'Standard D Tuning')!;
+    const stringNames = getRange(1, numberOfStrings)
+      .map(formatOrdinal)
+      .toReversed();
+    for (const [index, name] of stringNames.entries()) {
+      const stringTuningControl = within(group).getByRole('combobox', {
+        name
+      });
+      expect(stringTuningControl).toHaveValue(stringTunings[index]);
+    }
   });
 });
