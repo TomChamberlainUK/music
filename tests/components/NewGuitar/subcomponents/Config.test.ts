@@ -7,14 +7,14 @@ import { formatOrdinal } from '@/utils';
 describe('<Config />', () => {
   const numberOfStrings = 6;
   const numberOfFrets = 22;
-  const stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
+  const tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
   const fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
 
   beforeEach(() => {
     render(Config, {
       numberOfStrings,
       numberOfFrets,
-      stringTunings,
+      tuning,
       fretMarkers
     });
   });
@@ -67,7 +67,7 @@ describe('<Config />', () => {
 
   it('Should render a set of controls for string tunings', () => {
     const group = screen.getByRole('group', {
-      name: 'String Tunings'
+      name: 'Tuning'
     });
     expect(group).toBeInTheDocument();
     for (let i = 0; i < numberOfStrings; i++) {

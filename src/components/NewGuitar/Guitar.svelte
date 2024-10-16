@@ -90,7 +90,7 @@
   <Config
     bind:numberOfFrets={numberOfFrets}
     bind:numberOfStrings={numberOfStrings}
-    bind:stringTunings={tuning}
+    bind:tuning={tuning}
     bind:fretMarkers={fretMarkers}
   />
 {/if}
