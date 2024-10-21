@@ -152,27 +152,28 @@ describe('<Config />', () => {
   });
 
   it('Should update the presets when the number of strings changes', async () => {
-    const newNumberOfStrings = 4;
     const numberOfStringsControl = screen.getByRole('spinbutton', {
       name: 'Number of Strings'
     });
-    await userEvent.clear(numberOfStringsControl);
-    await userEvent.type(numberOfStringsControl, `${newNumberOfStrings}`);
     const group = screen.getByRole('group', {
       name: 'Tuning'
     });
     const control = within(group).getByRole('combobox', {
       name: 'Presets'
     });
-    const presets = guitarTunings.getTuningsForNumberOfStrings(newNumberOfStrings);
-    console.log(presets);
-    for (const { name, value } of presets) { 
-      console.log(name, value);
-      const option = within(control).getByRole('option', {
-        name
-      });
-      expect(option).toHaveValue(value);
-      expect(option).toBeInTheDocument();
+    for (let newNumberOfStrings = 1; newNumberOfStrings <= 6; newNumberOfStrings++) {
+      await userEvent.clear(numberOfStringsControl);
+      await userEvent.type(numberOfStringsControl, `${newNumberOfStrings}`);
+      const presets = guitarTunings.getTuningsForNumberOfStrings(newNumberOfStrings);
+      console.log(presets);
+      for (const { name, value } of presets) {
+        console.log(name, value);
+        const option = within(control).getByRole('option', {
+          name
+        });
+        expect(option).toHaveValue(value);
+        expect(option).toBeInTheDocument();
+      }
     }
   });
 });
