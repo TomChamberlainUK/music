@@ -165,9 +165,7 @@ describe('<Config />', () => {
       await userEvent.clear(numberOfStringsControl);
       await userEvent.type(numberOfStringsControl, `${newNumberOfStrings}`);
       const presets = guitarTunings.getTuningsForNumberOfStrings(newNumberOfStrings);
-      console.log(presets);
       for (const { name, value } of presets) {
-        console.log(name, value);
         const option = within(control).getByRole('option', {
           name
         });
