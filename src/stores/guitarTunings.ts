@@ -47,7 +47,7 @@ const store = readable(defaultGuitarTunings);
 
 export default {
   ...store,
-  getTunings: (numberOfStrings: number) => (
+  getTuningsForNumberOfStrings: (numberOfStrings: number) => (
     get(store)[numberOfStrings] ?? []
   )
 };

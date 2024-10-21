@@ -116,7 +116,7 @@ describe('<Config />', () => {
     const control = within(group).getByRole('combobox', {
       name: 'Presets'
     });
-    const presets = guitarTunings.getTunings(numberOfStrings);
+    const presets = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings);
     for (const { name, value } of presets) { 
       const option = within(control).getByRole('option', {
         name
@@ -138,7 +138,7 @@ describe('<Config />', () => {
     });
     await userEvent.selectOptions(control, option);
     const { stringTunings } = guitarTunings
-      .getTunings(numberOfStrings)
+      .getTuningsForNumberOfStrings(numberOfStrings)
       .find(({ name }) => name === 'Standard D Tuning')!;
     const stringNames = getRange(1, numberOfStrings)
       .map(formatOrdinal)
@@ -164,7 +164,7 @@ describe('<Config />', () => {
     const control = within(group).getByRole('combobox', {
       name: 'Presets'
     });
-    const presets = guitarTunings.getTunings(newNumberOfStrings);
+    const presets = guitarTunings.getTuningsForNumberOfStrings(newNumberOfStrings);
     console.log(presets);
     for (const { name, value } of presets) { 
       console.log(name, value);

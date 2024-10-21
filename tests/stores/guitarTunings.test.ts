@@ -51,9 +51,9 @@ describe('guitarTunings', () => {
     expect(guitarTunings).toEqual(defaultGuitarTunings);
   });
 
-  describe('getTunings()', () => {
+  describe('getTuningsForNumberOfStrings()', () => {
     it('Should return the tunings for a given number of strings', () => {
-      const tunings = guitarTuningsStore.getTunings(6);
+      const tunings = guitarTuningsStore.getTuningsForNumberOfStrings(6);
       expect(tunings).toEqual(default6StringGuitarTunings);
     });
   });

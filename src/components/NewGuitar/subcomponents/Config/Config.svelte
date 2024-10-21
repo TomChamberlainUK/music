@@ -8,12 +8,12 @@
   export let tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
   export let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
 
-  let selectedPreset = guitarTunings.getTunings(numberOfStrings)[0].value;
+  let selectedPreset = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)[0].value;
 
   $: frets = getRange(0, numberOfFrets, { format: 'string' });
 
   function handlePresetChange() {
-    tuning = [...guitarTunings.getTunings(numberOfStrings).find(({ value }) => value === selectedPreset)?.stringTunings ?? []];
+    tuning = [...guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).find(({ value }) => value === selectedPreset)?.stringTunings ?? []];
   }
 </script>
 
@@ -29,7 +29,7 @@
   <FormGroup label="Tuning">
     <FormControlDropdown
       label="Presets"
-      options={guitarTunings.getTunings(numberOfStrings)}
+      options={guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)}
       bind:value={selectedPreset}
       on:change={handlePresetChange}
     />
