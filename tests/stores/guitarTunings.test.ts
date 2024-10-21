@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { guitarTunings as guitarTuningsStore } from '@/stores';
 
 describe('guitarTunings', () => {
-  const defaultGuitarTunings = [
+  const default6StringGuitarTunings = [
     {
       name: 'Standard E Tuning',
       value: 'standard-e-tuning',
@@ -36,8 +36,25 @@ describe('guitarTunings', () => {
     }
   ];
 
+  const defaultGuitarTunings = [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    default6StringGuitarTunings
+  ];
+
   it('Should initialise with default properties', () => {
     const guitarTunings = get(guitarTuningsStore);
     expect(guitarTunings).toEqual(defaultGuitarTunings);
+  });
+
+  describe('getTunings()', () => {
+    it('Should return the tunings for a given number of strings', () => {
+      const tunings = guitarTuningsStore.getTunings(6);
+      expect(tunings).toEqual(default6StringGuitarTunings);
+    });
   });
 });

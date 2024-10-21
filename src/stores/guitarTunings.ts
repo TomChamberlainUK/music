@@ -1,6 +1,6 @@
-import { readable } from 'svelte/store';
+import { get, readable } from 'svelte/store';
 
-const store = readable([
+const default6StringGuitarTunings = [
   {
     name: 'Standard E Tuning',
     value: 'standard-e-tuning',
@@ -31,8 +31,23 @@ const store = readable([
     value: 'drop-c-tuning',
     stringTunings: ['C', 'G', 'C', 'F', 'A', 'D']
   }
-]);
+];
+
+const defaultGuitarTunings = [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  default6StringGuitarTunings
+];
+
+const store = readable(defaultGuitarTunings);
 
 export default {
-  ...store
+  ...store,
+  getTunings: (numberOfStrings: number) => (
+    get(store)[numberOfStrings] ?? []
+  )
 };
