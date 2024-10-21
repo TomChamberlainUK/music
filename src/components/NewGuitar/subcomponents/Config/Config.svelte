@@ -13,7 +13,11 @@
   $: frets = getRange(0, numberOfFrets, { format: 'string' });
 
   function handlePresetChange() {
-    tuning = [...guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).find(({ value }) => value === selectedPreset)?.stringTunings ?? []];
+    tuning = guitarTunings
+      .getTuningsForNumberOfStrings(numberOfStrings)
+      .find(
+        ({ value }) => value === selectedPreset
+      )?.stringTunings ?? [];
   }
 </script>
 
