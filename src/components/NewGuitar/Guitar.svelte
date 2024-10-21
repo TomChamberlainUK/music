@@ -28,7 +28,6 @@
     }
   }
 
-  
   function toggleConfig() {
     displayConfig = !displayConfig;
   }
