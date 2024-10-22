@@ -1,6 +1,7 @@
 import { get } from 'svelte/store';
 import { describe, expect, it } from 'vitest';
 import { guitarTunings as guitarTuningsStore } from '@/stores';
+import { getRange } from '@/utils';
 
 describe('guitarTunings', () => {
   const default4StringGuitarTunings = [
@@ -26,7 +27,7 @@ describe('guitarTunings', () => {
     },
     {
       name: 'Drop Flat D Tuning',
-      value: 'drop-flat-e-tuning',
+      value: 'drop-flat-d-tuning',
       stringTunings: ['C♯', 'G♯', 'C♯', 'F♯']
     },
     {
@@ -59,12 +60,12 @@ describe('guitarTunings', () => {
     },
     {
       name: 'Drop Flat A Tuning',
-      value: 'flat-b-tuning',
+      value: 'drop-flat-b-tuning',
       stringTunings: ['G♯', 'D♯', 'G♯', 'C♯', 'F♯']
     },
     {
       name: 'Drop G Tuning',
-      value: 'standard-a-tuning',
+      value: 'drop-g-tuning',
       stringTunings: ['G', 'D', 'G', 'C', 'F']
     }
   ];
@@ -92,7 +93,7 @@ describe('guitarTunings', () => {
     },
     {
       name: 'Drop Flat D Tuning',
-      value: 'drop-flat-e-tuning',
+      value: 'drop-flat-d-tuning',
       stringTunings: ['C♯', 'G♯', 'C♯', 'F♯', 'A♯', 'D♯']
     },
     {
@@ -119,9 +120,23 @@ describe('guitarTunings', () => {
 
   describe('getTuningsForNumberOfStrings()', () => {
     it('Should return the tunings for a given number of strings', () => {
-      for (let numberOfStrings = 1; numberOfStrings <= 6; numberOfStrings++) {
+      const stringRange = getRange(1, 6);
+      for (const numberOfStrings of stringRange) {
         const tunings = guitarTuningsStore.getTuningsForNumberOfStrings(numberOfStrings);
         expect(tunings).toEqual(defaultGuitarTunings[numberOfStrings] ?? []);
+      }
+    });
+  });
+
+  describe('getTuning()', () => {
+    it('Should return the tuning for a given number of strings and identifier', () => {
+      const stringRange = getRange(1, 6);
+      for (const numberOfStrings of stringRange) {
+        const tuningObjects = guitarTuningsStore.getTuningsForNumberOfStrings(numberOfStrings);
+        for (const { value, stringTunings } of tuningObjects) {
+          const tuning = guitarTuningsStore.getTuning(numberOfStrings, value);
+          expect(tuning).toEqual(stringTunings);
+        }
       }
     });
   });

@@ -20,11 +20,7 @@
 
   $: {
     if (guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).length) {
-      tuning = [...guitarTunings
-        .getTuningsForNumberOfStrings(numberOfStrings)
-        .find(
-          ({ value }) => value === selectedPreset
-        )?.stringTunings ?? []];
+      tuning = guitarTunings.getTuning(numberOfStrings, selectedPreset);
     }
   }
 </script>

@@ -23,7 +23,7 @@ const default4StringGuitarTunings = [
   },
   {
     name: 'Drop Flat D Tuning',
-    value: 'drop-flat-e-tuning',
+    value: 'drop-flat-d-tuning',
     stringTunings: ['C♯', 'G♯', 'C♯', 'F♯']
   },
   {
@@ -56,12 +56,12 @@ const default5StringGuitarTunings = [
   },
   {
     name: 'Drop Flat A Tuning',
-    value: 'flat-b-tuning',
+    value: 'drop-flat-b-tuning',
     stringTunings: ['G♯', 'D♯', 'G♯', 'C♯', 'F♯']
   },
   {
     name: 'Drop G Tuning',
-    value: 'standard-a-tuning',
+    value: 'drop-g-tuning',
     stringTunings: ['G', 'D', 'G', 'C', 'F']
   }
 ];
@@ -89,7 +89,7 @@ const default6StringGuitarTunings = [
   },
   {
     name: 'Drop Flat D Tuning',
-    value: 'drop-flat-e-tuning',
+    value: 'drop-flat-d-tuning',
     stringTunings: ['C♯', 'G♯', 'C♯', 'F♯', 'A♯', 'D♯']
   },
   {
@@ -113,7 +113,16 @@ const store = readable(defaultGuitarTunings);
 
 export default {
   ...store,
-  getTuningsForNumberOfStrings: (numberOfStrings: number) => (
-    get(store)[numberOfStrings] ?? []
-  )
+  getTuningsForNumberOfStrings,
+  getTuning
 };
+
+function getTuning(numberOfStrings: number, identifier: string) {
+  const tuningObjects = getTuningsForNumberOfStrings(numberOfStrings);
+  const { stringTunings } = tuningObjects.find(({ value }) => value === identifier) ?? {};
+  return [...stringTunings ?? []];
+}
+
+function getTuningsForNumberOfStrings(numberOfStrings: number) {
+  return get(store)[numberOfStrings] ?? [];
+}
