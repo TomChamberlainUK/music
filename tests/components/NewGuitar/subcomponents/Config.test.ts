@@ -174,4 +174,28 @@ describe('<Config />', () => {
       }
     }
   });
+
+  it('Should select the first known preset tuning when the number of strings changes', async () => {
+    const numberOfStringsControl = screen.getByRole('spinbutton', {
+      name: 'Number of Strings'
+    });
+    const numberOfStringsToPresets = get(guitarTunings)
+      .map((presets) => (
+        presets
+          ? presets[0].value
+          : null
+      ));
+    for (const [newNumberOfStrings, preset] of numberOfStringsToPresets.entries()) {
+      if (!preset) continue;
+      await userEvent.clear(numberOfStringsControl);
+      await userEvent.type(numberOfStringsControl, newNumberOfStrings.toString());
+      const group = screen.getByRole('group', {
+        name: 'Tuning'
+      });
+      const control = within(group).getByRole('combobox', {
+        name: 'Presets'
+      });
+      expect(control).toHaveValue(preset);
+    }
+  });
 });
