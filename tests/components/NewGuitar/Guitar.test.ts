@@ -10,9 +10,7 @@ describe('<Guitar />', () => {
   const numberOfStrings = 6;
 
   beforeEach(() => {
-    render(Guitar, {
-      numberOfFrets
-    });
+    render(Guitar);
   });
 
   afterEach(() => {
