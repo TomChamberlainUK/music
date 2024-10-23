@@ -1,79 +1,52 @@
 <script lang="ts">
-  import {
-    Form,
-    FormControlCheckboxMulti,
-    FormControlDropdown,
-    FormControlNumber,
-    FormGroup
-  } from '@/components';
-  import {
-    formatOrdinal,
-    getRange,
-    notes,
-    tuningPresets as tuningPresetsPerNumberOfStrings
-  } from '@/utils';
+  import { FormControlCheckboxMulti, FormControlDropdown, FormControlNumber, FormGroup } from '@/components/Form';
+  import { guitarTunings, notes } from '@/stores';
+  import { formatOrdinal, getRange } from '@/utils';
 
-  export let numberOfFrets = 22;
   export let numberOfStrings = 6;
-  export let stringTunings = ['E', 'A', 'D', 'G', 'B', 'E'];
+  export let numberOfFrets = 21;
+  export let tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
   export let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
+
+  let selectedPreset = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)[0].value;
 
   $: frets = getRange(0, numberOfFrets, { format: 'string' });
 
-  let selectedPreset: string;
-
-  function setStringTunings(tunings: string[]) {
-    stringTunings = [...tunings];
-  }
-
-  function updateStringTunings() {
-    stringTunings = [...stringTunings];
-  }
-
-  $: tuningPresets = tuningPresetsPerNumberOfStrings[numberOfStrings];
-
-  $: presetTuning = tuningPresets?.find(preset => selectedPreset === preset.value)?.stringTunings;
-
   $: {
-    if (presetTuning) {
-      setStringTunings(presetTuning);
+    if (guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).length) {
+      selectedPreset = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)[0].value;
     }
   }
 
   $: {
-    if (tuningPresets && !tuningPresets.find(({value}) => selectedPreset === value)) {
-      selectedPreset = tuningPresets[0].value;
+    if (guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).length) {
+      tuning = guitarTunings.getTuning(numberOfStrings, selectedPreset);
     }
   }
-
 </script>
 
-<Form label="Guitar Config">
+<div data-testId="guitar-config">
   <FormControlNumber
-    label="Number of Strings:"
+    label="Number of Strings"
     bind:value={numberOfStrings}
-    on:input={() => stringTunings.length = numberOfStrings}
   />
   <FormControlNumber
-    label="Number of Frets:"
+    label="Number of Frets"
     bind:value={numberOfFrets}
   />
   <FormGroup label="Tuning">
-    {#if tuningPresets}
+    <FormControlDropdown
+      label="Presets"
+      options={guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)}
+      bind:value={selectedPreset}
+    />
+    <br />
+    <br />
+    {#each { length: numberOfStrings } as _, index}
       <FormControlDropdown
-        label="Presets:"
-        options={tuningPresets}
-        bind:value={selectedPreset}
-        on:change={updateStringTunings}
-      />
-      <br />
-      <br />
-    {/if}
-    {#each { length: numberOfStrings } as _, i}
-      <FormControlDropdown
-        label={formatOrdinal(numberOfStrings - i)}
-        options={notes}
-        bind:value={stringTunings[i]}
+        label={formatOrdinal(numberOfStrings - index)}
+        options={$notes}
+        bind:value={tuning[index]}
       />
     {/each}
   </FormGroup>
@@ -83,4 +56,4 @@
       bind:checked={fretMarkers}
     />
   </FormGroup>
-</Form>
+</div>
