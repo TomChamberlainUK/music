@@ -58,22 +58,30 @@
       case 'ArrowRight':
         if (focussedFret === null) return;
         event.preventDefault();
-        focussedFret.fret = focussedFret.fret + 1;
+        focussedFret.fret = focussedFret.fret < numberOfFrets
+          ? focussedFret.fret + 1
+          : 0;
         break;
       case 'ArrowLeft':
         if (focussedFret === null) return;
         event.preventDefault();
-        focussedFret.fret = focussedFret.fret - 1;
+        focussedFret.fret = focussedFret.fret > 0
+          ? focussedFret.fret - 1
+          : numberOfFrets;
         break;
       case 'ArrowDown':
         if (focussedFret === null) return;
         event.preventDefault();
-        focussedFret.string = focussedFret.string + 1;
+        focussedFret.string = focussedFret.string < numberOfStrings - 1
+          ? focussedFret.string + 1
+          : 0;
         break;
       case 'ArrowUp':
         if (focussedFret === null) return;
         event.preventDefault();
-        focussedFret.string = focussedFret.string - 1;
+        focussedFret.string = focussedFret.string > 0
+          ? focussedFret.string - 1
+          : numberOfStrings - 1;
         break;
     }
   }
