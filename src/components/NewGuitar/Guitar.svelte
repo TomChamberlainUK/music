@@ -11,12 +11,12 @@
   let numberOfStrings = 6;
   let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
   let tuning = [...defaultTuning];
-
+  
+  let focussedFret: { string: number, fret: number } | null = null;
   let fretElements: HTMLInputElement[][] = new Array(numberOfStrings)
     .fill(null)
     .map(() => new Array(numberOfFrets + 1).fill(null));
   
-
   $: {
     // TODO: This triggers twice due to a bug in Svelte that is fixed in v5
     if (fretElements.length > numberOfStrings) {
@@ -31,7 +31,11 @@
     fretElements = [...fretElements];
   }
 
-  
+  $: (() => {
+    if (focussedFret === null) return;
+    fretElements[focussedFret.string][focussedFret.fret]?.focus();
+  })();
+
   $: strings = tuning
     .toReversed()
     .map(note => (
@@ -46,6 +50,15 @@
       tuning[numberOfStrings - 1] = defaultTuning[numberOfStrings - 1];
     } else {
       tuning[numberOfStrings - 1] = 'E';
+    }
+  }
+
+  function handleKeyboardEvent(event: KeyboardEvent) {
+    switch(event.key) {
+      case 'ArrowRight':
+        if (focussedFret === null) return;
+        focussedFret.fret = focussedFret.fret + 1;
+        break;
     }
   }
 
@@ -83,6 +96,9 @@
             value={note}
             bind:group={$scale.notes}
             bind:this={fretElements[stringIndex][fretIndex]}
+            on:focus={() => focussedFret = { string: stringIndex, fret: fretIndex }}
+            on:blur={() => focussedFret = null}
+            on:keydown={event => handleKeyboardEvent(event)}
           />
           <span class="fret__label">
             {note}

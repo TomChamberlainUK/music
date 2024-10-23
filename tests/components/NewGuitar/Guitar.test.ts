@@ -101,4 +101,12 @@ describe('<Guitar />', () => {
     const tooltip = screen.getByRole('tooltip', { name: 'Minor 3rd' });
     expect(tooltip).toBeInTheDocument();
   });
+
+  it('Should focus the next fret when focused and the right arrow key is pressed', async () => {
+    const fret = screen.getAllByRole('checkbox', { name: 'E' })[0];
+    const nextFret = screen.getAllByRole('checkbox', { name: 'F' })[0];
+    await userEvent.click(fret);
+    await userEvent.keyboard('{arrowright}');
+    expect(nextFret).toHaveFocus();
+  });
 });
