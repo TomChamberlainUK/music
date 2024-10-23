@@ -91,70 +91,72 @@
   }
 </script>
 
-<div class="fret-markers">
-  {#each frets as fret}
-    <div
-      class="fret-marker fret-marker--top"
-      class:isHighlighted={fretMarkers.includes(`${fret}`)}
-      data-testId="fret-marker-top"
-    >
-      {fret}
-    </div>
-  {/each}
-</div>
-<fieldset class="guitar">
-  {#each strings as string, stringIndex}
-    <div
-      class="string"
-      data-testId="string"
-    >
-      {#each string as note, fretIndex}
-        <label
-          class="fret"
-          class:isRoot={$scale.root === note}
-          use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
-        >
-          <input
-            class="fret__input"
-            type="checkbox"
-            value={note}
-            bind:group={$scale.notes}
-            bind:this={fretElements[stringIndex][fretIndex]}
-            on:focus={() => focussedFret = { string: stringIndex, fret: fretIndex }}
-            on:blur={() => focussedFret = null}
-            on:keydown={event => handleKeyboardEvent(event)}
-          />
-          <span class="fret__label">
-            {note}
-          </span>
-        </label>
-      {/each}
-    </div>
-  {/each}
-</fieldset>
-<div class="fret-markers">
-  {#each frets as fret}
-    <div
-      class="fret-marker fret-marker--bottom"
-      class:isHighlighted={fretMarkers.includes(`${fret}`)}
-      data-testId="fret-marker-bottom"
+<div>
+  <div class="fret-markers">
+    {#each frets as fret}
+      <div
+        class="fret-marker fret-marker--top"
+        class:isHighlighted={fretMarkers.includes(`${fret}`)}
+        data-testId="fret-marker-top"
+      >
+        {fret}
+      </div>
+    {/each}
+  </div>
+  <fieldset class="guitar">
+    {#each strings as string, stringIndex}
+      <div
+        class="string"
+        data-testId="string"
+      >
+        {#each string as note, fretIndex}
+          <label
+            class="fret"
+            class:isRoot={$scale.root === note}
+            use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
+          >
+            <input
+              class="fret__input"
+              type="checkbox"
+              value={note}
+              bind:group={$scale.notes}
+              bind:this={fretElements[stringIndex][fretIndex]}
+              on:focus={() => focussedFret = { string: stringIndex, fret: fretIndex }}
+              on:blur={() => focussedFret = null}
+              on:keydown={event => handleKeyboardEvent(event)}
+            />
+            <span class="fret__label">
+              {note}
+            </span>
+          </label>
+        {/each}
+      </div>
+    {/each}
+  </fieldset>
+  <div class="fret-markers">
+    {#each frets as fret}
+      <div
+        class="fret-marker fret-marker--bottom"
+        class:isHighlighted={fretMarkers.includes(`${fret}`)}
+        data-testId="fret-marker-bottom"
+      />
+    {/each}
+  </div>
+  <button
+    type="button"
+    on:click={toggleConfig}
+  >
+    Configure
+  </button>
+  {#if displayConfig}
+    <Config
+      bind:numberOfFrets={numberOfFrets}
+      bind:numberOfStrings={numberOfStrings}
+      bind:tuning={tuning}
+      bind:fretMarkers={fretMarkers}
     />
-  {/each}
+  {/if}
 </div>
-<button
-  type="button"
-  on:click={toggleConfig}
->
-  Configure
-</button>
-{#if displayConfig}
-  <Config
-    bind:numberOfFrets={numberOfFrets}
-    bind:numberOfStrings={numberOfStrings}
-    bind:tuning={tuning}
-    bind:fretMarkers={fretMarkers}
-  />
-{/if}
 
 <style lang="scss">
   @import './Guitar.scss';
