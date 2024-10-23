@@ -18,18 +18,17 @@
   
 
   $: {
+    // TODO: This triggers twice due to a bug in Svelte that is fixed in v5
     if (fretElements.length > numberOfStrings) {
       fretElements = [
         ...fretElements.filter((_, index) => (
-          index <= numberOfStrings
+          index <= numberOfStrings // Edit this when Svelte v5 is released to be less than not less than or equal to
         ))
       ];
     } else while (fretElements.length < numberOfStrings) {
       fretElements.push(new Array(numberOfFrets + 1).fill(null));
     }
     fretElements = [...fretElements];
-    // TODO: AT THE MOMENT THIS LEAVES AN EXTRA ARRAY IN FRET ELEMENTS WHEN THE NUMBER OF STRINGS IS REDUCED
-    console.log(fretElements);
   }
 
   
