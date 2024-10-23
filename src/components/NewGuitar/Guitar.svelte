@@ -57,7 +57,23 @@
     switch(event.key) {
       case 'ArrowRight':
         if (focussedFret === null) return;
+        event.preventDefault();
         focussedFret.fret = focussedFret.fret + 1;
+        break;
+      case 'ArrowLeft':
+        if (focussedFret === null) return;
+        event.preventDefault();
+        focussedFret.fret = focussedFret.fret - 1;
+        break;
+      case 'ArrowDown':
+        if (focussedFret === null) return;
+        event.preventDefault();
+        focussedFret.string = focussedFret.string + 1;
+        break;
+      case 'ArrowUp':
+        if (focussedFret === null) return;
+        event.preventDefault();
+        focussedFret.string = focussedFret.string - 1;
         break;
     }
   }

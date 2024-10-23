@@ -109,4 +109,30 @@ describe('<Guitar />', () => {
     await userEvent.keyboard('{arrowright}');
     expect(nextFret).toHaveFocus();
   });
+
+  it('Should focus the previous fret when focused and the left arrow key is pressed', async () => {
+    const fret = screen.getAllByRole('checkbox', { name: 'F' })[0];
+    const previousFret = screen.getAllByRole('checkbox', { name: 'E' })[0];
+    await userEvent.click(fret);
+    await userEvent.keyboard('{arrowleft}');
+    expect(previousFret).toHaveFocus();
+  });
+
+  it('Should focus the next string when focused and the down arrow key is pressed', async () => {
+    const strings = screen.getAllByTestId('string');
+    const fret = within(strings[0]).getAllByRole('checkbox', { name: 'E' })[0];
+    const nextString = within(strings[1]).getAllByRole('checkbox', { name: 'B' })[0];
+    await userEvent.click(fret);
+    await userEvent.keyboard('{arrowdown}');
+    expect(nextString).toHaveFocus();
+  });
+
+  it('Should focus the previous string when focused and the up arrow key is pressed', async () => {
+    const strings = screen.getAllByTestId('string');
+    const fret = within(strings[1]).getAllByRole('checkbox', { name: 'B' })[0];
+    const previousString = within(strings[0]).getAllByRole('checkbox', { name: 'E' })[0];
+    await userEvent.click(fret);
+    await userEvent.keyboard('{arrowup}');
+    expect(previousString).toHaveFocus();
+  });
 });
