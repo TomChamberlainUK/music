@@ -11,12 +11,34 @@
   let numberOfStrings = 6;
   let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
   let tuning = [...defaultTuning];
+
+  let fretElements: HTMLInputElement[][] = new Array(numberOfStrings)
+    .fill(null)
+    .map(() => new Array(numberOfFrets + 1).fill(null));
+  
+
+  $: {
+    if (fretElements.length > numberOfStrings) {
+      fretElements = [
+        ...fretElements.filter((_, index) => (
+          index <= numberOfStrings
+        ))
+      ];
+    } else while (fretElements.length < numberOfStrings) {
+      fretElements.push(new Array(numberOfFrets + 1).fill(null));
+    }
+    fretElements = [...fretElements];
+    // TODO: AT THE MOMENT THIS LEAVES AN EXTRA ARRAY IN FRET ELEMENTS WHEN THE NUMBER OF STRINGS IS REDUCED
+    console.log(fretElements);
+  }
+
   
   $: strings = tuning
     .toReversed()
     .map(note => (
       notes.getConsecutiveNotes(note, numberOfFrets + 1)
     ));
+
   $: frets = getRange(0, numberOfFrets, { format: 'string' });
 
   $: {
@@ -45,12 +67,12 @@
   {/each}
 </div>
 <fieldset class="guitar">
-  {#each strings as string}
+  {#each strings as string, stringIndex}
     <div
       class="string"
       data-testId="string"
     >
-      {#each string as note}
+      {#each string as note, fretIndex}
         <label
           class="fret"
           class:isRoot={$scale.root === note}
@@ -61,6 +83,7 @@
             type="checkbox"
             value={note}
             bind:group={$scale.notes}
+            bind:this={fretElements[stringIndex][fretIndex]}
           />
           <span class="fret__label">
             {note}
