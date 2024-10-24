@@ -24,12 +24,12 @@ describe('Notes Store', () => {
   });
 
   describe('getConsecutiveNotes()', () => {
-    it('Should return consecutive notes from a root', () => {
-      const consecutiveNotes = notesStore.getConsecutiveNotes('C', 5);
-      expect(consecutiveNotes).toEqual(['C', 'C♯', 'D', 'D♯', 'E']);
+    it('Should return all consecutive notes from a root', () => {
+      const consecutiveNotes = notesStore.getConsecutiveNotes('C');
+      expect(consecutiveNotes).toEqual(['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']);
     });
 
-    it('Should wrap around to the beginning of the notes array', () => {
+    it('Should return X amount of consecutive notes when passed a number', () => {
       const consecutiveNotes = notesStore.getConsecutiveNotes('G', 7);
       expect(consecutiveNotes).toEqual(['G', 'G♯', 'A', 'A♯', 'B', 'C', 'C♯']);
     });

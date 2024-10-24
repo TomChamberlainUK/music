@@ -17,7 +17,7 @@ const store = readable([
 
 export default {
   ...store,
-  getConsecutiveNotes: (root: string, numberOfNotes: number) => {
+  getConsecutiveNotes: (root: string, numberOfNotes: number = 12) => {
     const notes = get(store);
     const rootIndex = notes.indexOf(root);
     const consecutiveNotes = [];
