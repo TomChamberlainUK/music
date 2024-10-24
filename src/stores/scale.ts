@@ -1,5 +1,4 @@
-import { get, writable } from 'svelte/store';
-import { getNotesFromRoot } from '@/utils';
+import { writable } from 'svelte/store';
 import notesStore from './notes';
 
 type ScalePatterns = Record<string, number[]>;
@@ -111,8 +110,7 @@ function arraysAreEqual(a: string[], b: string[]) {
 }
 
 function getScaleNotes() {
-  const allNotes = get(notesStore);
-  const notesFromRoot = getNotesFromRoot(currentRoot, allNotes);
+  const notesFromRoot = notesStore.getConsecutiveNotes(currentRoot);
   const scalePattern = scalePatterns[currentScaleName][currentModeName];
   return scalePattern.map(interval => notesFromRoot[interval]);
 }
