@@ -1,1 +1,0 @@
-export type { SelectedNote } from './SelectedNote';
