@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { getFifthsFromRoot } from '@/utils';
-  import { getFifthsShapes, getModeOffset } from './utils';
+  import { getFifthsFromRoot, getFifthsShapes, getModeOffset } from './utils';
   import { scale } from '@/stores';
 
   const majorFifths = [
