@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getFifthsFromRoot } from '@/utils';
   import { getFifthsShapes, getModeOffset } from './utils';
-  import { mode, root } from '@/stores';
+  import { scale } from '@/stores';
 
   const majorFifths = [
     'C',
@@ -55,8 +55,8 @@
   const height = '15rem';
 
   $: fifthsFromC = getFifthsFromRoot('C');
-  $: rootIndex = fifthsFromC.findIndex(value => value === $root);
-  $: modeOffsetIndex = rootIndex + getModeOffset($mode);
+  $: rootIndex = fifthsFromC.findIndex(value => value === $scale.root);
+  $: modeOffsetIndex = rootIndex + getModeOffset($scale.modeName);
   $: fifthsShapes = getFifthsShapes({
     allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
     highlightOffset: modeOffsetIndex,
