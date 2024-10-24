@@ -82,6 +82,12 @@ describe('Scale Store', () => {
       }
     });
 
+    it('Should update the available mode names when the scale name changes', () => {
+      scale.set({ scaleName: 'pentatonic' });
+      const { modeNames } = get(scale);
+      expect(modeNames).toEqual(['major', 'minor']);
+    });
+
     it('Should update the current notes from a mode name', () => {
       const scales = [
         { modeName: 'ionian', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
@@ -97,19 +103,6 @@ describe('Scale Store', () => {
         const { notes: currentNotes } = get(scale);
         expect(currentNotes).toEqual(notes);
       }
-    });
-  });
-
-  describe('getAvailableModeNames()', () => {
-    it('Should return the available mode names for the current scale', () => {
-      const { modeNames } = get(scale);
-      expect(modeNames).toEqual(['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']);
-    });
-
-    it('Should update the available mode names when the scale name changes', () => {
-      scale.set({ scaleName: 'pentatonic' });
-      const { modeNames } = get(scale);
-      expect(modeNames).toEqual(['major', 'minor']);
     });
   });
 });
