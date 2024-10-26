@@ -1,85 +1,58 @@
 <script lang="ts">
+  import { intervalNames, scale } from '@/stores';
   import { tooltip } from '@/actions';
-  import { highlightedNotes, selectedNote } from '@/stores';
 
-  const whiteKeys = [
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'A',
-    'B'
-  ];
+  let keyElements: HTMLInputElement[] = [];
+  let focusIndex: number | null = null;
 
-  const blackKeys = [
-    'C#',
-    'D#',
-    'F#',
-    'G#',
-    'A#'
-  ];
+  $: (() => {
+    if (focusIndex === null) return;
+    keyElements[focusIndex]?.focus();
+  })();
 
-  $: isSelected = (note: string) => (
-    $selectedNote?.value === note
-  );
-
-  $: isHighlighted = (note: string) => (
-    $highlightedNotes.some(({ value }) => value === note)
-  );
-
-  $: getHighlightedNote = (note: string) => (
-    $highlightedNotes.find(({ value }) => value === note)
-  );
-
-  $: getIntervalName = (note:string) => (
-    getHighlightedNote(note)?.name
-  );
+  function handleKeyboardEvent(event: KeyboardEvent) {
+    switch(event.key) {
+      case 'ArrowRight':
+        if (focusIndex === null) return;
+        focusIndex = focusIndex < keyElements.length - 1
+          ? focusIndex + 1
+          : 0;
+        break;
+      case 'ArrowLeft':
+        if (focusIndex === null) return;
+        focusIndex = focusIndex > 0
+          ? focusIndex - 1
+          : keyElements.length - 1;
+        break;
+    }
+  }
 </script>
 
-<!-- TODO: replace testId with accessible role -->
-<div class="container" data-testId="piano">
-  <div class="piano">
-    <div class="white-keys">
-      {#each whiteKeys as note}
-        <!-- TODO: aria-selected should be set to <td /> once Piano is an accessible grid -->
-        <!-- svelte-ignore a11y-role-supports-aria-props -->
-        <button class="white-key"
-          on:click={() => selectedNote.select(note)}
-          use:tooltip={{ text: getIntervalName(note) }}
-          aria-current={isSelected(note) && 'location'}
-          aria-selected={isHighlighted(note) ? 'true' : 'false'}
-        >
-          <div
-            class="white-key__indicator"
-            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
-          >
-            {note}
-          </div>
-        </button>
-      {/each}
-    </div>
-    <div class="black-keys">
-      {#each blackKeys as note}
-        <!-- TODO: aria-selected should be set to <td /> once Piano is an accessible grid -->
-        <!-- svelte-ignore a11y-role-supports-aria-props -->
-        <button class="black-key"
-          on:click={() => selectedNote.select(note)}
-          use:tooltip={{ text: getIntervalName(note) }}
-          aria-current={isSelected(note) && 'location'}
-          aria-selected={isHighlighted(note) ? 'true' : 'false'}
-        >
-          <div
-            class="black-key__indicator"
-            style={isHighlighted(note) ? `background-color: ${getHighlightedNote(note)?.color};` : undefined}
-          >
-            {note}
-          </div>
-        </button>
-      {/each}
-    </div>
-  </div>
-</div>
+<fieldset class="piano">
+  {#each ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] as note, i}
+    <label
+      class="key"
+      class:isRoot={$scale.root === note}
+      class:key--sharp={note.includes('♯')}
+      use:tooltip={{ text: intervalNames.getIntervalName($scale.root, note) }}
+    >
+      <input
+        class="key__input"
+        type="checkbox"
+        tabindex="0"
+        value={note}
+        bind:group={$scale.notes}
+        bind:this={keyElements[i]}
+        on:focus={() => focusIndex = i}
+        on:blur={() => focusIndex = null}
+        on:keydown={event => handleKeyboardEvent(event)}
+      />
+      <span class="key__label">
+        {note}
+      </span>
+    </label>
+  {/each}
+</fieldset>
 
 <style lang="scss">
   @import './Piano.scss';

@@ -1,15 +1,12 @@
-import { getNotesFromRoot } from '@/utils';
+import { notes as notesStore } from '@/stores';
 
 export default function getFifthsFromRoot(root: string) {
-  if (!root) return [];
-
-  const output = [];
-
-  const notes = getNotesFromRoot(root);
+  const notes = notesStore.getConsecutiveNotes(root);
   const startingIndex = notes.findIndex(note => note === root);
-
+  
   let currentIndex = startingIndex;
   let iterationCount = 0;
+  const output = [];
 
   do {
     output.push(notes[currentIndex]);
