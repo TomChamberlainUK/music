@@ -9,5 +9,20 @@
   ],
   "assignees": [
     "TomChamberlainUK"
-  ]
+  ],
+  "packageRules": [
+    {
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchPackageNames": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    }
+  ],
+  "platformAutomerge": true
 }
