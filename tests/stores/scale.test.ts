@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { describe, it, expect, afterEach, vi } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { scale } from '@/stores';
 
 describe('Scale Store', () => {

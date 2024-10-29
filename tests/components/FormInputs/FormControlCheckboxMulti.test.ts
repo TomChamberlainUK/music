@@ -8,11 +8,10 @@ describe('<FormControlCheckboxMulti />', () => {
   const checked: string[] = [];
 
   beforeEach(() => {
-    const { component } = render(FormControlCheckboxMulti, {
+    render(FormControlCheckboxMulti, {
       values,
       checked
     });
-    component
   });
 
   it('Should render each input', () => {
