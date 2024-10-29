@@ -10,7 +10,7 @@ describe('<FormControlCheckboxMulti />', () => {
   beforeEach(() => {
     render(FormControlCheckboxMulti, {
       values,
-      checked
+      checked,
     });
   });
 

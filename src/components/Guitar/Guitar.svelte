@@ -11,21 +11,22 @@
   let numberOfStrings = 6;
   let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
   let tuning = [...defaultTuning];
-  
-  let focussedFret: { string: number, fret: number } | null = null;
+
+  let focussedFret: { string: number; fret: number } | null = null;
   let fretElements: HTMLInputElement[][] = new Array(numberOfStrings)
     .fill(null)
     .map(() => new Array(numberOfFrets + 1).fill(null));
-  
+
   $: {
     // TODO: This triggers twice due to a bug in Svelte that is fixed in v5
     if (fretElements.length > numberOfStrings) {
       fretElements = [
         ...fretElements.filter((_, index) => (
           index <= numberOfStrings // Edit this when Svelte v5 is released to be less than not less than or equal to
-        ))
+        )),
       ];
-    } else while (fretElements.length < numberOfStrings) {
+    }
+    else while (fretElements.length < numberOfStrings) {
       fretElements.push(new Array(numberOfFrets + 1).fill(null));
     }
     fretElements = [...fretElements];
@@ -48,13 +49,14 @@
     tuning.length = numberOfStrings;
     if (defaultTuning[numberOfStrings - 1]) {
       tuning[numberOfStrings - 1] = defaultTuning[numberOfStrings - 1];
-    } else {
+    }
+    else {
       tuning[numberOfStrings - 1] = 'E';
     }
   }
 
   function handleKeyboardEvent(event: KeyboardEvent) {
-    switch(event.key) {
+    switch (event.key) {
       case 'ArrowRight':
         if (focussedFret === null) return;
         event.preventDefault();

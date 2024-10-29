@@ -15,7 +15,7 @@ describe('Notes Store', () => {
     'F',
     'F♯',
     'G',
-    'G♯'
+    'G♯',
   ];
 
   it('Should initialise with default properties', () => {

@@ -8,7 +8,7 @@ describe('<Header />', () => {
 
   beforeEach(() => {
     render(Header, {
-      onMenuButtonClick: menuButtonClickHandler
+      onMenuButtonClick: menuButtonClickHandler,
     });
   });
 
@@ -20,7 +20,7 @@ describe('<Header />', () => {
   it('Should render a title', () => {
     const title = screen.getByRole('heading', {
       level: 1,
-      name: 'Music'
+      name: 'Music',
     });
     expect(title).toBeInTheDocument();
   });

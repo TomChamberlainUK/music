@@ -5,12 +5,11 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { Piano } from '@/components';
 import { scale } from '@/stores';
 
-
 describe('<Piano />', () => {
   beforeEach(() => {
     render(Piano);
   });
-  
+
   afterEach(() => {
     cleanup();
     scale.reset();

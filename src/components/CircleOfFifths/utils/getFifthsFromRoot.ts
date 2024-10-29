@@ -3,7 +3,7 @@ import { notes as notesStore } from '@/stores';
 export default function getFifthsFromRoot(root: string) {
   const notes = notesStore.getConsecutiveNotes(root);
   const startingIndex = notes.findIndex(note => note === root);
-  
+
   let currentIndex = startingIndex;
   let iterationCount = 0;
   const output = [];

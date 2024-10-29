@@ -46,23 +46,23 @@ export default function getFifthsShapes({
       const endAngle = (j + 1 - angleModifier) / totalSegments * totalRadians;
       const innerStart = new Vector2D(
         Math.cos(startAngle) * innerRadius + center.x,
-        Math.sin(startAngle) * innerRadius + center.y
+        Math.sin(startAngle) * innerRadius + center.y,
       );
       const outerStart = new Vector2D(
         Math.cos(startAngle) * outerRadius + center.x,
-        Math.sin(startAngle) * outerRadius + center.y
+        Math.sin(startAngle) * outerRadius + center.y,
       );
       const centerMiddle = new Vector2D(
         Math.cos(centerAngle) * centerRadius + center.x,
-        Math.sin(centerAngle) * centerRadius + center.y
+        Math.sin(centerAngle) * centerRadius + center.y,
       );
       const innerEnd = new Vector2D(
         Math.cos(endAngle) * innerRadius + center.x,
-        Math.sin(endAngle) * innerRadius + center.y
+        Math.sin(endAngle) * innerRadius + center.y,
       );
       const outerEnd = new Vector2D(
         Math.cos(endAngle) * outerRadius + center.x,
-        Math.sin(endAngle) * outerRadius + center.y
+        Math.sin(endAngle) * outerRadius + center.y,
       );
       const path = [
         `M ${innerStart.x} ${innerStart.y}`,
@@ -70,7 +70,7 @@ export default function getFifthsShapes({
         `A ${radius} ${radius} 0 0 1 ${outerEnd.x} ${outerEnd.y}`,
         `L ${innerEnd.x} ${innerEnd.y}`,
         `A ${innerRadius} ${innerRadius} 0 0 0 ${innerStart.x} ${innerStart.y}`,
-        'Z'
+        'Z',
       ].join(' ');
       const isMajor = i === 0;
       const isMinor = i === 1;
@@ -79,15 +79,15 @@ export default function getFifthsShapes({
       const isFourthFromStartingPoint = j === (1 + highlightOffset) % totalSegments; // anticlockwise around the circle
       const isFifthFromStartingPoint = j === (totalSegments - 1 + highlightOffset) % totalSegments; // clockwise around the circle
       const isHighlighted = (
-        (isMajor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint)) ||
-        (isMinor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint)) ||
-        (isDiminished && isStartingPoint)
+        (isMajor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint))
+        || (isMinor && (isStartingPoint || isFourthFromStartingPoint || isFifthFromStartingPoint))
+        || (isDiminished && isStartingPoint)
       );
       fifths.push({
         name: allFifths[(i * totalSegments) + j],
         textCoordinates: centerMiddle,
         path,
-        isHighlighted
+        isHighlighted,
       });
     }
   });

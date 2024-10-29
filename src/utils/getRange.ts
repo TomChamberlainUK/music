@@ -7,18 +7,18 @@ function getRange<T extends Options['format'] = 'number'>(
   min: number,
   max: number,
   options: {
-    format?: T
+    format?: T;
   }
 ): (T extends 'string' ? string : number)[];
 function getRange(
   min: number,
   max: number,
   {
-    format
-  }: Options = {}
+    format,
+  }: Options = {},
 ) {
   const range = [
-    ...Array(max + 1).keys()
+    ...Array(max + 1).keys(),
   ].slice(min);
   const formattedRange = format !== 'string'
     ? range

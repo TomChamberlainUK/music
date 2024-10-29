@@ -22,12 +22,12 @@ describe('<Menu />', () => {
     beforeEach(() => {
       render(Menu);
     });
-  
+
     it('Should render', () => {
       const menu = screen.getByRole('list');
       expect(menu).toBeInTheDocument();
     });
-  
+
     it('Should render a Theme dropdown', () => {
       const dropdown = screen.getByRole('combobox', { name: 'Theme' });
       expect(dropdown).toBeInTheDocument();

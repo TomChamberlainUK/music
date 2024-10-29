@@ -12,7 +12,7 @@ describe('<FormControlNumber />', () => {
   beforeEach(() => {
     const { component } = render(FormControlNumber, {
       label,
-      value
+      value,
     });
     inputComponent = component;
   });

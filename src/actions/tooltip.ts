@@ -14,7 +14,7 @@ const tooltip: Action<HTMLElement, { text?: string }> = (node, { text }) => {
     const { x, y } = getTooltipPosition();
     tooltipElement = new Tooltip({
       props: { details, x, y },
-      target: document.body
+      target: document.body,
     });
   }
 
@@ -34,7 +34,7 @@ const tooltip: Action<HTMLElement, { text?: string }> = (node, { text }) => {
     const nodeBounds = node.getBoundingClientRect();
     return {
       x: nodeBounds.x + (nodeBounds.width / 2) + window.scrollX,
-      y: nodeBounds.y + window.scrollY
+      y: nodeBounds.y + window.scrollY,
     };
   }
 
@@ -57,7 +57,7 @@ const tooltip: Action<HTMLElement, { text?: string }> = (node, { text }) => {
       window.removeEventListener('resize', updateTooltipPosition);
       window.removeEventListener('scroll', updateTooltipPosition);
       destroyTooltipElement();
-    }
+    },
   };
 };
 

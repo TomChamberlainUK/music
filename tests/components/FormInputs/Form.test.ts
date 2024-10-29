@@ -7,7 +7,7 @@ describe('<Form />', () => {
 
   beforeEach(() => {
     render(Form, {
-      label
+      label,
     });
   });
 

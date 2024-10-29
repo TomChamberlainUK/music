@@ -10,7 +10,7 @@ const notes = [
   'F',
   'F#',
   'G',
-  'G#'
+  'G#',
 ];
 
 export default notes;

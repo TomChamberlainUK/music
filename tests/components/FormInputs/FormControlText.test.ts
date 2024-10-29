@@ -9,7 +9,7 @@ describe('<FormControlText />', () => {
   beforeEach(() => {
     render(FormControlText, {
       label,
-      value
+      value,
     });
   });
 

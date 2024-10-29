@@ -3,7 +3,7 @@ const suffixes = new Map([
   ['one', 'st'],
   ['two', 'nd'],
   ['few', 'rd'],
-  ['other', 'th']
+  ['other', 'th'],
 ]);
 
 export default function formatOrdinal(number: number) {

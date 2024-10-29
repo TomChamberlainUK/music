@@ -11,7 +11,7 @@
   })();
 
   function handleKeyboardEvent(event: KeyboardEvent) {
-    switch(event.key) {
+    switch (event.key) {
       case 'ArrowRight':
         if (focusIndex === null) return;
         focusIndex = focusIndex < keyElements.length - 1
