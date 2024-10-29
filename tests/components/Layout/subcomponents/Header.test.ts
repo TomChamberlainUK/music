@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Header } from '@/components/Layout/subcomponents';
 
 describe('<Header />', () => {
-  let menuButtonClickHandler = vi.fn();
+  const menuButtonClickHandler = vi.fn();
 
   beforeEach(() => {
     render(Header, {
