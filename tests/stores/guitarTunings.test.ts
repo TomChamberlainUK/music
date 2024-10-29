@@ -4,7 +4,7 @@ import { guitarTunings as guitarTuningsStore } from '@/stores';
 import { getRange } from '@/utils';
 import { fiveStringGuitarTunings, fourStringGuitarTunings, sixStringGuitarTunings } from '@/data';
 
-describe('guitarTunings', () => {  
+describe('guitarTunings', () => {
   const defaultGuitarTunings = [
     null,
     null,
@@ -12,7 +12,7 @@ describe('guitarTunings', () => {
     null,
     fourStringGuitarTunings,
     fiveStringGuitarTunings,
-    sixStringGuitarTunings
+    sixStringGuitarTunings,
   ];
 
   it('Should initialise with default properties', () => {

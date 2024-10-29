@@ -7,7 +7,7 @@ describe('<FormControlWrapper />', () => {
 
   beforeEach(() => {
     render(FormControlWrapper, {
-      label: labelText
+      label: labelText,
     });
   });
 

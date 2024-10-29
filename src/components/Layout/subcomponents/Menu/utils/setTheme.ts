@@ -2,10 +2,11 @@ export default function setTheme(theme: string) {
   switch (theme) {
     case 'system': {
       const isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
+
       if (isDarkTheme) {
         document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
+      }
+      else {
         document.documentElement.setAttribute('data-theme', 'light');
       }
 

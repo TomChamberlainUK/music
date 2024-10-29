@@ -10,7 +10,7 @@ describe('getTheme', () => {
   it('Should attempt to get a theme from localStorage', () => {
     const mockedLocalStorageGetItem = vi.spyOn(
       Object.getPrototypeOf(window.localStorage),
-      'getItem'
+      'getItem',
     );
     getTheme();
     expect(mockedLocalStorageGetItem).toHaveBeenCalledWith('theme');
@@ -20,7 +20,7 @@ describe('getTheme', () => {
     it('Should return dark theme', () => {
       const test = vi.spyOn(
         Object.getPrototypeOf(window.localStorage),
-        'getItem'
+        'getItem',
       );
       test.mockImplementationOnce(() => 'dark');
       const theme = getTheme();
@@ -32,7 +32,7 @@ describe('getTheme', () => {
     it('Should return light theme', () => {
       const test = vi.spyOn(
         Object.getPrototypeOf(window.localStorage),
-        'getItem'
+        'getItem',
       );
       test.mockImplementationOnce(() => 'light');
       const theme = getTheme();

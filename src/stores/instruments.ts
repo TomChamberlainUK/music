@@ -9,12 +9,12 @@ type Instrument = {
 const defaultInstruments: Instrument[] = [
   {
     id: getUID(),
-    type: 'guitar'
+    type: 'guitar',
   },
   {
     id: getUID(),
-    type: 'piano'
-  }
+    type: 'piano',
+  },
 ];
 
 const { set, subscribe, update } = writable<Instrument[]>(defaultInstruments);
@@ -24,7 +24,7 @@ const localInstruments = window.localStorage.getItem('instruments');
 function updateLocalInstruments(instruments: Instrument[]) {
   window.localStorage.setItem(
     'instruments',
-    JSON.stringify(instruments)
+    JSON.stringify(instruments),
   );
 }
 
@@ -38,25 +38,24 @@ if (localInstruments) {
 export default {
   subscribe,
   add: (type: Instrument['type']) => {
-    update(instruments => {
+    update((instruments) => {
       const updatedInstruments = [
         ...instruments,
         {
           id: getUID(),
-          type
-        }
+          type,
+        },
       ];
       updateLocalInstruments(updatedInstruments);
       return updatedInstruments;
     });
-
   },
   remove: (id: number) => {
-    update(instruments => {
+    update((instruments) => {
       const index = instruments.findIndex(instrument => instrument.id === id);
       const updatedInstruments = [
         ...instruments.slice(0, index),
-        ...instruments.slice(index + 1)
+        ...instruments.slice(index + 1),
       ];
       updateLocalInstruments(updatedInstruments);
       return updatedInstruments;
@@ -64,5 +63,5 @@ export default {
   },
   reset: () => {
     set(defaultInstruments);
-  }
+  },
 };

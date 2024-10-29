@@ -18,7 +18,7 @@
     options={[
       'system',
       'light',
-      'dark'
+      'dark',
     ]}
     bind:value={theme}
   />

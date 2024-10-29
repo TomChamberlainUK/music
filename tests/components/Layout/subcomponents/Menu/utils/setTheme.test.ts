@@ -20,7 +20,7 @@ describe('setTheme', () => {
 
   describe('When passed an invalid theme', () => {
     it('Should throw an error', () => {
-      expect(() => setTheme('invalid')).toThrowError;
+      expect(() => setTheme('invalid')).toThrowError();
     });
   });
 });

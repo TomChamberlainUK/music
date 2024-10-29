@@ -15,7 +15,7 @@ describe('<CircleOfFifths />', () => {
     'A♭',
     'E♭',
     'B♭',
-    'F'
+    'F',
   ];
 
   const minorFifths = [
@@ -30,7 +30,7 @@ describe('<CircleOfFifths />', () => {
     'f',
     'c',
     'g',
-    'd'
+    'd',
   ];
 
   const diminishedFifths = [
@@ -55,7 +55,7 @@ describe('<CircleOfFifths />', () => {
     'F',
     'G',
     'a',
-    'B°'
+    'B°',
   ];
 
   beforeEach(() => {
@@ -68,28 +68,28 @@ describe('<CircleOfFifths />', () => {
   });
 
   it('Should render all major chords', () => {
-    majorFifths.forEach(note => {
+    majorFifths.forEach((note) => {
       const chord = screen.getByRole('gridcell', { name: note });
       expect(chord).toBeInTheDocument();
     });
   });
 
   it('Should render all minor chords', () => {
-    minorFifths.forEach(note => {
+    minorFifths.forEach((note) => {
       const chord = screen.getByRole('gridcell', { name: note });
       expect(chord).toBeInTheDocument();
     });
   });
 
   it('Should render all diminished chords', () => {
-    diminishedFifths.forEach(note => {
+    diminishedFifths.forEach((note) => {
       const chord = screen.getByRole('gridcell', { name: note });
       expect(chord).toBeInTheDocument();
     });
   });
 
   it('Should highlight chords available in the current diatonic scale', () => {
-    cScaleDiatonicChords.forEach(note => {
+    cScaleDiatonicChords.forEach((note) => {
       const chord = screen.getByRole('gridcell', { name: note });
       expect(chord).toHaveAttribute('aria-selected', 'true');
     });
@@ -98,7 +98,7 @@ describe('<CircleOfFifths />', () => {
   it('Should not highlight chords not available in the current diatonic scale', () => {
     [...majorFifths, ...minorFifths, ...diminishedFifths]
       .filter(note => !cScaleDiatonicChords.includes(note))
-      .forEach(note => {
+      .forEach((note) => {
         const chord = screen.getByRole('gridcell', { name: note });
         expect(chord).toHaveAttribute('aria-selected', 'false');
       });

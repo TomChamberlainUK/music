@@ -9,7 +9,7 @@ describe('<FormControlColor />', () => {
   beforeEach(() => {
     render(FormControlColor, {
       label,
-      value
+      value,
     });
   });
 

@@ -8,13 +8,13 @@ const store = readable([
   null,
   fourStringGuitarTunings,
   fiveStringGuitarTunings,
-  sixStringGuitarTunings
+  sixStringGuitarTunings,
 ]);
 
 export default {
   ...store,
   getTuningsForNumberOfStrings,
-  getTuning
+  getTuning,
 };
 
 function getTuning(numberOfStrings: number, identifier: string) {

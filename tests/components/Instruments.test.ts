@@ -6,12 +6,12 @@ describe('<Instruments />', () => {
   const instruments = [
     {
       type: 'guitar',
-      id: 0
+      id: 0,
     },
     {
       type: 'piano',
-      id: 1
-    }
+      id: 1,
+    },
   ];
 
   beforeEach(() => {

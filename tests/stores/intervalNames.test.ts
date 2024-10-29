@@ -15,7 +15,7 @@ describe('intervalNames Store', () => {
     'Minor 6th',
     'Major 6th',
     'Minor 7th',
-    'Major 7th'
+    'Major 7th',
   ];
 
   it('Should initialise with default properties', () => {
@@ -49,7 +49,7 @@ describe('intervalNames Store', () => {
         { root: 'A', note: 'F', interval: 'Minor 6th' },
         { root: 'A', note: 'F♯', interval: 'Major 6th' },
         { root: 'A', note: 'G', interval: 'Minor 7th' },
-        { root: 'A', note: 'G♯', interval: 'Major 7th' }
+        { root: 'A', note: 'G♯', interval: 'Major 7th' },
       ];
       for (const { root, note, interval } of intervals) {
         const intervalName = intervalNamesStore.getIntervalName(root, note);

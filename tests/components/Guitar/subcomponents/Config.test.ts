@@ -17,7 +17,7 @@ describe('<Config />', () => {
       numberOfStrings,
       numberOfFrets,
       tuning,
-      fretMarkers
+      fretMarkers,
     });
   });
 
@@ -25,29 +25,29 @@ describe('<Config />', () => {
     const config = screen.getByTestId('guitar-config');
     expect(config).toBeInTheDocument();
   });
-  
+
   it('Should render a form control for the number of strings', () => {
     const control = screen.getByRole('spinbutton', {
-      name: 'Number of Strings'
+      name: 'Number of Strings',
     });
     expect(control).toBeInTheDocument();
   });
 
   it('Should render a form control for the number of frets', () => {
     const control = screen.getByRole('spinbutton', {
-      name: 'Number of Frets'
+      name: 'Number of Frets',
     });
     expect(control).toBeInTheDocument();
   });
 
   it('Should render a set of controls for fret markers', () => {
     const group = screen.getByRole('group', {
-      name: 'Fret Markers'
+      name: 'Fret Markers',
     });
     expect(group).toBeInTheDocument();
     for (let i = 0; i <= numberOfFrets; i++) {
       const fretMarkerControl = within(group).getByRole('checkbox', {
-        name: `${i}`
+        name: `${i}`,
       });
       expect(fretMarkerControl).toBeInTheDocument();
     }
@@ -56,12 +56,12 @@ describe('<Config />', () => {
   it('Should render fret marker controls equal to the number of frets', async () => {
     const newNumberOfFrets = 10;
     const numberOfFretsControl = screen.getByRole('spinbutton', {
-      name: 'Number of Frets'
+      name: 'Number of Frets',
     });
     await userEvent.clear(numberOfFretsControl);
     await userEvent.type(numberOfFretsControl, `${newNumberOfFrets}`);
     const group = screen.getByRole('group', {
-      name: 'Fret Markers'
+      name: 'Fret Markers',
     });
     const fretMarkerControls = within(group).getAllByRole('checkbox');
     expect(fretMarkerControls.length).toBe(newNumberOfFrets + 1);
@@ -69,12 +69,12 @@ describe('<Config />', () => {
 
   it('Should render a set of controls for string tunings', () => {
     const group = screen.getByRole('group', {
-      name: 'Tuning'
+      name: 'Tuning',
     });
     expect(group).toBeInTheDocument();
     for (let i = 0; i < numberOfStrings; i++) {
       const stringTuningControl = within(group).getByRole('combobox', {
-        name: formatOrdinal(i + 1)
+        name: formatOrdinal(i + 1),
       });
       expect(stringTuningControl).toBeInTheDocument();
     }
@@ -83,17 +83,17 @@ describe('<Config />', () => {
   it('Should render a string tuning control for each string', async () => {
     const newNumberOfStrings = 12;
     const numberOfStringsControl = screen.getByRole('spinbutton', {
-      name: 'Number of Strings'
+      name: 'Number of Strings',
     });
     await userEvent.clear(numberOfStringsControl);
     await userEvent.type(numberOfStringsControl, `${newNumberOfStrings}`);
     const group = screen.getByRole('group', {
-      name: 'Tuning'
+      name: 'Tuning',
     });
     const stringNames = getRange(1, newNumberOfStrings).map(formatOrdinal);
     for (const name of stringNames) {
       const control = within(group).getByRole('combobox', {
-        name
+        name,
       });
       expect(control).toBeInTheDocument();
     }
@@ -101,25 +101,25 @@ describe('<Config />', () => {
 
   it('Should render a control for preset tunings', () => {
     const group = screen.getByRole('group', {
-      name: 'Tuning'
+      name: 'Tuning',
     });
     const control = within(group).getByRole('combobox', {
-      name: 'Presets'
+      name: 'Presets',
     });
     expect(control).toBeInTheDocument();
   });
 
   it('Should render an option for each preset tuning', () => {
     const group = screen.getByRole('group', {
-      name: 'Tuning'
+      name: 'Tuning',
     });
     const control = within(group).getByRole('combobox', {
-      name: 'Presets'
+      name: 'Presets',
     });
     const presets = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings);
-    for (const { name, value } of presets) { 
+    for (const { name, value } of presets) {
       const option = within(control).getByRole('option', {
-        name
+        name,
       });
       expect(option).toHaveValue(value);
       expect(option).toBeInTheDocument();
@@ -128,13 +128,13 @@ describe('<Config />', () => {
 
   it('Should update the tuning when a preset is selected', async () => {
     const group = screen.getByRole('group', {
-      name: 'Tuning'
+      name: 'Tuning',
     });
     const control = within(group).getByRole('combobox', {
-      name: 'Presets'
+      name: 'Presets',
     });
     const option = within(control).getByRole('option', {
-      name: 'Standard D Tuning'
+      name: 'Standard D Tuning',
     });
     await userEvent.selectOptions(control, option);
     const { stringTunings } = guitarTunings
@@ -145,7 +145,7 @@ describe('<Config />', () => {
       .toReversed();
     for (const [index, name] of stringNames.entries()) {
       const stringTuningControl = within(group).getByRole('combobox', {
-        name
+        name,
       });
       expect(stringTuningControl).toHaveValue(stringTunings[index]);
     }
@@ -153,13 +153,13 @@ describe('<Config />', () => {
 
   it('Should update the presets when the number of strings changes', async () => {
     const numberOfStringsControl = screen.getByRole('spinbutton', {
-      name: 'Number of Strings'
+      name: 'Number of Strings',
     });
     const group = screen.getByRole('group', {
-      name: 'Tuning'
+      name: 'Tuning',
     });
     const control = within(group).getByRole('combobox', {
-      name: 'Presets'
+      name: 'Presets',
     });
     for (let newNumberOfStrings = 1; newNumberOfStrings <= 6; newNumberOfStrings++) {
       await userEvent.clear(numberOfStringsControl);
@@ -167,7 +167,7 @@ describe('<Config />', () => {
       const presets = guitarTunings.getTuningsForNumberOfStrings(newNumberOfStrings);
       for (const { name, value } of presets) {
         const option = within(control).getByRole('option', {
-          name
+          name,
         });
         expect(option).toHaveValue(value);
         expect(option).toBeInTheDocument();
@@ -177,10 +177,10 @@ describe('<Config />', () => {
 
   it('Should select the first known preset tuning when the number of strings changes', async () => {
     const numberOfStringsControl = screen.getByRole('spinbutton', {
-      name: 'Number of Strings'
+      name: 'Number of Strings',
     });
     const numberOfStringsToPresets = get(guitarTunings)
-      .map((presets) => (
+      .map(presets => (
         presets
           ? presets[0].value
           : null
@@ -190,10 +190,10 @@ describe('<Config />', () => {
       await userEvent.clear(numberOfStringsControl);
       await userEvent.type(numberOfStringsControl, newNumberOfStrings.toString());
       const group = screen.getByRole('group', {
-        name: 'Tuning'
+        name: 'Tuning',
       });
       const control = within(group).getByRole('combobox', {
-        name: 'Presets'
+        name: 'Presets',
       });
       expect(control).toHaveValue(preset);
     }

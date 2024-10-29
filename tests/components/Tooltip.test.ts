@@ -6,15 +6,15 @@ describe('<Tooltip />', () => {
   describe('When given a description', () => {
     beforeEach(() => {
       render(Tooltip, {
-        details: 'Test'
+        details: 'Test',
       });
     });
-  
+
     it('Should render', () => {
       const tooltip = screen.getByRole('tooltip');
       expect(tooltip).toBeInTheDocument();
     });
-  
+
     it('Should render a description', () => {
       const description = screen.getByText(/Test/);
       expect(description).toBeInTheDocument();

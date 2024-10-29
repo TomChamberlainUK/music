@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { describe, it, expect, afterEach, vi } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { scale } from '@/stores';
 
 describe('Scale Store', () => {
@@ -60,7 +60,7 @@ describe('Scale Store', () => {
         { root: 'F', notes: ['F', 'G', 'A', 'A♯', 'C', 'D', 'E'] },
         { root: 'F♯', notes: ['F♯', 'G♯', 'A♯', 'B', 'C♯', 'D♯', 'F'] },
         { root: 'G', notes: ['G', 'A', 'B', 'C', 'D', 'E', 'F♯'] },
-        { root: 'G♯', notes: ['G♯', 'A♯', 'C', 'C♯', 'D♯', 'F', 'G'] }
+        { root: 'G♯', notes: ['G♯', 'A♯', 'C', 'C♯', 'D♯', 'F', 'G'] },
       ];
       for (const { root, notes } of scales) {
         scale.set({ root });
@@ -73,7 +73,7 @@ describe('Scale Store', () => {
       const scales = [
         { scaleName: 'chromatic', notes: ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] },
         { scaleName: 'diatonic', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
-        { scaleName: 'pentatonic', notes: ['C', 'D', 'E', 'G', 'A'] }
+        { scaleName: 'pentatonic', notes: ['C', 'D', 'E', 'G', 'A'] },
       ];
       for (const { scaleName, notes } of scales) {
         scale.set({ scaleName });
@@ -96,7 +96,7 @@ describe('Scale Store', () => {
         { modeName: 'lydian', notes: ['C', 'D', 'E', 'F♯', 'G', 'A', 'B'] },
         { modeName: 'mixolydian', notes: ['C', 'D', 'E', 'F', 'G', 'A', 'A♯'] },
         { modeName: 'aeolian', notes: ['C', 'D', 'D♯', 'F', 'G', 'G♯', 'A♯'] },
-        { modeName: 'locrian', notes: ['C', 'C♯', 'D♯', 'F', 'F♯', 'G♯', 'A♯'] }
+        { modeName: 'locrian', notes: ['C', 'C♯', 'D♯', 'F', 'F♯', 'G♯', 'A♯'] },
       ];
       for (const { modeName, notes } of scales) {
         scale.set({ modeName });

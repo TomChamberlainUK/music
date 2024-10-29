@@ -4,11 +4,11 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Header } from '@/components/Layout/subcomponents';
 
 describe('<Header />', () => {
-  let menuButtonClickHandler = vi.fn();
+  const menuButtonClickHandler = vi.fn();
 
   beforeEach(() => {
     render(Header, {
-      onMenuButtonClick: menuButtonClickHandler
+      onMenuButtonClick: menuButtonClickHandler,
     });
   });
 
@@ -20,7 +20,7 @@ describe('<Header />', () => {
   it('Should render a title', () => {
     const title = screen.getByRole('heading', {
       level: 1,
-      name: 'Music'
+      name: 'Music',
     });
     expect(title).toBeInTheDocument();
   });

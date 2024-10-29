@@ -9,7 +9,7 @@ describe('<FormControlCheckbox />', () => {
   beforeEach(() => {
     render(FormControlCheckbox, {
       label,
-      isChecked
+      isChecked,
     });
   });
 

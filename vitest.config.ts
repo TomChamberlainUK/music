@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [svelte()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src'),
     },
     conditions: mode === 'test' ? ['browser'] : [],
   },
@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     environment: 'jsdom',
     setupFiles: ['./tests/vitest-setup.ts'],
     coverage: {
-      reportsDirectory: './tests/coverage'
-    }
-  }
+      reportsDirectory: './tests/coverage',
+    },
+  },
 }));

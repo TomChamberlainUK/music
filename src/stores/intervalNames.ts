@@ -13,7 +13,7 @@ const store = readable<string[]>([
   'Minor 6th',
   'Major 6th',
   'Minor 7th',
-  'Major 7th'
+  'Major 7th',
 ]);
 
 export default {
@@ -23,5 +23,5 @@ export default {
     const consecutiveNotes = notesStore.getConsecutiveNotes(root, 12);
     const index = consecutiveNotes.indexOf(note);
     return intervalNames[index];
-  }
+  },
 };

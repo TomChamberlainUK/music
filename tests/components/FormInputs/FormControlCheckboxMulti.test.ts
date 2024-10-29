@@ -5,14 +5,13 @@ import { FormControlCheckboxMulti } from '@/components';
 
 describe('<FormControlCheckboxMulti />', () => {
   const values = ['nut-free', 'gluten-free', 'vegetarian'];
-  let checked: string[] = [];
+  const checked: string[] = [];
 
   beforeEach(() => {
-    const { component } = render(FormControlCheckboxMulti, {
+    render(FormControlCheckboxMulti, {
       values,
-      checked
+      checked,
     });
-    component
   });
 
   it('Should render each input', () => {

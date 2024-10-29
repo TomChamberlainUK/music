@@ -27,7 +27,7 @@ describe('<Layout />', () => {
   });
 
   it('Should render a header', () => {
-    const header = screen.getByRole('banner')
+    const header = screen.getByRole('banner');
     expect(header).toBeInTheDocument();
   });
 

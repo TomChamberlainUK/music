@@ -15,25 +15,28 @@
     "postinstall": "git config core.hooksPath ./git-hooks"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "2.9.0",
+    "@eslint/js": "^9.13.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
     "@sveltejs/vite-plugin-svelte": "3.1.2",
     "@testing-library/jest-dom": "6.6.2",
     "@testing-library/svelte": "5.2.4",
     "@testing-library/user-event": "14.5.2",
     "@tsconfig/svelte": "5.0.4",
+    "@types/eslint__js": "^8.42.3",
     "@types/node": "20.17.3",
-    "@typescript-eslint/eslint-plugin": "8.12.2",
-    "@typescript-eslint/parser": "8.12.2",
     "@vitest/coverage-v8": "2.1.4",
-    "eslint": "8.57.1",
-    "eslint-plugin-svelte": "2.46.0",
+    "eslint": "9.13.0",
+    "eslint-plugin-svelte": "^2.46.0",
+    "globals": "^15.11.0",
     "jsdom": "25.0.1",
     "sass": "1.80.5",
     "svelte": "4.2.19",
     "svelte-check": "3.8.6",
     "tslib": "2.8.0",
     "typescript": "5.6.3",
+    "typescript-eslint": "^8.12.2",
     "vite": "5.4.10",
     "vitest": "2.1.4"
-  }
+  },
+  "packageManager": "pnpm@8.15.6+sha256.01c01eeb990e379b31ef19c03e9d06a14afa5250b82e81303f88721c99ff2e6f"
 }

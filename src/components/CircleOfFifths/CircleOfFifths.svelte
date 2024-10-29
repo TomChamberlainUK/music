@@ -14,7 +14,7 @@
     'A♭',
     'E♭',
     'B♭',
-    'F'
+    'F',
   ];
 
   const minorFifths = [
@@ -29,7 +29,7 @@
     'f',
     'c',
     'g',
-    'd'
+    'd',
   ];
 
   const diminishedFifths = [

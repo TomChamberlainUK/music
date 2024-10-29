@@ -12,7 +12,7 @@ const store = readable([
   'F',
   'F♯',
   'G',
-  'G♯'
+  'G♯',
 ]);
 
 export default {
@@ -27,5 +27,5 @@ export default {
       consecutiveNotes.push(nextNote);
     }
     return consecutiveNotes;
-  }
+  },
 };

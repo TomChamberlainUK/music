@@ -17,12 +17,12 @@ describe('<FormControlDropdown />', () => {
   const namedValueOptions = [
     {
       name: 'cacio e pepe',
-      value: 'cacio-e-pepe'
+      value: 'cacio-e-pepe',
     },
     {
       name: 'fettuccine alfredo',
-      value: 'fettuccine-alfredo'
-    }
+      value: 'fettuccine-alfredo',
+    },
   ];
 
   const selectedValue = 'carbonara';
@@ -33,8 +33,8 @@ describe('<FormControlDropdown />', () => {
       value: selectedValue,
       options: [
         ...simpleValueOptions,
-        ...namedValueOptions
-      ]
+        ...namedValueOptions,
+      ],
     });
     component = renderedComponent;
   });
