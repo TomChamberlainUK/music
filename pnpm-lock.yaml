@@ -6,10 +6,10 @@ settings:
 
 devDependencies:
   '@eslint/js':
-    specifier: ^9.13.0
+    specifier: 9.13.0
     version: 9.13.0
   '@stylistic/eslint-plugin':
-    specifier: ^2.9.0
+    specifier: 2.9.0
     version: 2.9.0(eslint@9.13.0)(typescript@5.6.3)
   '@sveltejs/vite-plugin-svelte':
     specifier: 3.1.2
@@ -27,7 +27,7 @@ devDependencies:
     specifier: 5.0.4
     version: 5.0.4
   '@types/eslint__js':
-    specifier: ^8.42.3
+    specifier: 8.42.3
     version: 8.42.3
   '@types/node':
     specifier: 20.17.3
@@ -39,10 +39,10 @@ devDependencies:
     specifier: 9.13.0
     version: 9.13.0
   eslint-plugin-svelte:
-    specifier: ^2.46.0
+    specifier: 2.46.0
     version: 2.46.0(eslint@9.13.0)(svelte@4.2.19)
   globals:
-    specifier: ^15.11.0
+    specifier: 15.11.0
     version: 15.11.0
   jsdom:
     specifier: 25.0.1
@@ -63,7 +63,7 @@ devDependencies:
     specifier: 5.6.3
     version: 5.6.3
   typescript-eslint:
-    specifier: ^8.12.2
+    specifier: 8.12.2
     version: 8.12.2(eslint@9.13.0)(typescript@5.6.3)
   vite:
     specifier: 5.4.10
