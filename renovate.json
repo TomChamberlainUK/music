@@ -22,6 +22,17 @@
         "patch"
       ],
       "automerge": true
+    },
+    {
+      "groupName": "all pin dependencies",
+      "groupSlug": "all-pin",
+      "matchPackageNames": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "pin"
+      ],
+      "automerge": true
     }
   ],
   "platformAutomerge": true
