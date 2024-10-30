@@ -11,7 +11,7 @@
     role="tooltip"
   >
     {details}
-    <div class="tooltip__tail" />
+    <div class="tooltip__tail"></div>
   </div>
 {/if}
 

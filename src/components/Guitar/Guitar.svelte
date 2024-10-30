@@ -141,7 +141,7 @@
         class="fret-marker fret-marker--bottom"
         class:isHighlighted={fretMarkers.includes(`${fret}`)}
         data-testId="fret-marker-bottom"
-      />
+      ></div>
     {/each}
   </div>
   <button
