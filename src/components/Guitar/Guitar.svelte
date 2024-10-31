@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tooltip } from '@/actions';
+  import { focus, tooltip } from '@/actions';
   import { intervalNames, notes, scale } from '@/stores';
   import { getRange } from '@/utils';
   import { Config } from './subcomponents';
@@ -11,18 +11,7 @@
   let numberOfStrings = $state(6);
   let fretMarkers = $state(['3', '5', '7', '9', '12', '15', '17', '19', '21']);
   let tuning = $state([...defaultTuning]);
-
   let focussedFret: { string: number; fret: number } | null = $state(null);
-  let fretElements: HTMLInputElement[][] = $state((() => (
-    new Array(numberOfStrings)
-      .fill(null)
-      .map(() => new Array(numberOfFrets + 1).fill(null))
-  ))());
-
-  $effect(() => {
-    if (focussedFret === null) return;
-    fretElements[focussedFret.string][focussedFret.fret]?.focus();
-  });
 
   let strings = $derived(tuning
     .toReversed()
@@ -109,10 +98,10 @@
               type="checkbox"
               value={note}
               bind:group={$scale.notes}
-              bind:this={fretElements[stringIndex][fretIndex]}
               onfocus={() => focussedFret = { string: stringIndex, fret: fretIndex }}
               onblur={() => focussedFret = null}
               onkeydown={event => handleKeyboardEvent(event)}
+              use:focus={{ isFocussed: focussedFret?.string === stringIndex && focussedFret?.fret === fretIndex }}
             />
             <span class="fret__label">
               {note}
