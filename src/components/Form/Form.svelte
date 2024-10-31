@@ -1,7 +1,12 @@
 <script lang="ts">
-  export let label: string;
+  type Props = {
+    label: string;
+    children?: import('svelte').Snippet;
+  };
+
+  let { label, children }: Props = $props();
 </script>
 
 <form aria-label={label}>
-  <slot />
+  {@render children?.()}
 </form>
