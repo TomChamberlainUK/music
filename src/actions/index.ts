@@ -1,1 +1,2 @@
-export { default as tooltip } from './tooltip';
+export { default as focus } from './focus';
+export { default as tooltip } from './tooltip.svelte';

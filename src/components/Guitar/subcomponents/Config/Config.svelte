@@ -3,26 +3,44 @@
   import { guitarTunings, notes } from '@/stores';
   import { formatOrdinal, getRange } from '@/utils';
 
-  export let numberOfStrings = 6;
-  export let numberOfFrets = 21;
-  export let tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
-  export let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
+  type Props = {
+    numberOfStrings?: number;
+    numberOfFrets?: number;
+    tuning?: string[];
+    fretMarkers?: string[];
+  };
 
-  let selectedPreset = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)[0].value;
+  let {
+    numberOfStrings = $bindable(6),
+    numberOfFrets = $bindable(21),
+    tuning = $bindable(['E', 'A', 'D', 'G', 'B', 'E']),
+    fretMarkers = $bindable(['3', '5', '7', '9', '12', '15', '17', '19', '21']),
+  }: Props = $props();
 
-  $: frets = getRange(0, numberOfFrets, { format: 'string' });
+  let selectedPreset = $state(guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)[0].value);
 
-  $: {
+  let frets = $derived(getRange(0, numberOfFrets, { format: 'string' }));
+
+  $effect(() => {
     if (guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).length) {
       selectedPreset = guitarTunings.getTuningsForNumberOfStrings(numberOfStrings)[0].value;
     }
-  }
+  });
 
-  $: {
+  $effect(() => {
     if (guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).length) {
       tuning = guitarTunings.getTuning(numberOfStrings, selectedPreset);
     }
-  }
+    else if (tuning.length > numberOfStrings) {
+      tuning = tuning.slice(0, numberOfStrings);
+    }
+    else if (tuning.length < numberOfStrings) {
+      tuning = [
+        ...tuning,
+        ...new Array(numberOfStrings - tuning.length).fill('E'),
+      ];
+    }
+  });
 </script>
 
 <div data-testId="guitar-config">
@@ -42,7 +60,7 @@
     />
     <br />
     <br />
-    {#each { length: numberOfStrings } as _, index}
+    {#each tuning as _, index}
       <FormControlDropdown
         label={formatOrdinal(numberOfStrings - index)}
         options={$notes}

@@ -2,13 +2,13 @@
   import { intervalNames, scale } from '@/stores';
   import { tooltip } from '@/actions';
 
-  let keyElements: HTMLInputElement[] = [];
-  let focusIndex: number | null = null;
+  let keyElements: HTMLInputElement[] = $state([]);
+  let focusIndex: number | null = $state(null);
 
-  $: (() => {
+  $effect(() => {
     if (focusIndex === null) return;
     keyElements[focusIndex]?.focus();
-  })();
+  });
 
   function handleKeyboardEvent(event: KeyboardEvent) {
     switch (event.key) {
@@ -43,9 +43,9 @@
         value={note}
         bind:group={$scale.notes}
         bind:this={keyElements[i]}
-        on:focus={() => focusIndex = i}
-        on:blur={() => focusIndex = null}
-        on:keydown={event => handleKeyboardEvent(event)}
+        onfocus={() => focusIndex = i}
+        onblur={() => focusIndex = null}
+        onkeydown={event => handleKeyboardEvent(event)}
       />
       <span class="key__label">
         {note}

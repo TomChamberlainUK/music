@@ -1,59 +1,25 @@
 <script lang="ts">
-  import { tooltip } from '@/actions';
+  import { focus, tooltip } from '@/actions';
   import { intervalNames, notes, scale } from '@/stores';
   import { getRange } from '@/utils';
   import { Config } from './subcomponents';
 
   const defaultTuning = ['E', 'A', 'D', 'G', 'B', 'E'];
 
-  let displayConfig = false;
-  let numberOfFrets = 21;
-  let numberOfStrings = 6;
-  let fretMarkers = ['3', '5', '7', '9', '12', '15', '17', '19', '21'];
-  let tuning = [...defaultTuning];
+  let displayConfig = $state(false);
+  let numberOfFrets = $state(21);
+  let numberOfStrings = $state(6);
+  let fretMarkers = $state(['3', '5', '7', '9', '12', '15', '17', '19', '21']);
+  let tuning = $state([...defaultTuning]);
+  let focussedFret: { string: number; fret: number } | null = $state(null);
 
-  let focussedFret: { string: number; fret: number } | null = null;
-  let fretElements: HTMLInputElement[][] = new Array(numberOfStrings)
-    .fill(null)
-    .map(() => new Array(numberOfFrets + 1).fill(null));
-
-  $: {
-    // TODO: This triggers twice due to a bug in Svelte that is fixed in v5
-    if (fretElements.length > numberOfStrings) {
-      fretElements = [
-        ...fretElements.filter((_, index) => (
-          index <= numberOfStrings // Edit this when Svelte v5 is released to be less than not less than or equal to
-        )),
-      ];
-    }
-    else while (fretElements.length < numberOfStrings) {
-      fretElements.push(new Array(numberOfFrets + 1).fill(null));
-    }
-    fretElements = [...fretElements];
-  }
-
-  $: (() => {
-    if (focussedFret === null) return;
-    fretElements[focussedFret.string][focussedFret.fret]?.focus();
-  })();
-
-  $: strings = tuning
+  let strings = $derived(tuning
     .toReversed()
     .map(note => (
       notes.getConsecutiveNotes(note, numberOfFrets + 1)
-    ));
+    )));
 
-  $: frets = getRange(0, numberOfFrets, { format: 'string' });
-
-  $: {
-    tuning.length = numberOfStrings;
-    if (defaultTuning[numberOfStrings - 1]) {
-      tuning[numberOfStrings - 1] = defaultTuning[numberOfStrings - 1];
-    }
-    else {
-      tuning[numberOfStrings - 1] = 'E';
-    }
-  }
+  let frets = $derived(getRange(0, numberOfFrets, { format: 'string' }));
 
   function handleKeyboardEvent(event: KeyboardEvent) {
     switch (event.key) {
@@ -122,10 +88,10 @@
               type="checkbox"
               value={note}
               bind:group={$scale.notes}
-              bind:this={fretElements[stringIndex][fretIndex]}
-              on:focus={() => focussedFret = { string: stringIndex, fret: fretIndex }}
-              on:blur={() => focussedFret = null}
-              on:keydown={event => handleKeyboardEvent(event)}
+              onfocus={() => focussedFret = { string: stringIndex, fret: fretIndex }}
+              onblur={() => focussedFret = null}
+              onkeydown={event => handleKeyboardEvent(event)}
+              use:focus={{ isFocussed: focussedFret?.string === stringIndex && focussedFret?.fret === fretIndex }}
             />
             <span class="fret__label">
               {note}
@@ -141,12 +107,12 @@
         class="fret-marker fret-marker--bottom"
         class:isHighlighted={fretMarkers.includes(`${fret}`)}
         data-testId="fret-marker-bottom"
-      />
+      ></div>
     {/each}
   </div>
   <button
     type="button"
-    on:click={toggleConfig}
+    onclick={toggleConfig}
   >
     Configure
   </button>

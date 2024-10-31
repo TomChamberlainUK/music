@@ -1,7 +1,13 @@
 <script lang="ts">
   import { Header, Menu } from './subcomponents';
 
-  let menuIsOpen: boolean = false;
+  type Props = {
+    children?: import('svelte').Snippet;
+  };
+
+  let { children }: Props = $props();
+
+  let menuIsOpen: boolean = $state(false);
 
   function toggleMenu() {
     menuIsOpen = !menuIsOpen;
@@ -12,7 +18,7 @@
   <Header onMenuButtonClick={toggleMenu} />
   <Menu isOpen={menuIsOpen} />
   <div class="body">
-    <slot />
+    {@render children?.()}
   </div>
   <footer class="footer">
     Tom Chamberlain

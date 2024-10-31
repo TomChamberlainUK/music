@@ -21,19 +21,19 @@
       {:else if type === 'piano'}
         <Piano />
       {/if}
-      <button on:click={() => instruments.remove(id)}>
+      <button onclick={() => instruments.remove(id)}>
         Remove
       </button>
     </li>
   {/each}
 </ul>
-<button on:click={() => instruments.add('guitar')}>
+<button onclick={() => instruments.add('guitar')}>
   Add Guitar
 </button>
-<button on:click={() => instruments.add('piano')}>
+<button onclick={() => instruments.add('piano')}>
   Add Piano
 </button>
-<button on:click={() => instruments.reset()}>
+<button onclick={() => instruments.reset()}>
   Reset to Default
 </button>
 

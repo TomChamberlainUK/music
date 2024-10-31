@@ -1,8 +1,12 @@
 <script lang="ts">
   import FormControlWrapper from './FormControlWrapper.svelte';
 
-  export let label: string;
-  export let isChecked: boolean = false;
+  type Props = {
+    label: string;
+    isChecked?: boolean;
+  };
+
+  let { label, isChecked = $bindable(false) }: Props = $props();
 </script>
 
 <FormControlWrapper

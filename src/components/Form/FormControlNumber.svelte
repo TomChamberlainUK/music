@@ -1,8 +1,12 @@
 <script lang="ts">
   import FormControlWrapper from './FormControlWrapper.svelte';
 
-  export let label: string;
-  export let value: number;
+  type Props = {
+    label: string;
+    value: number;
+  };
+
+  let { label, value = $bindable() }: Props = $props();
 </script>
 
 <FormControlWrapper
@@ -11,6 +15,5 @@
   <input
     type="number"
     bind:value={value}
-    on:input
   />
 </FormControlWrapper>

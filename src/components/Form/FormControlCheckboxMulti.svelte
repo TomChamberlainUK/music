@@ -1,8 +1,12 @@
 <script lang="ts">
   import FormControlWrapper from './FormControlWrapper.svelte';
 
-  export let values: string[];
-  export let checked: string[];
+  type Props = {
+    values: string[];
+    checked: string[];
+  };
+
+  let { values, checked = $bindable() }: Props = $props();
 </script>
 
 {#each values as value}

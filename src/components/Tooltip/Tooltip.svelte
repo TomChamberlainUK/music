@@ -1,7 +1,11 @@
 <script lang="ts">
-  export let details: string | undefined;
-  export let x = 0;
-  export let y = 0;
+  type Props = {
+    details: string | undefined;
+    x?: number;
+    y?: number;
+  };
+
+  let { details, x = 0, y = 0 }: Props = $props();
 </script>
 
 {#if details}
@@ -11,7 +15,7 @@
     role="tooltip"
   >
     {details}
-    <div class="tooltip__tail" />
+    <div class="tooltip__tail"></div>
   </div>
 {/if}
 

@@ -1,11 +1,17 @@
 <script lang="ts">
-  export let onMenuButtonClick = () => {};
+  import type { MouseEventHandler } from 'svelte/elements';
+
+  type Props = {
+    onMenuButtonClick?: MouseEventHandler<HTMLButtonElement>;
+  };
+
+  let { onMenuButtonClick }: Props = $props();
 </script>
 
 <header class="container">
   <button
     class="button"
-    on:click={onMenuButtonClick}
+    onclick={onMenuButtonClick}
   >
     Menu
   </button>
