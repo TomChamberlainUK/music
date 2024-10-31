@@ -1,9 +1,17 @@
 <script lang="ts">
   import FormControlWrapper from './FormControlWrapper.svelte';
 
-  export let label: string;
-  export let options: Option[] = [];
-  export let value: string = getOptionValue(options[0]);
+  type Props = {
+    label: string;
+    options?: Option[];
+    value?: string;
+  };
+
+  let {
+    label,
+    options = [],
+    value = $bindable(getOptionValue(options[0])),
+  }: Props = $props();
 
   type Option = string | {
     name: string;
@@ -26,10 +34,7 @@
 <FormControlWrapper
   {label}
 >
-  <select
-    bind:value={value}
-    on:change
-  >
+  <select bind:value={value}>
     {#each options as option}
       <option value={getOptionValue(option)}>
         {getOptionName(option)}
