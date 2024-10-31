@@ -51,7 +51,7 @@
     />
     <br />
     <br />
-    {#each { length: numberOfStrings } as _, index}
+    {#each tuning as _, index}
       <FormControlDropdown
         label={formatOrdinal(numberOfStrings - index)}
         options={$notes}
