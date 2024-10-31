@@ -3,7 +3,7 @@ import type { Action } from 'svelte/action';
 import Tooltip from '@/components/Tooltip';
 
 const tooltip: Action<HTMLElement, { text?: string }> = (node, { text }) => {
-  let tooltipElement: Record<string, unknown>;
+  let tooltipElement: Record<string, unknown> | null = null;
   const props = $state({
     details: text,
     x: 0,
@@ -24,7 +24,9 @@ const tooltip: Action<HTMLElement, { text?: string }> = (node, { text }) => {
   }
 
   function destroyTooltipElement() {
+    if (!tooltipElement) return;
     unmount(tooltipElement);
+    tooltipElement = null;
   }
 
   function updateTooltipPosition() {
