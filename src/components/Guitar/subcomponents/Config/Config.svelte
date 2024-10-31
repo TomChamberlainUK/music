@@ -31,6 +31,15 @@
     if (guitarTunings.getTuningsForNumberOfStrings(numberOfStrings).length) {
       tuning = guitarTunings.getTuning(numberOfStrings, selectedPreset);
     }
+    else if (tuning.length > numberOfStrings) {
+      tuning = tuning.slice(0, numberOfStrings);
+    }
+    else if (tuning.length < numberOfStrings) {
+      tuning = [
+        ...tuning,
+        ...new Array(numberOfStrings - tuning.length).fill('E'),
+      ];
+    }
   });
 </script>
 

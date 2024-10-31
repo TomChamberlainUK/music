@@ -21,16 +21,6 @@
 
   let frets = $derived(getRange(0, numberOfFrets, { format: 'string' }));
 
-  $effect(() => {
-    tuning.length = numberOfStrings;
-    if (defaultTuning[numberOfStrings - 1]) {
-      tuning[numberOfStrings - 1] = defaultTuning[numberOfStrings - 1];
-    }
-    else {
-      tuning[numberOfStrings - 1] = 'E';
-    }
-  });
-
   function handleKeyboardEvent(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowRight':
