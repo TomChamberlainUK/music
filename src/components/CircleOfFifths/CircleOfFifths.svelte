@@ -53,16 +53,16 @@
   const width = '15rem';
   const height = '15rem';
 
-  $: fifthsFromC = getFifthsFromRoot('C');
-  $: rootIndex = fifthsFromC.findIndex(value => value === $scale.root);
-  $: modeOffsetIndex = rootIndex + getModeOffset($scale.modeName);
-  $: fifthsShapes = getFifthsShapes({
+  let fifthsFromC = $derived(getFifthsFromRoot('C'));
+  let rootIndex = $derived(fifthsFromC.findIndex(value => value === $scale.root));
+  let modeOffsetIndex = $derived(rootIndex + getModeOffset($scale.modeName));
+  let fifthsShapes = $derived(getFifthsShapes({
     allFifths: [...majorFifths, ...minorFifths, ...diminishedFifths],
     highlightOffset: modeOffsetIndex,
     size,
     sectionWidth,
     strokeWidth,
-  });
+  }));
 </script>
 
 <svg
