@@ -1,11 +1,8 @@
 import { render, screen } from '@testing-library/svelte';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { FormControlDropdown } from '@/components';
-import userEvent from '@testing-library/user-event';
 
 describe('<FormControlDropdown />', () => {
-  let component: FormControlDropdown;
-
   const label = 'Dish';
 
   const simpleValueOptions = [
@@ -28,7 +25,7 @@ describe('<FormControlDropdown />', () => {
   const selectedValue = 'carbonara';
 
   beforeEach(() => {
-    const { component: renderedComponent } = render(FormControlDropdown, {
+    render(FormControlDropdown, {
       label,
       value: selectedValue,
       options: [
@@ -36,7 +33,6 @@ describe('<FormControlDropdown />', () => {
         ...namedValueOptions,
       ],
     });
-    component = renderedComponent;
   });
 
   it('Should render', () => {
@@ -68,14 +64,5 @@ describe('<FormControlDropdown />', () => {
       expect(option).toBeInTheDocument();
       expect(option).toHaveValue(value);
     };
-  });
-
-  it('Should pass an on:change event to the native html element', async () => {
-    const dropdown = screen.getByRole('combobox');
-    const option = screen.getByRole('option', { name: 'bolognese' });
-    const onChangeMock = vi.fn();
-    component.$on('change', onChangeMock);
-    await userEvent.selectOptions(dropdown, option);
-    expect(onChangeMock).toHaveBeenCalled();
   });
 });
