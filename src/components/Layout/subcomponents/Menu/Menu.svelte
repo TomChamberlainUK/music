@@ -2,11 +2,17 @@
   import { FormControlDropdown } from '@/components';
   import { getTheme, setTheme } from './utils';
 
-  export let isOpen = false;
+  interface Props {
+    isOpen?: boolean;
+  }
 
-  let theme = getTheme();
+  let { isOpen = false }: Props = $props();
 
-  $: setTheme(theme);
+  let theme = $state(getTheme());
+
+  $effect(() => {
+    setTheme(theme);
+  });
 </script>
 
 <menu
