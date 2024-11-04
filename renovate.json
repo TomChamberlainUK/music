@@ -10,6 +10,9 @@
   "assignees": [
     "TomChamberlainUK"
   ],
+  "schedule": [
+    "before 7am"
+  ],
   "packageRules": [
     {
       "groupName": "all non-major dependencies",
