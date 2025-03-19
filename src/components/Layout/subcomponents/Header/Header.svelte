@@ -21,5 +21,5 @@
 </header>
 
 <style lang="scss">
-  @import './Header.scss';
+  @use './Header.scss';
 </style>

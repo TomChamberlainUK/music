@@ -55,5 +55,5 @@
 </fieldset>
 
 <style lang="scss">
-  @import './Piano.scss';
+  @use './Piano.scss';
 </style>

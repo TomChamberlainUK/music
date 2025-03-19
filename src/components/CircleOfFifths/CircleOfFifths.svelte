@@ -97,5 +97,5 @@
 </svg>
 
 <style lang="scss">
-  @import './CircleOfFifths.scss';
+  @use './CircleOfFifths.scss';
 </style>

@@ -26,5 +26,5 @@
 </div>
 
 <style lang="scss">
-  @import './Layout.scss';
+  @use './Layout.scss';
 </style>

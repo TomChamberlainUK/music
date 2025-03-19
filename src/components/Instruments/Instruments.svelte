@@ -37,5 +37,5 @@
 </button>
 
 <style lang="scss">
-  @import './Instruments.scss';
+  @use './Instruments.scss';
 </style>

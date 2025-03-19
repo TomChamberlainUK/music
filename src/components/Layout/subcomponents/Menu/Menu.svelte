@@ -31,5 +31,5 @@
 </menu>
 
 <style lang="scss">
-  @import './Menu.scss';
+  @use './Menu.scss';
 </style>
