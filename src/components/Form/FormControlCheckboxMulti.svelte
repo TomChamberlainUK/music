@@ -9,7 +9,7 @@
   let { values, checked = $bindable() }: Props = $props();
 </script>
 
-{#each values as value}
+{#each values as value (value)}
   <FormControlWrapper
     label={value}
   >

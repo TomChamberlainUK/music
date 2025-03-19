@@ -71,7 +71,7 @@
   {height}
   role="graphics-document"
 >
-  {#each fifthsShapes as { isHighlighted, name, path, textCoordinates }}
+  {#each fifthsShapes as { isHighlighted, name, path, textCoordinates } (name)}
   <g
     role="gridcell"
     aria-labelledby={`circle-of-fifths-chord-${name}`}

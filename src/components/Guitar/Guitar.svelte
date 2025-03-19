@@ -61,7 +61,7 @@
 
 <div>
   <div class="fret-markers">
-    {#each frets as fret}
+    {#each frets as fret (fret)}
       <div
         class="fret-marker fret-marker--top"
         class:isHighlighted={fretMarkers.includes(`${fret}`)}
@@ -72,12 +72,12 @@
     {/each}
   </div>
   <fieldset class="guitar">
-    {#each strings as string, stringIndex}
+    {#each strings as string, stringIndex (stringIndex)}
       <div
         class="string"
         data-testId="string"
       >
-        {#each string as note, fretIndex}
+        {#each string as note, fretIndex (fretIndex)}
           <label
             class="fret"
             class:isRoot={$scale.root === note}
@@ -102,7 +102,7 @@
     {/each}
   </fieldset>
   <div class="fret-markers">
-    {#each frets as fret}
+    {#each frets as fret (fret)}
       <div
         class="fret-marker fret-marker--bottom"
         class:isHighlighted={fretMarkers.includes(`${fret}`)}

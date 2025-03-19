@@ -29,7 +29,7 @@
 </script>
 
 <fieldset class="piano">
-  {#each ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] as note, i}
+  {#each ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] as note, i (note)}
     <label
       class="key"
       class:isRoot={$scale.root === note}
