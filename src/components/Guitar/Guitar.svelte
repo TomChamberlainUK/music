@@ -127,5 +127,5 @@
 </div>
 
 <style lang="scss">
-  @import './Guitar.scss';
+  @use './Guitar.scss';
 </style>

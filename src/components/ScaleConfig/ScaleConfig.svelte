@@ -32,5 +32,5 @@
 </div>
 
 <style lang="scss">
-  @import './ScaleConfig.scss';
+  @use './ScaleConfig.scss';
 </style>

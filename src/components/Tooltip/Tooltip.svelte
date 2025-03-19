@@ -20,5 +20,5 @@
 {/if}
 
 <style lang="scss">
-  @import './Tooltip.scss';
+  @use './Tooltip.scss';
 </style>
