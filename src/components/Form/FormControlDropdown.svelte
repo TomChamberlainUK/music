@@ -35,7 +35,7 @@
   {label}
 >
   <select bind:value={value}>
-    {#each options as option}
+    {#each options as option (option)}
       <option value={getOptionValue(option)}>
         {getOptionName(option)}
       </option>
