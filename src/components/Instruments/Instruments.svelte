@@ -11,7 +11,6 @@
         id="instrument-label-{id}"
       >
         {type}
-        {' '}
         <span class="heading__id">
           (id: {id})
         </span>
