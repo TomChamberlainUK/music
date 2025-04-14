@@ -2,6 +2,9 @@
   import { CircleOfFifths, Instruments, Layout, ScaleConfig } from '@/components';
 </script>
 
+<svelte:head>
+  <title>Music</title>
+</svelte:head>
 <Layout>
   <main class="container">
     <div class="header">
