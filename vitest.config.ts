@@ -12,9 +12,9 @@ export default defineConfig(({ mode }) => ({
   },
   test: {
     environment: 'jsdom',
-    setupFiles: ['./tests/vitest-setup.ts'],
+    setupFiles: ['./tests/unit/vitest-setup.ts'],
     coverage: {
-      reportsDirectory: './tests/coverage',
+      reportsDirectory: './tests/unit/coverage',
     },
     include: ['tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
   },
