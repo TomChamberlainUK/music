@@ -16,6 +16,6 @@ export default defineConfig(({ mode }) => ({
     coverage: {
       reportsDirectory: './tests/unit/coverage',
     },
-    include: ['tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
   },
 }));
